@@ -1,0 +1,6 @@
+body { font-family: 'Roboto', sans-serif; color: #333; background-color: #EEE;}
+#loginBox {background-color:#FFF;border:1px solid #CCC;border-radius:5px;padding:20px;}
+#loginBox input {margin-bottom:5px;}
+.smallCenterBlock {margin-top:60px;max-width:350px;margin-left:auto;margin-right:auto;}
+.btn-primary { background-color: #77cc00; border-color: #70db86;color:#FFF;}
+.btn-primary:hover { background-color: #55aa00; border-color: #55aa00; }
