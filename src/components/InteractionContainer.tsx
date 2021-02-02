@@ -29,6 +29,12 @@ export const InteractionContainer: React.FC<Props> = (props) => {
         return result;
     }
 
+    const getIframe = (tab: TabInterface, i: number, visible: boolean) => {
+        return (<div key={i} id={"frame" + i.toString()} className="frame" style={(!visible) ? { display: "none" } : {}}><iframe src={tab.url} frameBorder="0" title={"frame" + i.toString()}></iframe></div>)
+
+    }
+
+
     const getItems = () => {
         var result = [];
         if (props.tabs != null) {
@@ -52,8 +58,12 @@ export const InteractionContainer: React.FC<Props> = (props) => {
                         if (ChatHelper.user.isHost) result.push(<ReceivePrayer key={i} chatState={props.chatState} visible={visible} />);
                         else result.push(<RequestPrayer key={i} chatState={props.chatState} visible={visible} />);
                         break;
+                    case "page":
+                        //if requirepublish
+                        result.push(getIframe(t, i, visible));
+                        break;
                     default:
-                        result.push(<div key={i} id={"frame" + i.toString()} className="frame" style={(!visible) ? { display: "none" } : {}}><iframe src={t.url} frameBorder="0" title={"frame" + i.toString()}></iframe></div>);
+                        result.push(getIframe(t, i, visible));
                         break;
                 }
             }

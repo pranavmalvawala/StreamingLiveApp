@@ -6,6 +6,7 @@ import { EditorState, ContentState, convertToRaw } from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
 import { PageInterface, ApiHelper, InputBox } from "."
+import { EnvironmentHelper } from "../../../helpers";
 
 
 interface Props { page: PageInterface, updatedFunction: () => void }
@@ -39,7 +40,7 @@ export const PageEdit: React.FC<Props> = (props) => {
         var content = editorState.getCurrentContent();
         page.content = draftToHtml(convertToRaw(content));
         ApiHelper.post("/pages", [page], "StreamingLiveApi").then(pages => {
-            ApiHelper.get("/pages/write/" + pages[0].id.toString(), "StreamingLiveApi").then(props.updatedFunction);
+            if (EnvironmentHelper.RequirePublish) ApiHelper.get("/pages/write/" + pages[0].id.toString(), "StreamingLiveApi").then(props.updatedFunction);
         })
     }
 
