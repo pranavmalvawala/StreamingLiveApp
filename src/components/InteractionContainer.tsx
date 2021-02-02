@@ -1,5 +1,6 @@
 import React from "react";
 import { TabInterface, Chat, HostChat, RequestPrayer, ReceivePrayer, ChatHelper, ChatStateInterface } from ".";
+import { EnvironmentHelper } from "../helpers";
 
 interface Props {
     tabs: TabInterface[],
@@ -59,7 +60,7 @@ export const InteractionContainer: React.FC<Props> = (props) => {
                         else result.push(<RequestPrayer key={i} chatState={props.chatState} visible={visible} />);
                         break;
                     case "page":
-                        //if requirepublish
+                        //if (EnvironmentHelper.RequirePublish) ... else
                         result.push(getIframe(t, i, visible));
                         break;
                     default:

@@ -41,6 +41,7 @@ export const PageEdit: React.FC<Props> = (props) => {
         page.content = draftToHtml(convertToRaw(content));
         ApiHelper.post("/pages", [page], "StreamingLiveApi").then(pages => {
             if (EnvironmentHelper.RequirePublish) ApiHelper.get("/pages/write/" + pages[0].id.toString(), "StreamingLiveApi").then(props.updatedFunction);
+            else props.updatedFunction();
         })
     }
 
