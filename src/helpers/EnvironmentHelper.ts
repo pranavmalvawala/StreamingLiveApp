@@ -2,7 +2,7 @@ import { ApiHelper } from "../appBase/helpers/ApiHelper";
 
 export class EnvironmentHelper {
     private static AccessApi = "";
-    private static StreamingLiveApi = "";
+    static StreamingLiveApi = "";
     static ChatApiUrl = "";
     static AdminUrl = "";
     static ContentRoot = "";
