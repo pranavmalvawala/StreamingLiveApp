@@ -13,7 +13,7 @@ export class ConfigHelper {
 
     static async load(keyName: string) {
         var jsonUrl = EnvironmentHelper.ContentRoot + '/data/' + keyName + '/data.json?nocache=' + (new Date()).getTime();
-        const preview = await ConfigHelper.getQs('preview') === '1';
+        const preview = !EnvironmentHelper.RequirePublish || await ConfigHelper.getQs('preview') === '1';
         if (preview) jsonUrl = ApiHelper.getConfig("StreamingLiveApi").url + '/preview/data/' + keyName;
         var result: ConfigurationInterface = await fetch(jsonUrl).then(response => response.json());
         ServicesHelper.updateServiceTimes(result);

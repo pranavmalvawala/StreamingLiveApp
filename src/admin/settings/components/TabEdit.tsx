@@ -23,7 +23,7 @@ export const TabEdit: React.FC<Props> = (props) => {
             case "text": t.text = val; break;
             case "type":
                 t.linkType = val;
-                if (val === "page" && pages.length > 0) t.linkData = pages[0].id.toString();
+                if (val === "page" && pages?.length > 0) t.linkData = pages[0].id.toString();
                 break;
             case "page": t.linkData = val; break;
             case "url": t.url = val; break;

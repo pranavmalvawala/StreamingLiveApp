@@ -9,12 +9,12 @@ export const Home: React.FC = () => {
   const [chatUser, setChatUser] = React.useState<ChatUserInterface>({ displayName: "Anonymous", guid: "", isHost: false });
   const [chatState, setChatState] = React.useState<ChatStateInterface>();
 
-  const loadConfig = React.useCallback((firstLoad: boolean) => {
+  const loadConfig = React.useCallback(async (firstLoad: boolean) => {
     const keyName = window.location.hostname.split(".")[0];
-    setCssUrl(EnvironmentHelper.ContentRoot + "/data/" + keyName + "/data.css?nocache=" + (new Date()).getTime());
-    ConfigHelper.getQs("preview").then(v => {
-      if (v === "1") setCssUrl(EnvironmentHelper.ContentRoot + "/preview/css/" + keyName);
-    });
+
+    const preview = !EnvironmentHelper.RequirePublish || await ConfigHelper.getQs('preview') === '1';
+    var cssUrl = (preview) ? EnvironmentHelper.StreamingLiveApi + "/preview/css/" + keyName : EnvironmentHelper.ContentRoot + "/data/" + keyName + "/data.css?nocache=" + (new Date()).getTime()
+    setCssUrl(cssUrl);
 
     ConfigHelper.load(keyName).then(data => {
       var d: ConfigurationInterface = data;
