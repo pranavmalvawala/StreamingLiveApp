@@ -1,6 +1,5 @@
 import React from "react";
 import { TabInterface, Chat, HostChat, RequestPrayer, ReceivePrayer, ChatHelper, ChatStateInterface } from ".";
-import { EnvironmentHelper } from "../helpers";
 
 interface Props {
     tabs: TabInterface[],
