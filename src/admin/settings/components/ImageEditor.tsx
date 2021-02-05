@@ -38,6 +38,10 @@ export const ImageEditor: React.FC<Props> = (props) => {
 
     const cropper = React.useRef(null);
 
+    const onCropperInit = (c: any) => {
+        cropper.current = c;
+    }
+
     const cropCallback = () => {
         if (cropper.current !== null) {
             const data = cropper.current.getCropBoxData();
@@ -71,10 +75,9 @@ export const ImageEditor: React.FC<Props> = (props) => {
     return (
         <InputBox id="cropperBox" headerIcon="" headerText="Crop" saveFunction={handleSave} saveText={"Update"} cancelFunction={handleCancel} headerActionContent={getHeaderButton()}  >
             <Cropper
-                ref={cropper}
+                onInitialized={onCropperInit}
                 src={currentUrl}
                 style={{ height: 150, width: "100%" }}
-
                 guides={false}
                 crop={handleCrop} />
         </InputBox>
