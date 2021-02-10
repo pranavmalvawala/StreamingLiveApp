@@ -1,4 +1,4 @@
-body,
+body{background-color: #EEE !important;}
 #liveContainer {
   height: 100%;
   width: 100%;
