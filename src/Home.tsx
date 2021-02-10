@@ -1,6 +1,5 @@
 import React from "react";
 import { ServicesHelper, ChatHelper, ChatUserInterface, ChatStateInterface, TabInterface, ApiHelper, UserHelper, EnvironmentHelper, ConfigHelper, ConfigurationInterface, ServiceInterface, Header, VideoContainer, InteractionContainer } from "./components";
-import "./all.css";
 
 export const Home: React.FC = () => {
   const [cssUrl, setCssUrl] = React.useState(undefined);
