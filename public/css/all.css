@@ -208,7 +208,7 @@ body {
 }
 #chatReceive,
 #prayerReceive {
-  flex: 1;
+  flex: 1 0 0;
   padding: 10px;
   overflow-y: scroll;
 }

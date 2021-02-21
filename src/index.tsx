@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import * as serviceWorker from "./serviceWorker";
 import { EnvironmentHelper } from "./components";
 import App from "./App";
-import "./index.css";
 
 EnvironmentHelper.init();
 ReactDOM.render(
