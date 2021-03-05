@@ -101,9 +101,13 @@ export const Home: React.FC = () => {
     initUser();
   }, [loadConfig]);
 
-
   if (chatState === null) {
-    return (<>Loading..</>);
+    return (
+      <div className="smallCenterBlock" style={{ marginTop: 200 }} >
+        <img src="/images/logo-login.png" alt="logo" className="img-fluid" style={{ marginBottom: 50 }} />
+        <div className="text-center">Loading..</div>
+      </div>
+    );
   } else return (
     <>
       <link rel="stylesheet" href={cssUrl} />

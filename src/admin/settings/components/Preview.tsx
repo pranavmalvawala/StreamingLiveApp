@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom"
 import { UserHelper, EnvironmentHelper } from ".";
 
 interface Props { ts: number }
@@ -10,7 +11,7 @@ export const Preview: React.FC<Props> = (props) => {
                 <div id="previewWrapper">
                     <iframe id="previewFrame" src={EnvironmentHelper.SubUrl.replace("{key}", UserHelper.currentChurch.subDomain) + "/?preview=1&ts=" + props.ts} title="Preview" ></iframe>
                 </div>
-                <p style={{ marginTop: 10, marginBottom: 10 }}>View your live site: <a href={EnvironmentHelper.SubUrl.replace("{key}", UserHelper.currentChurch.subDomain) + "/"} target="_blank" rel="noopener noreferrer" >{EnvironmentHelper.SubUrl.replace("{key}", UserHelper.currentChurch.subDomain) + "/"}</a></p>
+                <p style={{ marginTop: 10, marginBottom: 10 }}>View your live site: <Link to={"/"}>{EnvironmentHelper.SubUrl.replace("{key}", UserHelper.currentChurch.subDomain) + "/"}</Link></p>
             </div>
         </div>
     );
