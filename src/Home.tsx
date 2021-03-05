@@ -12,7 +12,7 @@ export const Home: React.FC = () => {
     const keyName = window.location.hostname.split(".")[0];
 
     const preview = !EnvironmentHelper.RequirePublish || await ConfigHelper.getQs('preview') === '1';
-    var cssUrl = (preview) ? EnvironmentHelper.StreamingLiveApi + "/preview/css/" + keyName : EnvironmentHelper.ContentRoot + "/data/" + keyName + "/data.css?nocache=" + (new Date()).getTime()
+    var cssUrl = (preview) ? EnvironmentHelper.AccessApi + "/preview/css/" + keyName : EnvironmentHelper.ContentRoot + "/data/" + keyName + "/data.css?nocache=" + (new Date()).getTime()
     setCssUrl(cssUrl);
 
     ConfigHelper.load(keyName).then(data => {
