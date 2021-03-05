@@ -40,7 +40,7 @@ export class EnvironmentHelper {
     static initStaging = () => {
         EnvironmentHelper.AccessApi = "https://accessapi.staging.churchapps.org";
         EnvironmentHelper.StreamingLiveApi = "https://api.staging.streaminglive.church";
-        EnvironmentHelper.MessagingApi = "https://messaging.staging.churchapps.org";
+        EnvironmentHelper.MessagingApi = "https://messagingapi.staging.churchapps.org";
         EnvironmentHelper.MessagingSocket = "wss://socket.staging.churchapps.org";
         EnvironmentHelper.AdminUrl = "https://admin.staging.streaminglive.church";
         EnvironmentHelper.ContentRoot = "";
@@ -52,7 +52,7 @@ export class EnvironmentHelper {
     static initProd = () => {
         EnvironmentHelper.AccessApi = "https://accessapi.churchapps.org";
         EnvironmentHelper.StreamingLiveApi = "https://api.streaminglive.church";
-        EnvironmentHelper.MessagingApi = "https://messaging.churchapps.org";
+        EnvironmentHelper.MessagingApi = "https://messagingapi.churchapps.org";
         EnvironmentHelper.MessagingSocket = "wss://socket.churchapps.org";
         EnvironmentHelper.AdminUrl = "https://admin.streaminglive.church";
         EnvironmentHelper.ContentRoot = "";
