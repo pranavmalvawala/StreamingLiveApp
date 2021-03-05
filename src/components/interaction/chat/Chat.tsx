@@ -1,6 +1,6 @@
 import React from "react";
 import { ChatSend, Callout, Attendance, ChatReceive } from ".";
-import { ChatStateInterface, ConfigHelper, ServicesHelper, ChatHelper, ChatRoomInterface, ChatUserInterface } from "../../../helpers"
+import { ServicesHelper, ChatRoomInterface, ChatUserInterface } from "../../../helpers"
 
 interface Props {
     room: ChatRoomInterface,

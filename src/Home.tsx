@@ -1,5 +1,5 @@
 import React from "react";
-import { ServicesHelper, ConversationInterface, TabInterface, ApiHelper, UserHelper, EnvironmentHelper, ConfigHelper, ConfigurationInterface, ServiceInterface, Header, VideoContainer, InteractionContainer, ChatStateInterface, ConnectionInterface, MessageInterface } from "./components";
+import { ServicesHelper, ConversationInterface, ApiHelper, UserHelper, EnvironmentHelper, ConfigHelper, ConfigurationInterface, ServiceInterface, Header, VideoContainer, InteractionContainer, ChatStateInterface } from "./components";
 import { ChatHelper } from "./helpers/ChatHelper";
 import { SocketHelper } from "./helpers/SocketHelper";
 

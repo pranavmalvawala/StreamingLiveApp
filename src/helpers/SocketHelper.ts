@@ -1,5 +1,4 @@
-import { ServicesHelper, EnvironmentHelper } from '.'
-import { ApiHelper } from '../components';
+import { EnvironmentHelper } from '.'
 import { PayloadInterface, ChatEventsInterface } from "../helpers/Interfaces"
 
 export class SocketHelper {
