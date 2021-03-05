@@ -1,9 +1,13 @@
 import React from "react";
-import { ChatSend, Callout, Attendance, ChatReceive, ChatStateInterface, ConfigHelper, ServicesHelper, ChatHelper } from ".";
+import { ChatSend, Callout, Attendance, ChatReceive } from ".";
+import { ChatStateInterface, ConfigHelper, ServicesHelper, ChatHelper, ChatRoomInterface, ChatUserInterface } from "../../../helpers"
 
 interface Props {
-    chatState: ChatStateInterface | undefined,
-    visible: boolean
+    room: ChatRoomInterface,
+    user: ChatUserInterface,
+    visible: boolean,
+    enableCallout?: boolean,
+    enableAttendance?: boolean,
 }
 
 export const Chat: React.FC<Props> = (props) => {
@@ -23,12 +27,14 @@ export const Chat: React.FC<Props> = (props) => {
     React.useEffect(() => { setInterval(updateChatEnabled, 1000); }, [updateChatEnabled]);
 
     var className = (chatEnabled) ? "chatContainer" : "chatContainer chatDisabled";
+
+
     return (
         <div className={className} style={(props.visible) ? {} : { display: "none" }} >
-            <Attendance viewers={ChatHelper.getOrCreateRoom(props.chatState, "church_" + ConfigHelper.current.churchId).viewers} />
-            <Callout callout={props.chatState?.callout || ""} roomName={"church_" + ConfigHelper.current.churchId} />
-            <ChatReceive room={ChatHelper.getOrCreateRoom(props.chatState, "church_" + ConfigHelper.current.churchId)} />
-            <ChatSend room={"church_" + ConfigHelper.current.churchId} />
+            {(props.enableAttendance) ? <Attendance attendance={props.room.attendance} /> : null}
+            {(props.enableCallout) ? <Callout room={props.room} user={props.user} /> : null}
+            <ChatReceive room={props.room} user={props.user} />
+            <ChatSend room={props.room} />
         </div>
     );
 }

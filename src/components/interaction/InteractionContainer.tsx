@@ -1,13 +1,26 @@
 import React from "react";
-import { TabInterface, Chat, HostChat, RequestPrayer, ReceivePrayer, ChatHelper, ChatStateInterface } from ".";
+import { TabInterface, Chat, HostChat, RequestPrayer, ReceivePrayer } from "..";
+import { ChatStateInterface } from "../../helpers";
+
 
 interface Props {
     tabs: TabInterface[],
-    chatState: ChatStateInterface | undefined
+    chatState: ChatStateInterface
 }
 
 export const InteractionContainer: React.FC<Props> = (props) => {
     const [selectedTab, setSelectedTab] = React.useState(0);
+
+
+    /*
+        const initChat = () => {
+            setTimeout(function () {
+                ChatHelper.init((state: ChatStateInterface) => { setChatState(state); setConfig(ConfigHelper.current); });
+                setChatState(ChatHelper.state);
+            }, 500);
+        }
+    */
+
 
     const selectTab = (index: number) => { setSelectedTab(index); }
 
@@ -31,9 +44,13 @@ export const InteractionContainer: React.FC<Props> = (props) => {
 
     const getIframe = (tab: TabInterface, i: number, visible: boolean) => {
         return (<div key={i} id={"frame" + i.toString()} className="frame" style={(!visible) ? { display: "none" } : {}}><iframe src={tab.url} frameBorder="0" title={"frame" + i.toString()}></iframe></div>)
-
     }
 
+    /*
+    const getMainConversation = () => {
+        if (props.chatState.rooms.length > 0) return props.chatState.rooms[0].conversationId;
+        else return "";
+    }*/
 
     const getItems = () => {
         var result = [];
@@ -49,13 +66,13 @@ export const InteractionContainer: React.FC<Props> = (props) => {
 
                 switch (t.type) {
                     case "chat":
-                        result.push(<Chat key={i} chatState={props.chatState} visible={visible} />);
+                        if (props.chatState.mainRoom !== null) result.push(<Chat key={i} room={props.chatState.mainRoom} user={props.chatState.user} visible={visible} enableAttendance={true} enableCallout={true} />);
                         break;
                     case "hostchat":
-                        result.push(<HostChat key={i} chatState={props.chatState} visible={visible} />);
+                        if (props.chatState.hostRoom !== null) result.push(<HostChat key={i} chatState={props.chatState} visible={visible} />);
                         break;
                     case "prayer":
-                        if (ChatHelper.user.isHost) result.push(<ReceivePrayer key={i} chatState={props.chatState} visible={visible} />);
+                        if (props.chatState.user.isHost) result.push(<ReceivePrayer key={i} chatState={props.chatState} visible={visible} />);
                         else result.push(<RequestPrayer key={i} chatState={props.chatState} visible={visible} />);
                         break;
                     case "page":

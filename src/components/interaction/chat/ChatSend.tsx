@@ -1,7 +1,8 @@
 import React, { KeyboardEvent } from "react";
-import { ChatHelper, Emojis } from ".";
+import { Emojis } from ".";
+import { ApiHelper, ChatHelper, ChatRoomInterface, ConfigHelper, MessageInterface } from "../../../helpers"
 
-interface Props { room: string }
+interface Props { room: ChatRoomInterface }
 
 export const ChatSend: React.FC<Props> = (props) => {
     const [message, setMessage] = React.useState("");
@@ -13,7 +14,8 @@ export const ChatSend: React.FC<Props> = (props) => {
     }
 
     const sendMessage = () => {
-        ChatHelper.sendMessage(props.room, message);
+        const msg: MessageInterface = { churchId: ConfigHelper.current.churchId, content: message, conversationId: props.room.conversationId, displayName: ChatHelper.current.user.displayName, messageType: "message" }
+        ApiHelper.postAnonymous("/messages/send", [msg], "MessagingApi");
         setMessage("");
     }
 
