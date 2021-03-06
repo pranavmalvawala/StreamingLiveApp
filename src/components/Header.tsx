@@ -53,13 +53,14 @@ export const Header: React.FC<Props> = (props) => {
             </div>)
         else return null;
     }
+    const imgSrc = props.logoUrl !== undefined ? (EnvironmentHelper.ContentRoot + props.logoUrl) : '/images/default-site-logo.png'
 
     return (
         <>
             <div id="header">
                 <div id="logo">
                     <a href={props.homeUrl} target="_blank" rel="noopener noreferrer">
-                        <img src={EnvironmentHelper.ContentRoot + props.logoUrl} alt="logo" />
+                        <img src={imgSrc} alt="logo" />
                     </a>
                 </div>
 

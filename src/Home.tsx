@@ -12,8 +12,7 @@ export const Home: React.FC = () => {
   const loadConfig = React.useCallback(async (firstLoad: boolean) => {
     const keyName = window.location.hostname.split(".")[0];
 
-    const preview = !EnvironmentHelper.RequirePublish || await ConfigHelper.getQs('preview') === '1';
-    var cssUrl = (preview) ? EnvironmentHelper.AccessApi + "/preview/css/" + keyName : EnvironmentHelper.ContentRoot + "/data/" + keyName + "/data.css?nocache=" + (new Date()).getTime()
+    var cssUrl = EnvironmentHelper.AccessApi + "/preview/css/" + keyName
     setCssUrl(cssUrl);
 
     ConfigHelper.load(keyName).then(data => {
