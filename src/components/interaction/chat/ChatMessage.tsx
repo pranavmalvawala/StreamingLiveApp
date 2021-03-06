@@ -1,17 +1,18 @@
 import React from "react";
-import { ChatMessageInterface, ChatHelper } from ".";
+import { MessageInterface, ChatHelper, ChatUserInterface, ApiHelper } from "../../../helpers";
 
-interface Props { message: ChatMessageInterface, roomName: string }
+interface Props { message: MessageInterface, conversationId: string, user: ChatUserInterface }
 
 export const ChatMessage: React.FC<Props> = (props) => {
 
     const handleDelete = (e: React.MouseEvent) => {
         e.preventDefault();
-        ChatHelper.sendDelete(props.roomName, props.message.timestamp)
+        ApiHelper.delete("/messages/" + props.message.id, "MessagingApi");
+        //ChatHelper.sendDelete(props.roomName, props.message.timestamp)
     }
 
     const getDeleteLink = () => {
-        if (!ChatHelper.user.isHost) return null;
+        if (!props.user.isHost) return null;
         else {
             return <span className="delete"><a href="about:blank" onClick={handleDelete}><i className="far fa-trash-alt"></i></a></span>
         }
@@ -22,7 +23,7 @@ export const ChatMessage: React.FC<Props> = (props) => {
     return (
         <div className={className}>
             {getDeleteLink()}
-            <b>{props.message.displayName}:</b> <span dangerouslySetInnerHTML={{ __html: ChatHelper.insertLinks(props.message.message) }}></span>
+            <b>{props.message.displayName}:</b> <span dangerouslySetInnerHTML={{ __html: ChatHelper.insertLinks(props.message.content) }}></span>
         </div >
     );
 }
