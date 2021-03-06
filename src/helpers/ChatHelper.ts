@@ -1,5 +1,6 @@
 import { ChatStateInterface, AttendanceInterface, MessageInterface, ChatRoomInterface, ChatUserInterface, ConversationInterface, ConnectionInterface } from "./Interfaces";
 import { SocketHelper } from "./SocketHelper";
+import { ConfigHelper } from "./ConfigHelper";
 import Cookies from 'js-cookie';
 import { ApiHelper } from "."
 
@@ -51,6 +52,9 @@ export class ChatHelper {
         const room = ChatHelper.getRoom(message.conversationId);
         if (room !== null) {
             room.messages.push(message);
+            if (room === ChatHelper.current.mainRoom) ConfigHelper.setTabUpdated("chat");
+            if (room === ChatHelper.current.hostRoom) ConfigHelper.setTabUpdated("hostchat");
+            if (room === ChatHelper.current.prayerRoom) ConfigHelper.setTabUpdated("prayer");
             ChatHelper.onChange();
         }
     }
@@ -59,6 +63,7 @@ export class ChatHelper {
         const room = ChatHelper.current.hostRoom;
         if (room.prayerRequests === undefined) room.prayerRequests = [];
         room.prayerRequests.push(conversation);
+        ConfigHelper.setTabUpdated("prayer");
         ChatHelper.onChange();
     }
 

@@ -48,15 +48,20 @@ export const Home: React.FC = () => {
   const checkHost = async (d: ConfigurationInterface) => {
     if (UserHelper.isHost) {
       d.tabs.push({ type: "hostchat", text: "Host Chat", icon: "fas fa-users", data: "", url: "" });
-      const conversation: ConversationInterface = await ApiHelper.get("/conversations/current/" + d.churchId + "/streamingLiveHost/chat", "MessagingApi");
+      const hostConversation: ConversationInterface = await ApiHelper.get("/conversations/current/" + d.churchId + "/streamingLiveHost/chat", "MessagingApi");
       ChatHelper.current.hostRoom = {
         messages: [],
-        attendance: { conversationId: conversation.id, totalViewers: 0, viewers: [] },
+        attendance: { conversationId: hostConversation.id, totalViewers: 0, viewers: [] },
         callout: { content: "" },
-        conversationId: conversation.id
+        conversationId: hostConversation.id
       };
       setChatState(ChatHelper.current);
-      ChatHelper.joinRoom(conversation);
+      setTimeout(() => {
+        console.log("HOST conversation");
+        console.log(hostConversation);
+        ChatHelper.joinRoom(hostConversation);
+      }, 500);
+
     }
   }
 
