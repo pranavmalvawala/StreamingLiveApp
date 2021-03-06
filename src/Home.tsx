@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from 'react-helmet'
 import { ServicesHelper, ConversationInterface, ApiHelper, UserHelper, EnvironmentHelper, ConfigHelper, ConfigurationInterface, ServiceInterface, Header, VideoContainer, InteractionContainer, ChatStateInterface } from "./components";
 import { ChatHelper } from "./helpers/ChatHelper";
 import { SocketHelper } from "./helpers/SocketHelper";
@@ -114,7 +115,9 @@ export const Home: React.FC = () => {
     );
   } else return (
     <>
-      <link rel="stylesheet" href={cssUrl} />
+      <Helmet>
+        <link rel="stylesheet" href={cssUrl} />
+      </Helmet>
       <div id="liveContainer">
         <Header homeUrl={config.logo?.url} logoUrl={config.logo?.image} buttons={config.buttons} user={chatState?.user} nameUpdateFunction={handleNameUpdate} loginChangeFunction={handleLoginChange} />
         <div id="body">
