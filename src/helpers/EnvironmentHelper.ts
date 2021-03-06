@@ -1,7 +1,7 @@
 import { ApiHelper } from "../appBase/helpers/ApiHelper";
 
 export class EnvironmentHelper {
-    private static AccessApi = "";
+    static AccessApi = "";
     static StreamingLiveApi = "";
     static MessagingApi = "";
     static MessagingSocket = "";

@@ -37,7 +37,7 @@ export const AppearanceEdit: React.FC<Props> = (props) => {
     }
 
     const getLogoUrl = (logoUrl: string) => {
-        if (logoUrl.indexOf("/data/") === 0) return EnvironmentHelper.ContentRoot + currentSettings.logoUrl.replace("/data/", "");
+        if (logoUrl?.indexOf("/data/") === 0) return EnvironmentHelper.ContentRoot + currentSettings.logoUrl.replace("/data/", "");
         else return logoUrl;
     }
     const getLogoLink = () => {
