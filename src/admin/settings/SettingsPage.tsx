@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap"
-import { Preview, Header, Services, Appearance, Links, Tabs, ApiHelper, EnvironmentHelper } from "./components"
+import { Preview, Header, Services, Links, Tabs, ApiHelper, EnvironmentHelper } from "./components"
 
 export const SettingsPage = () => {
 
@@ -34,7 +34,6 @@ export const SettingsPage = () => {
                         <Services updatedFunction={updatePreview} />
                     </Col>
                     <Col md={4}>
-                        <Appearance updatedFunction={updatePreview} />
                         <Links updatedFunction={updatePreview} />
                         <Tabs updatedFunction={updatePreview} />
                     </Col>
