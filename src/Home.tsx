@@ -1,20 +1,16 @@
 import React from "react";
 import { Helmet } from 'react-helmet'
-import { ServicesHelper, ConversationInterface, ApiHelper, UserHelper, EnvironmentHelper, ConfigHelper, ConfigurationInterface, ServiceInterface, Header, VideoContainer, InteractionContainer, ChatStateInterface } from "./components";
+import { ServicesHelper, ConversationInterface, ApiHelper, UserHelper, ConfigHelper, ConfigurationInterface, ServiceInterface, Header, VideoContainer, InteractionContainer, ChatStateInterface } from "./components";
 import { ChatHelper } from "./helpers/ChatHelper";
 import { SocketHelper } from "./helpers/SocketHelper";
 
 export const Home: React.FC = () => {
-  const [cssUrl, setCssUrl] = React.useState(undefined);
   const [config, setConfig] = React.useState<ConfigurationInterface>({} as ConfigurationInterface);
   const [currentService, setCurrentService] = React.useState<ServiceInterface | null>(null);
   const [chatState, setChatState] = React.useState<ChatStateInterface>(null);
 
   const loadConfig = React.useCallback(async (firstLoad: boolean) => {
     const keyName = window.location.hostname.split(".")[0];
-
-    var cssUrl = EnvironmentHelper.AccessApi + "/preview/css/" + keyName
-    setCssUrl(cssUrl);
 
     ConfigHelper.load(keyName).then(data => {
       var d: ConfigurationInterface = data;
@@ -106,6 +102,14 @@ export const Home: React.FC = () => {
     initUser();
   }, [loadConfig]);
 
+  let css = null;
+  if (config.keyName) {
+    console.log("write css tags here", config)
+    css = (<style type="text/css">{`
+    :root { --primaryColor: ${config?.primaryColor}; --contrastColor: ${config?.contrastColor}; --headerColor: ${config?.primaryColor} }
+    `}</style>)
+  }
+
   if (chatState === null) {
     return (
       <div className="smallCenterBlock" style={{ marginTop: 200 }} >
@@ -116,10 +120,10 @@ export const Home: React.FC = () => {
   } else return (
     <>
       <Helmet>
-        <link rel="stylesheet" href={cssUrl} />
+        {css}
       </Helmet>
       <div id="liveContainer">
-        <Header homeUrl={config.logo?.url} logoUrl={config.logo?.image} buttons={config.buttons} user={chatState?.user} nameUpdateFunction={handleNameUpdate} loginChangeFunction={handleLoginChange} />
+        <Header homeUrl={config?.homePageUrl} logoUrl={config?.logoImage} buttons={config.buttons} user={chatState?.user} nameUpdateFunction={handleNameUpdate} loginChangeFunction={handleLoginChange} />
         <div id="body">
           <VideoContainer currentService={currentService} />
           <InteractionContainer tabs={config.tabs} chatState={chatState} />
