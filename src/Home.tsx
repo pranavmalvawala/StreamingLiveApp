@@ -104,7 +104,6 @@ export const Home: React.FC = () => {
 
   let css = null;
   if (config.keyName) {
-    console.log("write css tags here", config)
     css = (<style type="text/css">{`
     :root { --primaryColor: ${config?.primaryColor}; --contrastColor: ${config?.contrastColor}; --headerColor: ${config?.primaryColor} }
     `}</style>)
