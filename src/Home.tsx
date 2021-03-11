@@ -4,6 +4,12 @@ import { ServicesHelper, ConversationInterface, ApiHelper, UserHelper, ConfigHel
 import { ChatHelper } from "./helpers/ChatHelper";
 import { SocketHelper } from "./helpers/SocketHelper";
 
+const defaultColors = {
+  primary: "#488AC7",
+  contrast: "#ffffff",
+  header: "#488AC7 "
+}
+
 export const Home: React.FC = () => {
   const [config, setConfig] = React.useState<ConfigurationInterface>({} as ConfigurationInterface);
   const [currentService, setCurrentService] = React.useState<ServiceInterface | null>(null);
@@ -105,7 +111,7 @@ export const Home: React.FC = () => {
   let css = null;
   if (config.keyName) {
     css = (<style type="text/css">{`
-    :root { --primaryColor: ${config?.primaryColor}; --contrastColor: ${config?.contrastColor}; --headerColor: ${config?.primaryColor} }
+    :root { --primaryColor: ${config?.primaryColor || defaultColors.primary}; --contrastColor: ${config?.primaryContrast || defaultColors.contrast}; --headerColor: ${config?.primaryColor || defaultColors.header} }
     `}</style>)
   }
 
@@ -122,7 +128,7 @@ export const Home: React.FC = () => {
         {css}
       </Helmet>
       <div id="liveContainer">
-        <Header homeUrl={config?.homePageUrl} logoUrl={config?.logoImage} buttons={config.buttons} user={chatState?.user} nameUpdateFunction={handleNameUpdate} loginChangeFunction={handleLoginChange} />
+        <Header homeUrl="/" logoUrl={config?.logoImage} buttons={config.buttons} user={chatState?.user} nameUpdateFunction={handleNameUpdate} loginChangeFunction={handleLoginChange} />
         <div id="body">
           <VideoContainer currentService={currentService} />
           <InteractionContainer tabs={config.tabs} chatState={chatState} />
