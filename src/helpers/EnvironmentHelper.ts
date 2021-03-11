@@ -27,7 +27,7 @@ export class EnvironmentHelper {
     }
 
     static initDev = () => {
-        EnvironmentHelper.AccountsApp = process.env.REACT_APP_ACCESS_API || "";
+        EnvironmentHelper.AccountsApp = process.env.REACT_APP_ACCOUNTS_APP || "";
         EnvironmentHelper.AccessApi = process.env.REACT_APP_ACCESS_API || "";
         EnvironmentHelper.StreamingLiveApi = process.env.REACT_APP_STREAMINGLIVE_API || "";
         EnvironmentHelper.MessagingApi = process.env.REACT_APP_MESSAGING_API || "";
