@@ -1,6 +1,5 @@
 import React from "react";
-import { Row, Col } from "react-bootstrap"
-import { PageList, PageEdit, ApiHelper, PageInterface, UserHelper, Header } from "./components"
+import { PageList, PageEdit, ApiHelper, PageInterface, UserHelper } from "./"
 
 export const Pages: React.FC = () => {
     const [pages, setPages] = React.useState<PageInterface[]>([]);
@@ -14,26 +13,10 @@ export const Pages: React.FC = () => {
 
     React.useEffect(() => { loadData(); }, []);
 
-    const getEdit = () => {
+    const getContent = () => {
         if (currentPage !== null) return <PageEdit page={currentPage} updatedFunction={handleUpdate} />;
+        else return <PageList pages={pages} addFunction={handleAdd} editFunction={handleEdit} />
     }
 
-    return (
-        <>
-            <Header />
-            <div className="container">
-                <Row style={{ marginBottom: 25 }}>
-                    <div className="col"><h1 style={{ borderBottom: 0, marginBottom: 0 }}><i className="fas fa-code"></i> Pages</h1></div>
-                </Row>
-                <Row>
-                    <Col md={8}>
-                        <PageList pages={pages} addFunction={handleAdd} editFunction={handleEdit} />
-                    </Col>
-                    <Col md={4}>
-                        {getEdit()}
-                    </Col>
-                </Row>
-            </div>
-        </>
-    );
+    return (<>{getContent()}</>);
 }

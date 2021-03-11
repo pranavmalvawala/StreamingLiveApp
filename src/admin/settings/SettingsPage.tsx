@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap"
-import { Header, Services, Links, Tabs, ApiHelper, EnvironmentHelper, External } from "./components"
+import { Header, Services, Links, Tabs, ApiHelper, EnvironmentHelper, External, Pages } from "./components"
 
 export const SettingsPage: React.FC = () => {
 
@@ -26,6 +26,7 @@ export const SettingsPage: React.FC = () => {
                 <Row>
                     <Col md={8}>
                         <Services />
+                        <Pages />
                     </Col>
                     <Col md={4}>
                         <Links />

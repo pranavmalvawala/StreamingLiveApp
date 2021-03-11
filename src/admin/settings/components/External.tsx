@@ -1,5 +1,5 @@
 import React from "react";
-import { DisplayBox, UserHelper, Permissions, EnvironmentHelper, ConfigHelper } from "."
+import { DisplayBox, Permissions, EnvironmentHelper, ConfigHelper } from "."
 import { Link } from "react-router-dom"
 
 interface Props { updatedFunction?: () => void }

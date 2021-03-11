@@ -2,7 +2,6 @@ import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { ProfilePage } from "./components";
 import { Home } from "./Home"
-import { Pages } from "./admin/pages";
 import { Logout } from "./Logout";
 import { SettingsPage } from './admin/settings/SettingsPage'
 
@@ -12,7 +11,6 @@ export const Authenticated: React.FC<Props> = (props) => {
     return (
         <Switch>
             <Route path="/admin/settings"><SettingsPage /></Route>
-            <Route path="/admin/pages"><Pages /></Route>
             <Route path="/profile"><ProfilePage /></Route>
             <Route path="/login"><Redirect to="/" /></Route>
             <Route path="/forgot"  ><Redirect to="/" /></Route>
