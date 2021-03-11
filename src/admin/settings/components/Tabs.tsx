@@ -1,12 +1,11 @@
 import React from "react";
 import { DisplayBox, TabEdit, LinkInterface, ApiHelper, UserHelper } from ".";
 
-interface Props { updatedFunction?: () => void }
-export const Tabs: React.FC<Props> = (props) => {
+export const Tabs: React.FC = () => {
     const [tabs, setTabs] = React.useState<LinkInterface[]>([]);
     const [currentTab, setCurrentTab] = React.useState<LinkInterface>(null);
 
-    const handleUpdated = () => { setCurrentTab(null); loadData(); props.updatedFunction(); }
+    const handleUpdated = () => { setCurrentTab(null); loadData(); }
     const getEditContent = () => { return <a href="about:blank" onClick={handleAdd}><i className="fas fa-plus"></i></a> }
     const loadData = () => { ApiHelper.get("/links?category=tab", "StreamingLiveApi").then(data => setTabs(data)); }
     const saveChanges = () => { ApiHelper.post("/links", tabs, "StreamingLiveApi").then(loadData); }
@@ -65,7 +64,7 @@ export const Tabs: React.FC<Props> = (props) => {
 
     if (currentTab !== null) return <TabEdit currentTab={currentTab} updatedFunction={handleUpdated} />;
     else return (
-        <DisplayBox headerIcon="fas fa-folder" headerText="Tabs" editContent={getEditContent()} >
+        <DisplayBox headerIcon="fas fa-folder" headerText="Sidebar Tabs" editContent={getEditContent()} >
             <table className="table table-sm">
                 <tbody>
                     {getRows()}

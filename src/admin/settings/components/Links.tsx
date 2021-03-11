@@ -1,13 +1,12 @@
 import React from "react";
 import { DisplayBox, LinkInterface, LinkEdit, ApiHelper, UserHelper } from "."
 
-interface Props { updatedFunction?: () => void }
 
-export const Links: React.FC<Props> = (props) => {
+export const Links: React.FC = () => {
     const [links, setLinks] = React.useState<LinkInterface[]>([]);
     const [currentLink, setCurrentLink] = React.useState<LinkInterface>(null);
 
-    const handleUpdated = () => { setCurrentLink(null); loadData(); props.updatedFunction() }
+    const handleUpdated = () => { setCurrentLink(null); loadData(); }
     const getEditContent = () => { return <a href="about:blank" onClick={handleAdd}><i className="fas fa-plus"></i></a> }
     const loadData = () => { ApiHelper.get("/links?category=link", "StreamingLiveApi").then(data => setLinks(data)); }
     const saveChanges = () => { ApiHelper.post("/links", links, "StreamingLiveApi").then(loadData); }
@@ -65,7 +64,7 @@ export const Links: React.FC<Props> = (props) => {
 
     if (currentLink !== null) return <LinkEdit currentLink={currentLink} updatedFunction={handleUpdated} />;
     else return (
-        <DisplayBox headerIcon="fas fa-link" headerText="Links" editContent={getEditContent()} >
+        <DisplayBox headerIcon="fas fa-link" headerText="Header Links" editContent={getEditContent()} >
             <table className="table table-sm">
                 <tbody>
                     {getLinks()}

@@ -1,18 +1,13 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap"
-import { Preview, Header, Services, Links, Tabs, ApiHelper, EnvironmentHelper } from "./components"
+import { Header, Services, Links, Tabs, ApiHelper, EnvironmentHelper, External } from "./components"
 
 export const SettingsPage: React.FC = () => {
 
-    const [ts, setTs] = React.useState(Date.now());
 
     const publish = (e: React.MouseEvent) => {
         e.preventDefault();
         ApiHelper.post("/settings/publish", [], "StreamingLiveApi").then(() => window.alert("Your changes have been published."));
-    }
-
-    const updatePreview = () => {
-        setTs(Date.now());
     }
 
     const getPublishButton = () => {
@@ -30,12 +25,12 @@ export const SettingsPage: React.FC = () => {
                 </Row>
                 <Row>
                     <Col md={8}>
-                        <Preview ts={ts} />
-                        <Services updatedFunction={updatePreview} />
+                        <Services />
                     </Col>
                     <Col md={4}>
-                        <Links updatedFunction={updatePreview} />
-                        <Tabs updatedFunction={updatePreview} />
+                        <Links />
+                        <Tabs />
+                        <External />
                     </Col>
                 </Row>
             </div>

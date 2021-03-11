@@ -32,7 +32,7 @@ export const NavItems: React.FC<Props> = (props) => {
         var tabs = [];
         if (UserHelper.checkAccess(Permissions.streamingLiveApi.settings.edit)) tabs.push(getTab("settings", "/admin/settings", "fas fa-video", "Settings"));
         if (UserHelper.checkAccess(Permissions.streamingLiveApi.pages.edit)) tabs.push(getTab("pages", "/admin/pages", "fas fa-code", "Pages"));
-        if (UserHelper.checkAccess(Permissions.accessApi.roleMembers.edit)) tabs.push(getTab("users", EnvironmentHelper.AccountsApp + "/churches/" + ConfigHelper.current.churchId + "/StreamingLive", "fas fa-user", "Users"));
+        //if (UserHelper.checkAccess(Permissions.accessApi.roleMembers.edit)) tabs.push(getTab("users", EnvironmentHelper.AccountsApp + "/churches/" + ConfigHelper.current.churchId + "/StreamingLive", "fas fa-user", "Users"));
         //tabs.push(getTab("traffic", "/traffic", "fas fa-chart-area", "Traffic"));
         //tabs.push(getTab("support", "mailto:support@streaminglive.church", "fas fa-envelope", "Support"));
         return tabs;

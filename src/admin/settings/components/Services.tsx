@@ -2,13 +2,12 @@ import React from "react";
 import { DisplayBox, ServiceEdit, AdminServiceInterface, ApiHelper, UserHelper } from ".";
 import { DateHelper } from "../../../helpers";
 
-interface Props { updatedFunction?: () => void }
 
-export const Services: React.FC<Props> = (props) => {
+export const Services: React.FC = () => {
     const [services, setServices] = React.useState<AdminServiceInterface[]>([]);
     const [currentService, setCurrentService] = React.useState<AdminServiceInterface>(null);
 
-    const handleUpdated = () => { setCurrentService(null); loadData(); props.updatedFunction(); }
+    const handleUpdated = () => { setCurrentService(null); loadData(); }
     const getEditContent = () => { return <a href="about:blank" onClick={handleAdd}><i className="fas fa-plus"></i></a> }
     const loadData = () => {
         ApiHelper.get("/services", "StreamingLiveApi").then(data => {
