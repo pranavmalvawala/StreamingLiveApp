@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col } from "react-bootstrap"
 import { Preview, Header, Services, Links, Tabs, ApiHelper, EnvironmentHelper } from "./components"
 
-export const SettingsPage = () => {
+export const SettingsPage: React.FC = () => {
 
     const [ts, setTs] = React.useState(Date.now());
 

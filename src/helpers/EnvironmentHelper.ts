@@ -1,6 +1,7 @@
 import { ApiHelper } from "../appBase/helpers/ApiHelper";
 
 export class EnvironmentHelper {
+    static AccountsApp = "";
     static AccessApi = "";
     static StreamingLiveApi = "";
     static MessagingApi = "";
@@ -26,6 +27,7 @@ export class EnvironmentHelper {
     }
 
     static initDev = () => {
+        EnvironmentHelper.AccountsApp = process.env.REACT_APP_ACCESS_API || "";
         EnvironmentHelper.AccessApi = process.env.REACT_APP_ACCESS_API || "";
         EnvironmentHelper.StreamingLiveApi = process.env.REACT_APP_STREAMINGLIVE_API || "";
         EnvironmentHelper.MessagingApi = process.env.REACT_APP_MESSAGING_API || "";
@@ -38,6 +40,7 @@ export class EnvironmentHelper {
 
     //NOTE: None of these values are secret.
     static initStaging = () => {
+        EnvironmentHelper.AccountsApp = "https://accounts.staging.churchapps.org";
         EnvironmentHelper.AccessApi = "https://accessapi.staging.churchapps.org";
         EnvironmentHelper.StreamingLiveApi = "https://api.staging.streaminglive.church";
         EnvironmentHelper.MessagingApi = "https://messagingapi.staging.churchapps.org";
@@ -50,6 +53,7 @@ export class EnvironmentHelper {
 
     //NOTE: None of these values are secret.
     static initProd = () => {
+        EnvironmentHelper.AccountsApp = "https://accounts.churchapps.org";
         EnvironmentHelper.AccessApi = "https://accessapi.churchapps.org";
         EnvironmentHelper.StreamingLiveApi = "https://api.streaminglive.church";
         EnvironmentHelper.MessagingApi = "https://messagingapi.churchapps.org";

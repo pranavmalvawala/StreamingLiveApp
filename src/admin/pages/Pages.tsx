@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col } from "react-bootstrap"
 import { PageList, PageEdit, ApiHelper, PageInterface, UserHelper, Header } from "./components"
 
-export const Pages = () => {
+export const Pages: React.FC = () => {
     const [pages, setPages] = React.useState<PageInterface[]>([]);
     const [currentPage, setCurrentPage] = React.useState<PageInterface>(null);
 

@@ -1,8 +1,10 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import { ProfilePage, UsersPage, Pages, SettingsPage } from "./components";
+import { ProfilePage } from "./components";
 import { Home } from "./Home"
+import { Pages } from "./admin/pages";
 import { Logout } from "./Logout";
+import { SettingsPage } from './admin/settings/SettingsPage'
 
 interface Props { location: any }
 
@@ -11,7 +13,6 @@ export const Authenticated: React.FC<Props> = (props) => {
         <Switch>
             <Route path="/admin/settings"><SettingsPage /></Route>
             <Route path="/admin/pages"><Pages /></Route>
-            <Route path="/admin/users"><UsersPage /></Route>
             <Route path="/profile"><ProfilePage /></Route>
             <Route path="/login"><Redirect to="/" /></Route>
             <Route path="/forgot"  ><Redirect to="/" /></Route>
