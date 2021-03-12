@@ -53,7 +53,7 @@ export const Header: React.FC<Props> = (props) => {
             </div>)
         else return null;
     }
-    const imgSrc = props.logoUrl !== undefined ? (EnvironmentHelper.ContentRoot + props.logoUrl) : '/images/default-site-logo.png'
+    const imgSrc = props.logoUrl !== undefined ? (EnvironmentHelper.ContentRoot + props.logoUrl) : '/images/logo.png'
 
     return (
         <>
