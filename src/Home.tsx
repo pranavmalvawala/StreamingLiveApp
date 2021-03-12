@@ -1,13 +1,14 @@
 import React from "react";
 import { Helmet } from 'react-helmet'
-import { ServicesHelper, ConversationInterface, ApiHelper, UserHelper, ConfigHelper, ConfigurationInterface, ServiceInterface, Header, VideoContainer, InteractionContainer, ChatStateInterface } from "./components";
+import { ServicesHelper, ConversationInterface, ApiHelper, UserHelper, ConfigHelper, ConfigurationInterface, ServiceInterface, Header, VideoContainer, InteractionContainer, ChatStateInterface, EnvironmentHelper } from "./components";
 import { ChatHelper } from "./helpers/ChatHelper";
 import { SocketHelper } from "./helpers/SocketHelper";
 
 const defaultColors = {
-  primary: "#488AC7",
-  contrast: "#ffffff",
-  header: "#488AC7 "
+  primaryColor: "#08A0CC",
+  primaryContrast: "#FFFFFF",
+  secondaryColor: "#FFBA1A",
+  secondaryContrast: "#000000"
 }
 
 export const Home: React.FC = () => {
@@ -111,14 +112,21 @@ export const Home: React.FC = () => {
   let css = null;
   if (config.keyName) {
     css = (<style type="text/css">{`
-    :root { --primaryColor: ${config?.primaryColor || defaultColors.primary}; --contrastColor: ${config?.primaryContrast || defaultColors.contrast}; --headerColor: ${config?.primaryColor || defaultColors.header} }
+    :root { 
+      --primaryColor: ${config?.primaryColor || defaultColors.primaryColor}; 
+      --primaryContrast: ${config?.primaryContrast || defaultColors.primaryContrast}; 
+      --secondaryColor: ${config?.secondaryColor || defaultColors.secondaryColor};
+      --secondaryContrast: ${config?.secondaryContrast || defaultColors.secondaryContrast};
+    }
     `}</style>)
   }
 
   if (chatState === null) {
+    const imgSrc = config.logoSquare !== undefined ? (EnvironmentHelper.ContentRoot + config.logoSquare) : '/images/logo-login.png'
+
     return (
       <div className="smallCenterBlock" style={{ marginTop: 200 }} >
-        <img src="/images/logo-login.png" alt="logo" className="img-fluid" style={{ marginBottom: 50 }} />
+        <img src={imgSrc} alt="logo" className="img-fluid" style={{ marginBottom: 50 }} />
         <div className="text-center">Loading..</div>
       </div>
     );
@@ -128,7 +136,7 @@ export const Home: React.FC = () => {
         {css}
       </Helmet>
       <div id="liveContainer">
-        <Header homeUrl="/" logoUrl={config?.logoImage} buttons={config.buttons} user={chatState?.user} nameUpdateFunction={handleNameUpdate} loginChangeFunction={handleLoginChange} />
+        <Header homeUrl="/" logoUrl={config?.logoHeader} buttons={config.buttons} user={chatState?.user} nameUpdateFunction={handleNameUpdate} loginChangeFunction={handleLoginChange} />
         <div id="body">
           <VideoContainer currentService={currentService} />
           <InteractionContainer tabs={config.tabs} chatState={chatState} />

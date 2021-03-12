@@ -21,7 +21,7 @@ body {
 #header {
   flex: 0 0 55px;
   display: flex;
-  background-color: var(--headerColor);
+  background-color: var(--primaryColor);
   padding-top: 3px;
   padding-bottom: 3px;
   box-shadow: 0px 3px 3px 0px #000;
@@ -57,7 +57,7 @@ body {
   padding-right: 20px;
 }
 #userLink div a {
-  color: var(--contrastColor);
+  color: var(--primaryContrast);
 }
 #userLink div a:hover {
   text-decoration: none;
@@ -74,18 +74,18 @@ body {
   width: 250px;
   max-width: 100%;
   position: relative;
-  background-color: var(--headerColor);
+  background-color: var(--primaryColor);
   float: right;
   box-shadow: -3px 3px 3px #999;
-  color: var(--contrastColor);
+  color: var(--primaryContrast);
   padding: 8px;
 }
 #userMenu a {
-  color: var(--contrastColor);
+  color: var(--primaryContrast);
 }
 #userMenu .nav-item,
 #userMenu .divider {
-  border-bottom: 1px solid var(--contrastColor);
+  border-bottom: 1px solid var(--primaryContrast);
 }
 #userMenu .nav:last-child .nav-item:last-child {
   border-bottom: none;
@@ -108,29 +108,29 @@ body {
   width: max-content;
 }
 #liveButtons a {
-  color: var(--contrastColor);
+  color: var(--primaryContrast);
   padding-left: 20px;
   padding-right: 20px;
-  border-right: 1px solid var(--contrastColor);
+  border-right: 1px solid var(--primaryContrast);
 }
 #liveButtons li:last-child a {
   border-right: none;
 }
 
 .btn-primary {
-  color: var(--contrastColor);
+  color: var(--primaryContrast);
   background-color: var(--primaryColor);
-  border-color: var(--contrastColor);
+  border-color: var(--primaryContrast);
 }
 .btn-secondary {
   color: var(--primaryColor);
-  background-color: var(--contrastColor);
+  background-color: var(--primaryContrast);
   border-color: var(--primaryColor);
 }
 .btn-secondary:hover {
-  color: var(--contrastColor);
+  color: var(--primaryContrast);
   background-color: var(--primaryColor);
-  border-color: var(--contrastColor);
+  border-color: var(--primaryContrast);
 }
 
 #body {
@@ -179,14 +179,12 @@ body {
   text-align: left;
   padding-top: 5px;
   padding-bottom: 5px;
-  color: var(--contrastColor);
-  background-color: var(--primaryColor);
-  border-top: 1px solid var(--contrastColor);
-  border-bottom: 1px solid var(--contrastColor);
+  color: var(--secondaryContrast);
+  background-color: var(--secondaryColor);
 }
 .tab:hover {
   text-decoration: none;
-  color: var(--contrastColor);
+  color: var(--secondaryContrast);
 }
 .tab i {
   padding-right: 10px;
@@ -331,7 +329,7 @@ prayerSend {
   padding-right: 0px;
 }
 .altTab {
-  color: var(--contrastColor);
+  color: var(--primaryContrast);
   background-color: var(--primaryColor);
   display: block;
   width: 100%;
@@ -343,11 +341,11 @@ prayerSend {
 }
 .altTab:hover {
   text-decoration: none;
-  color: var(--contrastColor);
+  color: var(--primaryContrast);
 }
 .altTab.active {
   color: var(--primaryColor);
-  background-color: var(--contrastColor);
+  background-color: var(--primaryContrast);
 }
 
 .inputBox {

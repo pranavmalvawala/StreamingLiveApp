@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, FormGroup } from "react-bootstrap"
 import { Redirect } from "react-router-dom";
-import { InputBox, UserHelper, ApiHelper } from "./components"
+import { InputBox, UserHelper, ApiHelper, ConfigHelper, EnvironmentHelper } from "./components"
 
 export const ProfilePage = () => {
     const [displayName, setDisplayName] = React.useState<string>("");
@@ -34,14 +34,15 @@ export const ProfilePage = () => {
     }
 
     React.useEffect(() => { setDisplayName(UserHelper.user?.displayName || ""); }, []);
-
+    const config = { ...ConfigHelper.current };
+    const imgSrc = config.logoSquare !== undefined ? (EnvironmentHelper.ContentRoot + config.logoSquare) : '/images/logo-login.png'
 
     if (redirectUrl !== "") return <Redirect to={redirectUrl} />
     else return (
         <>
 
             <div className="smallCenterBlock">
-                <img src="/images/logo-login.png" alt="logo" className="img-fluid" style={{ marginBottom: 50 }} />
+                <img src={imgSrc} alt="logo" className="img-fluid" style={{ marginBottom: 50 }} />
 
                 <InputBox headerIcon="fas fa-user" headerText="Edit Profile" saveFunction={handleSave}>
                     <Row>
