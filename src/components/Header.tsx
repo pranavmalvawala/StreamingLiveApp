@@ -4,7 +4,6 @@ import { NavItems, ButtonInterface, UserInterface, ChatName, UserHelper, Environ
 
 interface Props {
     logoUrl: string,
-    homeUrl: string,
     user: UserInterface,
     buttons: ButtonInterface[],
     nameUpdateFunction: (displayName: string) => void,
@@ -53,17 +52,12 @@ export const Header: React.FC<Props> = (props) => {
             </div>)
         else return null;
     }
-    const imgSrc = props.logoUrl !== undefined ? (EnvironmentHelper.ContentRoot + props.logoUrl) : '/images/logo.png'
+    const imgSrc = props.logoUrl !== undefined ? (EnvironmentHelper.ContentRoot + props.logoUrl) : '/images/logo-header.png'
 
     return (
         <>
             <div id="header">
-                <div id="logo">
-                    <a href={props.homeUrl} target="_blank" rel="noopener noreferrer">
-                        <img src={imgSrc} alt="logo" />
-                    </a>
-                </div>
-
+                <div id="logo"><img src={imgSrc} alt="logo" /></div>
                 <div id="liveButtons" className="d-none d-xl-flex" >
                     <div>
                         <ul className="nav nav-fill">

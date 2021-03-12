@@ -9,7 +9,7 @@ h2 span { color: #24b9ff; }
 
 #loginBox {background-color:#FFF;border:1px solid #CCC;border-radius:5px;padding:20px;}
 #loginBox input {margin-bottom:5px;}
-.smallCenterBlock {margin-top:60px;max-width:350px;margin-left:auto;margin-right:auto;}
+.smallCenterBlock {max-width:350px;margin-left:auto;margin-right:auto;}
 
 
 .btn-warning, .btn-warning:hover {color:#FFF;}

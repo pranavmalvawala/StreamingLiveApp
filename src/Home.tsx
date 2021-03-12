@@ -125,7 +125,7 @@ export const Home: React.FC = () => {
     const imgSrc = config.logoSquare !== undefined ? (EnvironmentHelper.ContentRoot + config.logoSquare) : '/images/logo-login.png'
 
     return (
-      <div className="smallCenterBlock" style={{ marginTop: 200 }} >
+      <div className="smallCenterBlock" style={{ marginTop: 100 }} >
         <img src={imgSrc} alt="logo" className="img-fluid" style={{ marginBottom: 50 }} />
         <div className="text-center">Loading..</div>
       </div>
@@ -136,7 +136,7 @@ export const Home: React.FC = () => {
         {css}
       </Helmet>
       <div id="liveContainer">
-        <Header homeUrl="/" logoUrl={config?.logoHeader} buttons={config.buttons} user={chatState?.user} nameUpdateFunction={handleNameUpdate} loginChangeFunction={handleLoginChange} />
+        <Header logoUrl={config?.logoHeader} buttons={config.buttons} user={chatState?.user} nameUpdateFunction={handleNameUpdate} loginChangeFunction={handleLoginChange} />
         <div id="body">
           <VideoContainer currentService={currentService} />
           <InteractionContainer tabs={config.tabs} chatState={chatState} />
