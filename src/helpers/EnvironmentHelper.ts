@@ -9,6 +9,7 @@ export class EnvironmentHelper {
     static AdminUrl = "";
     static ContentRoot = "";
     static SubUrl = "";
+    static GoogleAnalyticsTag = "";
 
     static init = () => {
         switch (process.env.REACT_APP_STAGE) {
@@ -58,6 +59,7 @@ export class EnvironmentHelper {
         EnvironmentHelper.AdminUrl = "https://admin.streaminglive.church";
         EnvironmentHelper.ContentRoot = "";
         EnvironmentHelper.SubUrl = "https://{key}.streaminglive.church";
+        EnvironmentHelper.GoogleAnalyticsTag = "UA-164774603-2";
     }
 
 }
