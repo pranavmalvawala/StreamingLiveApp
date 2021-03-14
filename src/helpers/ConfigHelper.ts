@@ -16,16 +16,26 @@ export class ConfigHelper {
         const preview = !EnvironmentHelper.RequirePublish || await ConfigHelper.getQs('preview') === '1';
         if (preview) jsonUrl = ApiHelper.getConfig("StreamingLiveApi").url + '/preview/data/' + keyName;
         var result: ConfigurationInterface = await fetch(jsonUrl).then(response => response.json());
-        
+
         // fetch theme colors and logo
-        const church = await fetch(`${EnvironmentHelper.AccessApi}/churches/lookup/?subDomain=${keyName}`).then(res => res.json());
-        const appearanceConfigs: ConfigurationInterface = await fetch(`${EnvironmentHelper.AccessApi}/settings/public/${church.id}`).then(response => response.json());
+        const churchId = await ConfigHelper.loadChurchId(keyName);
+        const appearanceConfigs: ConfigurationInterface = await ApiHelper.getAnonymous("/settings/public/" + churchId, "AccessApi");
         result = { ...result, ...appearanceConfigs };
-        
+
         ServicesHelper.updateServiceTimes(result);
         result.keyName = keyName;
         ConfigHelper.current = result;
         return result;
+    }
+
+    static async loadChurchId(keyName: string) {
+        const lsKey = "keyName_" + keyName;
+        var churchId = localStorage.getItem(lsKey) || "";
+        if (churchId === "") {
+            const church = await ApiHelper.getAnonymous("/churches/lookup/?subDomain=" + keyName, "AccessApi")
+            churchId = church.id;
+            if (churchId !== "") localStorage.setItem(lsKey, churchId);
+        }
     }
 
     static async getQs(name: string) {
