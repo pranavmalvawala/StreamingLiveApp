@@ -1,5 +1,5 @@
 import { ServicesHelper, EnvironmentHelper } from '.'
-import { ApiHelper } from '../components';
+import { ApiHelper, UniqueIdHelper } from '../components';
 export interface ColorsInterface { primary: string, contrast: string, header: string }
 export interface LogoInterface { url: string, image: string }
 export interface ButtonInterface { text: string, url: string }
@@ -34,8 +34,9 @@ export class ConfigHelper {
         if (churchId === "") {
             const church = await ApiHelper.getAnonymous("/churches/lookup/?subDomain=" + keyName, "AccessApi")
             churchId = church.id;
-            if (churchId !== "") localStorage.setItem(lsKey, churchId);
+            if (!UniqueIdHelper.isMissing(churchId)) localStorage.setItem(lsKey, churchId);
         }
+        return churchId;
     }
 
     static async getQs(name: string) {
