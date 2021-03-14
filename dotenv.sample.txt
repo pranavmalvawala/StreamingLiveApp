@@ -8,7 +8,6 @@ REACT_APP_MESSAGING_API=https://messagingapi.staging.churchapps.org
 REACT_APP_MESSAGING_SOCKET=wss://socket.staging.churchapps.org
 REACT_APP_CONTENT_ROOT=
 REACT_APP_SUB_URL=http://{key}.localhost:3201
-REACT_APP_REQUIRE_PUBLISH=true
 
 #Local
 #REACT_APP_ACCOUNTS_APP=http://localhost:3401
@@ -18,4 +17,3 @@ REACT_APP_REQUIRE_PUBLISH=true
 #REACT_APP_MESSAGING_SOCKET=ws://localhost:8087
 #REACT_APP_CONTENT_ROOT=
 #REACT_APP_SUB_URL=http://{key}.localhost:3201
-#REACT_APP_REQUIRE_PUBLISH=false
