@@ -10,6 +10,7 @@ export class EnvironmentHelper {
     static ContentRoot = "";
     static SubUrl = "";
     static RequirePublish = false;
+    static GoogleAnalyticsTag = "";
 
     static init = () => {
         switch (process.env.REACT_APP_STAGE) {
@@ -62,6 +63,7 @@ export class EnvironmentHelper {
         EnvironmentHelper.ContentRoot = "";
         EnvironmentHelper.SubUrl = "https://{key}.streaminglive.church";
         EnvironmentHelper.RequirePublish = true;
+        EnvironmentHelper.GoogleAnalyticsTag = "UA-164774603-2";
     }
 
 }
