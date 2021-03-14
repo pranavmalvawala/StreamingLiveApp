@@ -76,7 +76,6 @@ export const InteractionContainer: React.FC<Props> = (props) => {
                         else result.push(<RequestPrayer key={i} chatState={props.chatState} visible={visible} />);
                         break;
                     case "page":
-                        //if (EnvironmentHelper.RequirePublish) ... else
                         result.push(getIframe(t, i, visible));
                         break;
                     default:

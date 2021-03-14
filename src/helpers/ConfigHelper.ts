@@ -12,11 +12,8 @@ export class ConfigHelper {
     static current: ConfigurationInterface;
 
     static async load(keyName: string) {
-        var jsonUrl = EnvironmentHelper.ContentRoot + '/data/' + keyName + '/data.json?nocache=' + (new Date()).getTime();
-        const preview = !EnvironmentHelper.RequirePublish || await ConfigHelper.getQs('preview') === '1';
-        if (preview) jsonUrl = ApiHelper.getConfig("StreamingLiveApi").url + '/preview/data/' + keyName;
-        var result: ConfigurationInterface = await fetch(jsonUrl).then(response => response.json());
-
+        var result: ConfigurationInterface = await fetch(`${EnvironmentHelper.StreamingLiveApi}/preview/data/${keyName}`).then(response => response.json());
+        
         // fetch theme colors and logo
         const churchId = await ConfigHelper.loadChurchId(keyName);
         const appearanceConfigs: ConfigurationInterface = await ApiHelper.getAnonymous("/settings/public/" + churchId, "AccessApi");
@@ -37,13 +34,6 @@ export class ConfigHelper {
             if (!UniqueIdHelper.isMissing(churchId)) localStorage.setItem(lsKey, churchId);
         }
         return churchId;
-    }
-
-    static async getQs(name: string) {
-        var regex = new RegExp('[?&]' + encodeURIComponent(name) + '=([^&]*)')
-        var match = regex.exec(window.location.search);
-        if (match) return decodeURIComponent(match[1]);
-        else return null;
     }
 
     static setTabUpdated(tabType: string) {
