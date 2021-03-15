@@ -19,6 +19,10 @@ export class ConfigHelper {
         const appearanceConfigs: ConfigurationInterface = await ApiHelper.getAnonymous("/settings/public/" + churchId, "AccessApi");
         result = { ...result, ...appearanceConfigs };
 
+        delete appearanceConfigs.logoHeader;
+        delete appearanceConfigs.logoSquare;
+        localStorage.setItem(`theme_${keyName}`, JSON.stringify(appearanceConfigs));
+
         ServicesHelper.updateServiceTimes(result);
         result.keyName = keyName;
         ConfigHelper.current = result;
