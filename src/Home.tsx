@@ -19,6 +19,9 @@ export const Home: React.FC = () => {
   const loadConfig = React.useCallback(async (firstLoad: boolean) => {
     const keyName = window.location.hostname.split(".")[0];
 
+    const localThemeConfig = localStorage.getItem(`theme_${keyName}`);
+    setConfig(JSON.parse(localThemeConfig) || {});
+
     ConfigHelper.load(keyName).then(data => {
       var d: ConfigurationInterface = data;
 
@@ -28,7 +31,7 @@ export const Home: React.FC = () => {
 
 
       checkHost(d);
-      setConfig(d);
+      setConfig(c => ({...c, ...d}));
       //if (firstLoad) initChat();
     });
 
