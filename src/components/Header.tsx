@@ -6,8 +6,7 @@ interface Props {
     logoUrl: string,
     user: UserInterface,
     buttons: ButtonInterface[],
-    nameUpdateFunction: (displayName: string) => void,
-    loginChangeFunction: () => void
+    nameUpdateFunction: (displayName: string) => void
 }
 
 export const Header: React.FC<Props> = (props) => {

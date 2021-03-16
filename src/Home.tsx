@@ -1,7 +1,5 @@
 import React from "react";
-import { ServicesHelper, ConversationInterface, ApiHelper, UserHelper, ConfigHelper, ConfigurationInterface, ServiceInterface, Header, VideoContainer, InteractionContainer, ChatStateInterface, EnvironmentHelper } from "./components";
-import { Theme } from "./components/Theme";
-import { Loading } from "./components/Loading";
+import { ServicesHelper, ConversationInterface, ApiHelper, UserHelper, ConfigHelper, ConfigurationInterface, ServiceInterface, Header, VideoContainer, InteractionContainer, ChatStateInterface, Loading, Theme } from "./components";
 import { ChatHelper } from "./helpers/ChatHelper";
 import { SocketHelper } from "./helpers/SocketHelper";
 
@@ -10,7 +8,7 @@ export const Home: React.FC = () => {
   const [currentService, setCurrentService] = React.useState<ServiceInterface | null>(null);
   const [chatState, setChatState] = React.useState<ChatStateInterface>(null);
 
-  const loadConfig = React.useCallback(async (firstLoad: boolean) => {
+  const loadConfig = React.useCallback(async () => {
     const keyName = window.location.hostname.split(".")[0];
     const localThemeConfig = localStorage.getItem(`theme_${keyName}`);
     setConfig(JSON.parse(localThemeConfig) || {});
@@ -21,18 +19,12 @@ export const Home: React.FC = () => {
       checkHost(d);
       setConfig(c => ({ ...c, ...d }));
     });
-
   }, []);
 
 
   const joinMainRoom = async (churchId: string) => {
     const conversation: ConversationInterface = await ApiHelper.getAnonymous("/conversations/current/" + churchId + "/streamingLive/chat", "MessagingApi");
-    ChatHelper.current.mainRoom = {
-      messages: [],
-      attendance: { conversationId: conversation.id, totalViewers: 0, viewers: [] },
-      callout: { content: "" },
-      conversationId: conversation.id
-    };
+    ChatHelper.current.mainRoom = ChatHelper.createRoom(conversation.id);
     setChatState(ChatHelper.current);
     ChatHelper.joinRoom(conversation);
   }
@@ -42,15 +34,9 @@ export const Home: React.FC = () => {
     if (UserHelper.isHost) {
       d.tabs.push({ type: "hostchat", text: "Host Chat", icon: "fas fa-users", data: "", url: "" });
       const hostConversation: ConversationInterface = await ApiHelper.get("/conversations/current/" + d.churchId + "/streamingLiveHost/chat", "MessagingApi");
-      ChatHelper.current.hostRoom = {
-        messages: [],
-        attendance: { conversationId: hostConversation.id, totalViewers: 0, viewers: [] },
-        callout: { content: "" },
-        conversationId: hostConversation.id
-      };
+      ChatHelper.current.hostRoom = ChatHelper.createRoom(hostConversation.id);
       setChatState(ChatHelper.current);
       setTimeout(() => { ChatHelper.joinRoom(hostConversation); }, 500);
-
     }
   }
 
@@ -59,11 +45,6 @@ export const Home: React.FC = () => {
     ApiHelper.postAnonymous("/connections/setName", data, "MessagingApi");
     ChatHelper.current.user.displayName = displayName;
     ChatHelper.onChange();
-  }
-
-  const handleLoginChange = () => {
-    //setChatUser(ChatHelper.user);
-    //loadConfig(false);
   }
 
 
@@ -79,7 +60,7 @@ export const Home: React.FC = () => {
   React.useEffect(() => {
     ChatHelper.onChange = () => { setChatState({ ...ChatHelper.current }); }
     ServicesHelper.initTimer((cs) => { setCurrentService(cs) });
-    loadConfig(true);
+    loadConfig();
     setCurrentService(ServicesHelper.currentService);
     initUser();
   }, [loadConfig]);
@@ -89,7 +70,7 @@ export const Home: React.FC = () => {
     <>
       <Theme config={config} />
       <div id="liveContainer">
-        <Header logoUrl={config?.logoHeader} buttons={config.buttons} user={chatState?.user} nameUpdateFunction={handleNameUpdate} loginChangeFunction={handleLoginChange} />
+        <Header logoUrl={config?.logoHeader} buttons={config.buttons} user={chatState?.user} nameUpdateFunction={handleNameUpdate} />
         <div id="body">
           <VideoContainer currentService={currentService} />
           <InteractionContainer tabs={config.tabs} chatState={chatState} />

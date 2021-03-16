@@ -9,6 +9,14 @@ export class ChatHelper {
     static current: ChatStateInterface = { chatEnabled: false, mainRoom: null, hostRoom: null, prayerRoom: null, user: { displayName: "Anonymous", isHost: false } };
     static onChange: () => void;
 
+    static createRoom = (conversationId: string): ChatRoomInterface => {
+        return {
+            messages: [],
+            attendance: { conversationId: conversationId, totalViewers: 0, viewers: [] },
+            callout: { content: "" },
+            conversationId: conversationId
+        };
+    }
 
     static initChat = async () => {
         return SocketHelper.init({
