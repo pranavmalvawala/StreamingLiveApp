@@ -65,7 +65,7 @@ export const Header: React.FC<Props> = (props) => {
                         </ul>
                     </div>
                 </div>
-                <div id="userLink"><div><a href="about:blank" onClick={toggleUserMenu}>{props.user.displayName} <i className="fas fa-chevron-down"></i></a></div></div>
+                <div id="userLink"><div><a href="about:blank" onClick={toggleUserMenu}>{props.user?.displayName || "Loading"} <i className="fas fa-chevron-down"></i></a></div></div>
             </div>
             {getUserMenu()}
         </>
