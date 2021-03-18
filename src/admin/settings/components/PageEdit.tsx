@@ -38,9 +38,9 @@ export const PageEdit: React.FC<Props> = (props) => {
     const handleSave = () => {
         var content = editorState.getCurrentContent();
         page.content = draftToHtml(convertToRaw(content));
-        ApiHelper.post("/pages", [page], "StreamingLiveApi").then(pages => {
-            // TODO: remove this once pages/data starts coming from DB instead of S3. This Api saves the html to S3
-            ApiHelper.get("/pages/write/" + pages[0].id.toString(), "StreamingLiveApi").then(props.updatedFunction);
+
+        ApiHelper.post("/pages/write/", page, "StreamingLiveApi").then(page => {
+            ApiHelper.post("/pages", [page], "StreamingLiveApi").then(props.updatedFunction);
             props.updatedFunction();
         })
     }
