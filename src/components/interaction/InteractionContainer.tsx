@@ -1,5 +1,5 @@
 import React from "react";
-import { TabInterface, Chat, HostChat, RequestPrayer, ReceivePrayer, FileLoader } from "..";
+import { TabInterface, Chat, HostChat, RequestPrayer, ReceivePrayer } from "..";
 import { ChatStateInterface } from "../../helpers";
 
 
@@ -45,10 +45,8 @@ export const InteractionContainer: React.FC<Props> = (props) => {
     const getIframe = (tab: TabInterface, i: number, visible: boolean) => {
         return (
             <div key={i} id={"frame" + i.toString()} className="frame" style={(!visible) ? { display: "none" } : {}}>
-                <FileLoader url={tab.url} title={"frame" + i.toString()} fileType="text/html" keyName="StreamingLiveApi" />
+                <iframe src={tab.url} frameBorder="0" title={"frame" + i.toString()} /> :
             </div>);
-
-
     }
 
     /*
