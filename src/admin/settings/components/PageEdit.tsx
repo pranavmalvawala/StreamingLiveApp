@@ -39,10 +39,9 @@ export const PageEdit: React.FC<Props> = (props) => {
         var content = editorState.getCurrentContent();
         page.content = draftToHtml(convertToRaw(content));
 
-        ApiHelper.post("/pages/write/", page, "StreamingLiveApi").then(page => {
-            ApiHelper.post("/pages", [page], "StreamingLiveApi").then(props.updatedFunction);
-            props.updatedFunction();
-        })
+        ApiHelper.post("/pages", [page], "StreamingLiveApi").then(pages => {
+            ApiHelper.post("/pages/write", pages[0], "StreamingLiveApi").then(props.updatedFunction);
+        });
     }
 
     const handleEditorChange = (e: EditorState) => {
