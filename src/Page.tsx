@@ -1,5 +1,5 @@
 import React from "react";
-import { Theme, ConfigurationInterface, EnvironmentHelper, ConfigHelper } from "./components";
+import { Theme, ConfigurationInterface, EnvironmentHelper } from "./components";
 import { RouteComponentProps } from "react-router-dom";
 
 
@@ -10,7 +10,7 @@ export const Page = ({ match }: RouteComponentProps<TParams>) => {
     const [config, setConfig] = React.useState<ConfigurationInterface>({} as ConfigurationInterface);
     const [content, setContent] = React.useState("");
 
-    const init = () => {
+    const init = React.useCallback(async () => {
         const keyName = window.location.hostname.split(".")[0];
         const localThemeConfig = localStorage.getItem(`theme_${keyName}`);
         setConfig(JSON.parse(localThemeConfig) || {});
@@ -18,12 +18,12 @@ export const Page = ({ match }: RouteComponentProps<TParams>) => {
         fetch(path)
             .then(response => response.text())
             .then(c => { setContent(c) });
-    }
+    }, [match.params.id, match.params.churchId]);
 
 
     React.useEffect(() => {
         init()
-    }, []);
+    }, [init]);
 
     return (
         <>
