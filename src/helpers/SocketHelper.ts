@@ -20,9 +20,11 @@ export class SocketHelper {
                 const payload = JSON.parse(event.data);
                 SocketHelper.handleMessage(payload);
             };
-            SocketHelper.socket.onopen = (e) => {
+            SocketHelper.socket.onopen = async (e) => {
                 SocketHelper.socket.send("getId");
-                resolve(null);
+                setTimeout(() => {
+                    resolve(null);
+                }, 500);
             };
         });
     }
