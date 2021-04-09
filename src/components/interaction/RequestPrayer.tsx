@@ -17,7 +17,7 @@ export const RequestPrayer: React.FC<Props> = (props) => {
             conversationId: conversation.id
         };
         ChatHelper.onChange();
-        ChatHelper.joinRoom(conversation);
+        ChatHelper.joinRoom(conversation.id, conversation.churchId);
     }
     if (props.chatState.prayerRoom !== null) return (<Chat room={props.chatState.prayerRoom} user={props.chatState.user} visible={props.visible} enableAttendance={true} />)
     else return (<div id="prayerContainer" style={(props.visible) ? {} : { display: "none" }}>

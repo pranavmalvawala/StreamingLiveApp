@@ -26,7 +26,7 @@ export const Home: React.FC = () => {
     const conversation: ConversationInterface = await ApiHelper.getAnonymous("/conversations/current/" + churchId + "/streamingLive/chat", "MessagingApi");
     ChatHelper.current.mainRoom = ChatHelper.createRoom(conversation.id);
     setChatState(ChatHelper.current);
-    ChatHelper.joinRoom(conversation);
+    ChatHelper.joinRoom(conversation.id, conversation.churchId);
   }
 
 
@@ -36,7 +36,7 @@ export const Home: React.FC = () => {
       const hostConversation: ConversationInterface = await ApiHelper.get("/conversations/current/" + d.churchId + "/streamingLiveHost/chat", "MessagingApi");
       ChatHelper.current.hostRoom = ChatHelper.createRoom(hostConversation.id);
       setChatState(ChatHelper.current);
-      setTimeout(() => { ChatHelper.joinRoom(hostConversation); }, 500);
+      setTimeout(() => { ChatHelper.joinRoom(hostConversation.id, hostConversation.churchId); }, 500);
     }
   }
 

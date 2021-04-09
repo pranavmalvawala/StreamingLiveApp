@@ -3,6 +3,7 @@ import { SocketHelper } from "./SocketHelper";
 import { ConfigHelper } from "./ConfigHelper";
 import Cookies from 'js-cookie';
 import { ApiHelper } from "."
+import { EnvironmentHelper } from "./EnvironmentHelper";
 
 export class ChatHelper {
 
@@ -24,8 +25,24 @@ export class ChatHelper {
             calloutHandler: ChatHelper.handleCallout,
             deleteHandler: ChatHelper.handleDelete,
             messageHandler: ChatHelper.handleMessage,
-            prayerRequestHandler: ChatHelper.handlePrayerRequest
+            prayerRequestHandler: ChatHelper.handlePrayerRequest,
+            disconnectHandler: ChatHelper.handleDisconnect,
         });
+    }
+
+    static handleDisconnect = () => {
+        setTimeout(() => {
+            console.log("RECONNECTING");
+            console.log(SocketHelper.socket.readyState)
+            //Silently reconnect
+            if (SocketHelper.socket.readyState === SocketHelper.socket.CLOSED) {
+                ChatHelper.initChat().then(() => {
+                    const mRoom = ChatHelper.current.mainRoom;
+                    ChatHelper.joinRoom(mRoom.conversationId, ConfigHelper.current.churchId);
+                });
+            }
+        }, 1000);
+
     }
 
     static handleAttendance = (attendance: AttendanceInterface) => {
@@ -108,10 +125,10 @@ export class ChatHelper {
     }
 
 
-    static joinRoom(conversation: ConversationInterface) {
-        const connection: ConnectionInterface = { conversationId: conversation.id, churchId: conversation.churchId, displayName: ChatHelper.current.user.displayName, socketId: SocketHelper.socketId }
+    static joinRoom(conversationId: string, churchId: string) {
+        const connection: ConnectionInterface = { conversationId: conversationId, churchId: churchId, displayName: ChatHelper.current.user.displayName, socketId: SocketHelper.socketId }
         ApiHelper.postAnonymous("/connections", [connection], "MessagingApi");
-        ApiHelper.getAnonymous("/messages/catchup/" + conversation.churchId + "/" + conversation.id, "MessagingApi").then(messages => { ChatHelper.handleCatchup(messages) });
+        ApiHelper.getAnonymous("/messages/catchup/" + churchId + "/" + conversationId, "MessagingApi").then(messages => { ChatHelper.handleCatchup(messages) });
     }
 
 

@@ -26,6 +26,9 @@ export class SocketHelper {
                     resolve(null);
                 }, 500);
             };
+            SocketHelper.socket.onclose = async (e) => {
+                SocketHelper.events.disconnectHandler();
+            }
         });
     }
 

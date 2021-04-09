@@ -21,6 +21,7 @@ export interface ChatEventsInterface {
     calloutHandler: (message: MessageInterface) => void,
     attendanceHandler: (attendance: AttendanceInterface) => void,
     prayerRequestHandler: (conversation: ConversationInterface) => void,
+    disconnectHandler: () => void,
 }
 
 

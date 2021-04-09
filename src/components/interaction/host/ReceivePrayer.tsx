@@ -21,7 +21,7 @@ export const ReceivePrayer: React.FC<Props> = (props) => {
             conversationId: conv.id
         };
         ChatHelper.onChange();
-        ChatHelper.joinRoom(conv);
+        ChatHelper.joinRoom(conv.id, conv.churchId);
         setConversation(conv);
     }
 
