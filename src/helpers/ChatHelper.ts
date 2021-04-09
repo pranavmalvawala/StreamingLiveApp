@@ -32,7 +32,6 @@ export class ChatHelper {
     static handleDisconnect = () => {
         setTimeout(() => {
             console.log("RECONNECTING");
-            console.log(SocketHelper.socket.readyState)
             //Silently reconnect
             if (SocketHelper.socket.readyState === SocketHelper.socket.CLOSED) {
                 ChatHelper.initChat().then(() => {
@@ -93,16 +92,20 @@ export class ChatHelper {
 
 
     static handleCatchup = (messages: MessageInterface[]) => {
-        messages.forEach(m => {
-            switch (m.messageType) {
-                case "message": ChatHelper.handleMessage(m); break;
-                case "callout": ChatHelper.handleCallout(m); break;
-            }
-        });
+        if (messages.length > 0) {
+            const room = ChatHelper.getRoom(messages[0].conversationId);
+            room.messages = [];
+            messages.forEach(m => {
+                switch (m.messageType) {
+                    case "message": ChatHelper.handleMessage(m); break;
+                    case "callout": ChatHelper.handleCallout(m); break;
+                }
+            });
+        }
     }
 
     static getRoom = (conversationId: string): ChatRoomInterface => {
-        const c = ChatHelper.current
+        const c = ChatHelper.current;
         if (c.mainRoom?.conversationId === conversationId) return c.mainRoom;
         else if (c.hostRoom?.conversationId === conversationId) return c.hostRoom;
         else if (c.prayerRoom?.conversationId === conversationId) return c.prayerRoom;
