@@ -3,7 +3,6 @@ import { SocketHelper } from "./SocketHelper";
 import { ConfigHelper } from "./ConfigHelper";
 import Cookies from 'js-cookie';
 import { ApiHelper } from "."
-import { EnvironmentHelper } from "./EnvironmentHelper";
 
 export class ChatHelper {
 
