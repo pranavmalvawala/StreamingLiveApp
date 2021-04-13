@@ -36,7 +36,7 @@ export const ChatName: React.FC<Props> = (props) => {
 
     if (!edit) return (<a href="about:blank" className="nav-link" onClick={editMode}>Change Name</a>);
     else return (
-        <Row>
+        <Row style={{ marginRight: 0 }}>
             <Col>
                 <InputGroup size="sm">
 
