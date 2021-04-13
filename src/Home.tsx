@@ -2,6 +2,7 @@ import React from "react";
 import { ServicesHelper, ConversationInterface, ApiHelper, UserHelper, ConfigHelper, ConfigurationInterface, ServiceInterface, Header, VideoContainer, InteractionContainer, ChatStateInterface, Loading, Theme } from "./components";
 import { ChatHelper } from "./helpers/ChatHelper";
 import { SocketHelper } from "./helpers/SocketHelper";
+import Cookies from 'js-cookie';
 
 export const Home: React.FC = () => {
   const [config, setConfig] = React.useState<ConfigurationInterface>({} as ConfigurationInterface);
@@ -44,6 +45,7 @@ export const Home: React.FC = () => {
     const data = { socketId: SocketHelper.socketId, name: displayName };
     ApiHelper.postAnonymous("/connections/setName", data, "MessagingApi");
     ChatHelper.current.user.displayName = displayName;
+    Cookies.set("displayName", displayName);
     ChatHelper.onChange();
   }
 

@@ -120,7 +120,7 @@ export class ChatHelper {
 
     static getUser() {
         var name = Cookies.get('displayName');
-        if (name === undefined || name === null || name === '') { name = 'Anonymous'; Cookies.set('name', name); }
+        if (name === undefined || name === null || name === '') { name = 'Anonymous'; Cookies.set('displayName', name); }
         var result: ChatUserInterface = { displayName: name, isHost: false };
         ChatHelper.current.user = result;
         return result;
