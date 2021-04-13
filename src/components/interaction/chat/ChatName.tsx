@@ -4,7 +4,8 @@ import { Row, Col, InputGroup } from "react-bootstrap"
 
 interface Props {
     user: UserInterface,
-    updateFunction: (displayName: string) => void
+    updateFunction: (displayName: string) => void,
+    promptName: boolean
 }
 
 export const ChatName: React.FC<Props> = (props) => {
@@ -28,6 +29,10 @@ export const ChatName: React.FC<Props> = (props) => {
             setEdit(false);
         }
     }
+
+
+    React.useEffect(() => { setEdit(props.promptName); }, [props.promptName]);
+
 
     if (!edit) return (<a href="about:blank" className="nav-link" onClick={editMode}>Change Name</a>);
     else return (

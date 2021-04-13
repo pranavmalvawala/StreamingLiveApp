@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom"
-import { NavItems, ButtonInterface, UserInterface, ChatName, UserHelper, EnvironmentHelper, ApiHelper } from "."
+import { NavItems, ButtonInterface, UserInterface, ChatName, UserHelper, EnvironmentHelper, ApiHelper, ChatHelper } from "."
 
 interface Props {
     logoUrl: string,
@@ -11,6 +11,7 @@ interface Props {
 
 export const Header: React.FC<Props> = (props) => {
     const [showUserMenu, setShowUserMenu] = React.useState(false);
+    const [promptName, setPromptName] = React.useState(false);
 
     const toggleUserMenu = (e: React.MouseEvent) => { e.preventDefault(); setShowUserMenu(!showUserMenu); }
 
@@ -25,7 +26,7 @@ export const Header: React.FC<Props> = (props) => {
     }
 
     const getProfileLink = () => {
-        if (!ApiHelper.isAuthenticated) return (<li className="nav-item" ><ChatName user={props.user} updateFunction={updateName} /></li>);
+        if (!ApiHelper.isAuthenticated) return (<li className="nav-item" ><ChatName user={props.user} updateFunction={updateName} promptName={promptName} /></li>);
         else return (
             <li className="nav-item" ><Link to="/profile" className="nav-link">Profile</Link></li>);
     }
@@ -52,6 +53,18 @@ export const Header: React.FC<Props> = (props) => {
         else return null;
     }
     const imgSrc = props.logoUrl !== undefined ? (EnvironmentHelper.ContentRoot + props.logoUrl) : '/images/logo-header.png'
+
+
+    setTimeout(() => {
+        try {
+            const displayName = ChatHelper.current.user.displayName;
+            if (displayName === "" || displayName === "Anonymous") {
+                setShowUserMenu(true);
+                setPromptName(true);
+            }
+        } catch { }
+    }, 30000);
+
 
     return (
         <>
