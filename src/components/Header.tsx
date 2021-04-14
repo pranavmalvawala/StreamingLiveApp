@@ -59,8 +59,10 @@ export const Header: React.FC<Props> = (props) => {
         try {
             const displayName = ChatHelper.current.user.displayName;
             if (displayName === "" || displayName === "Anonymous") {
-                setShowUserMenu(true);
-                setPromptName(true);
+                if (!promptName) {
+                    setShowUserMenu(true);
+                    setPromptName(true);
+                }
             }
         } catch { }
     }, 30000);
