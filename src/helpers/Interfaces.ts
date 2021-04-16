@@ -6,11 +6,11 @@ export interface AdminServiceInterface { id?: string, churchId?: string, service
 
 
 export interface ConnectionInterface { churchId: string, conversationId: string, displayName: string, socketId: string }
-export interface ViewerInterface { name: string, count: number }
+export interface ViewerInterface { displayName: string, id: string }
 export interface AttendanceInterface { viewers?: ViewerInterface[], totalViewers?: number, conversationId: string }
 export interface ConversationInterface { id?: string, churchId?: string, contentType: string, contentId: string, title: string, dateCreated: Date }
 export interface MessageInterface { id?: string, churchId?: string, conversationId?: string, userId?: string, displayName?: string, timeSent?: Date, messageType?: string, content?: string }
-export type PayloadAction = "message" | "deleteMessage" | "callout" | "attendance" | "prayerRequest" | "socketId";
+export type PayloadAction = "message" | "deleteMessage" | "callout" | "attendance" | "prayerRequest" | "socketId" | "privateMessage";
 export interface PayloadInterface { churchId: string, conversationId: string, action: PayloadAction, data: any }
 
 
@@ -21,16 +21,20 @@ export interface ChatEventsInterface {
     calloutHandler: (message: MessageInterface) => void,
     attendanceHandler: (attendance: AttendanceInterface) => void,
     prayerRequestHandler: (conversation: ConversationInterface) => void,
+    privateMessageHandler: (conversation: ConversationInterface) => void,
     disconnectHandler: () => void,
 }
 
 
 export interface ChatRoomInterface {
+    title: string,
     conversationId: string,
     attendance: AttendanceInterface,
     messages: MessageInterface[],
     callout: MessageInterface,
-    prayerRequests?: ConversationInterface[]
+    prayerRequests?: ConversationInterface[],
 }
-export interface ChatStateInterface { mainRoom: ChatRoomInterface, hostRoom: ChatRoomInterface, prayerRoom: ChatRoomInterface, chatEnabled: boolean, user: ChatUserInterface }
+
+
+export interface ChatStateInterface { mainRoom: ChatRoomInterface, hostRoom: ChatRoomInterface, privateRooms: ChatRoomInterface[], chatEnabled: boolean, user: ChatUserInterface }
 export interface ChatUserInterface { displayName: string, isHost: boolean }

@@ -190,6 +190,12 @@ body {
   padding-right: 10px;
   padding-left: 10px;
 }
+
+.tab.childTab {
+  color: var(--primaryContrast);
+  background-color: var(--primaryColor);
+}
+
 /*#tabs > *:not(:first-child) {border-left:1px solid var(--primaryColor);}*/
 .frame {
   flex: 1;
@@ -265,6 +271,9 @@ body {
 #attendanceCount:hover {
   text-decoration: none;
 }
+.attendanceExpanded {padding-left: 20px;}
+.attendanceExpanded span.id {font-size: 11px;float:none !important;}
+
 #chatSend,
 prayerSend {
   flex: 0 0 0px;

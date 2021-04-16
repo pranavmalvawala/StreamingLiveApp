@@ -25,7 +25,7 @@ export const Home: React.FC = () => {
 
   const joinMainRoom = async (churchId: string) => {
     const conversation: ConversationInterface = await ApiHelper.getAnonymous("/conversations/current/" + churchId + "/streamingLive/chat", "MessagingApi");
-    ChatHelper.current.mainRoom = ChatHelper.createRoom(conversation.id);
+    ChatHelper.current.mainRoom = ChatHelper.createRoom(conversation.id, "Chat");
     setChatState(ChatHelper.current);
     ChatHelper.joinRoom(conversation.id, conversation.churchId);
   }
@@ -35,7 +35,7 @@ export const Home: React.FC = () => {
     if (UserHelper.isHost) {
       d.tabs.push({ type: "hostchat", text: "Host Chat", icon: "fas fa-users", data: "", url: "" });
       const hostConversation: ConversationInterface = await ApiHelper.get("/conversations/current/" + d.churchId + "/streamingLiveHost/chat", "MessagingApi");
-      ChatHelper.current.hostRoom = ChatHelper.createRoom(hostConversation.id);
+      ChatHelper.current.hostRoom = ChatHelper.createRoom(hostConversation.id, "Host Chat");
       setChatState(ChatHelper.current);
       setTimeout(() => { ChatHelper.joinRoom(hostConversation.id, hostConversation.churchId); }, 500);
     }
@@ -60,7 +60,10 @@ export const Home: React.FC = () => {
   }
 
   React.useEffect(() => {
-    ChatHelper.onChange = () => { setChatState({ ...ChatHelper.current }); }
+    ChatHelper.onChange = () => {
+      setChatState({ ...ChatHelper.current });
+      setConfig({ ...ConfigHelper.current });
+    }
     ServicesHelper.initTimer((cs) => { setCurrentService(cs) });
     loadConfig();
     setCurrentService(ServicesHelper.currentService);
@@ -75,7 +78,7 @@ export const Home: React.FC = () => {
         <Header logoUrl={config?.logoHeader} buttons={config.buttons} user={chatState?.user} nameUpdateFunction={handleNameUpdate} />
         <div id="body">
           <VideoContainer currentService={currentService} />
-          <InteractionContainer tabs={config.tabs} chatState={chatState} />
+          <InteractionContainer chatState={chatState} config={config} />
         </div>
       </div>
     </>
