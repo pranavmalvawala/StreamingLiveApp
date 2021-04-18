@@ -9,6 +9,7 @@ export class EnvironmentHelper {
     static AdminUrl = "";
     static ContentRoot = "";
     static SubUrl = "";
+    static churchAppsUrl = "";
     static GoogleAnalyticsTag = "";
 
     static init = () => {
@@ -35,6 +36,7 @@ export class EnvironmentHelper {
         EnvironmentHelper.AdminUrl = process.env.REACT_APP_ADMIN_URL || "";
         EnvironmentHelper.ContentRoot = process.env.REACT_APP_CONTENT_ROOT || "";
         EnvironmentHelper.SubUrl = process.env.REACT_APP_SUB_URL || "";
+        EnvironmentHelper.churchAppsUrl = process.env.REACT_APP_CHURCH_APPS || "";
     }
 
     //NOTE: None of these values are secret.
@@ -47,6 +49,7 @@ export class EnvironmentHelper {
         EnvironmentHelper.AdminUrl = "https://admin.staging.streaminglive.church";
         EnvironmentHelper.ContentRoot = "";
         EnvironmentHelper.SubUrl = "https://{key}.staging.streaminglive.church";
+        EnvironmentHelper.churchAppsUrl = "https://staging.churchapps.org";
     }
 
     //NOTE: None of these values are secret.
@@ -60,6 +63,7 @@ export class EnvironmentHelper {
         EnvironmentHelper.ContentRoot = "";
         EnvironmentHelper.SubUrl = "https://{key}.streaminglive.church";
         EnvironmentHelper.GoogleAnalyticsTag = "UA-164774603-2";
+        EnvironmentHelper.churchAppsUrl = "https://churchapps.org";
     }
 
 }
