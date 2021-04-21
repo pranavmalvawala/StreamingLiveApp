@@ -1,7 +1,9 @@
 import React from "react";
 import { ServiceInterface } from ".";
+import { ChatHelper, ConfigHelper, UserInterface } from "../helpers";
+import { Jutsu } from 'react-jutsu'
 
-interface Props { currentService: ServiceInterface | null }
+interface Props { currentService: ServiceInterface | null, jitsiRoom: string, user: UserInterface }
 
 export const VideoContainer: React.FC<Props> = (props) => {
 
@@ -20,19 +22,38 @@ export const VideoContainer: React.FC<Props> = (props) => {
         }
     }
 
+    const leaveJitsi = () => {
+        console.log("LEAVING")
+        ConfigHelper.current.jitsiRoom = null;
+        ChatHelper.onChange();
+    }
+
     const getVideo = (cs: ServiceInterface) => {
-        var videoUrl = cs.videoUrl;
-        if (cs.localStartTime !== undefined) {
-            var seconds = Math.floor((loadedTime - cs.localStartTime.getTime()) / 1000);
-            if (seconds > 10) {
-                if (cs.provider === "youtube_watchparty") videoUrl += "&start=" + seconds.toString();
-                if (cs.provider === "vimeo_watchparty") videoUrl += "#t=" + seconds.toString() + "s";
-            } else {
-                if (cs.provider === "youtube_watchparty") videoUrl += "&start=0";
-                if (cs.provider === "vimeo_watchparty") videoUrl += cs.videoUrl + "#t=0m0s";
+        if (props.jitsiRoom) {
+            return (
+                <Jutsu
+                    roomName={props.jitsiRoom}
+                    displayName={props.user.displayName}
+                    onMeetingEnd={() => { leaveJitsi() }}
+                    loadingComponent={<p>loading ...</p>}
+                    errorComponent={<p>Oops, something went wrong</p>}
+                    containerStyles={{ width: '100%', height: '100%' }}
+                />
+            )
+        } else {
+            var videoUrl = cs.videoUrl;
+            if (cs.localStartTime !== undefined) {
+                var seconds = Math.floor((loadedTime - cs.localStartTime.getTime()) / 1000);
+                if (seconds > 10) {
+                    if (cs.provider === "youtube_watchparty") videoUrl += "&start=" + seconds.toString();
+                    if (cs.provider === "vimeo_watchparty") videoUrl += "#t=" + seconds.toString() + "s";
+                } else {
+                    if (cs.provider === "youtube_watchparty") videoUrl += "&start=0";
+                    if (cs.provider === "vimeo_watchparty") videoUrl += cs.videoUrl + "#t=0m0s";
+                }
             }
+            return (<iframe id="videoFrame" src={videoUrl} frameBorder={0} allow="autoplay; fullscreen" allowFullScreen title="Sermon Video" ></iframe>);
         }
-        return (<iframe id="videoFrame" src={videoUrl} frameBorder={0} allow="autoplay; fullscreen" allowFullScreen title="Sermon Video" ></iframe>);
     }
 
     const getCountdown = (cs: ServiceInterface) => {

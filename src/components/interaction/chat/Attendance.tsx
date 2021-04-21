@@ -1,5 +1,5 @@
 import React from "react";
-import { AttendanceInterface, UserHelper, ChatHelper, ConversationInterface, ChatRoomInterface, ApiHelper, ConfigHelper } from "../../../helpers";
+import { AttendanceInterface, UserHelper, ChatHelper, ConversationInterface, ChatRoomInterface, ApiHelper, ConfigHelper, UniqueIdHelper } from "../../../helpers";
 import { Menu, Item, useContextMenu } from 'react-contexify';
 import 'react-contexify/dist/ReactContexify.css';
 
@@ -143,6 +143,13 @@ export const Attendance: React.FC<Props> = (props) => {
         }
     }
 
+    const handleVideoChat = async () => {
+        var room = (ConfigHelper.current.jitsiRoom) ? ConfigHelper.current.jitsiRoom : UniqueIdHelper.generateAlphanumeric();
+        await ApiHelper.get("/conversations/videoChat/" + selectedConnectionId + "/" + room, "MessagingApi");
+        ConfigHelper.current.jitsiRoom = room;
+        ChatHelper.onChange();
+    }
+
 
     const contextMenu = useContextMenu({ id: "attendeeMenu" });
 
@@ -158,9 +165,14 @@ export const Attendance: React.FC<Props> = (props) => {
 
     const getContextMenuItems = () => {
         const privateRoom: ChatRoomInterface = getRoomForConnection(selectedConnectionId);
+        const result: JSX.Element[] = []
 
-        if (privateRoom === null) return <Item onClick={() => handlePMClick(null)}>Private Message</Item>;
-        else return <Item onClick={() => handlePMClick(privateRoom)}>Join Private Conversation</Item>;
+        if (privateRoom === null) result.push(<Item onClick={() => handlePMClick(null)}>Private Message</Item>);
+        else result.push(<Item onClick={() => handlePMClick(privateRoom)}>Join Private Conversation</Item>);
+
+        result.push(<Item onClick={() => handleVideoChat()}>Invite to Video Chat</Item>);
+
+        return result;
     }
 
     return (

@@ -32,6 +32,7 @@ export class ChatHelper {
             disconnectHandler: ChatHelper.handleDisconnect,
             privateMessageHandler: ChatHelper.handlePrivateMessage,
             privateRoomAddedHandler: ChatHelper.handlePrivateRoomAdded,
+            videoChatInviteHandler: ChatHelper.handleVideoChatInvite,
 
         });
     }
@@ -99,6 +100,13 @@ export class ChatHelper {
     }
 
 
+    static handleVideoChatInvite = (roomName: string) => {
+        console.log("handleVideoChatInvite called")
+        ConfigHelper.current.jitsiRoom = roomName;
+        ChatHelper.onChange();
+    }
+
+
     static handlePrivateMessage = (conversation: ConversationInterface) => {
         const privateRoom = ChatHelper.createRoom(conversation);
         privateRoom.conversation.title = "Private Chat";
@@ -118,7 +126,7 @@ export class ChatHelper {
         });
 
         if (privateRoom === null) {
-            const privateRoom = ChatHelper.createRoom(conversation);
+            privateRoom = ChatHelper.createRoom(conversation);
             ChatHelper.current.privateRooms.push(privateRoom);
             ChatHelper.onChange();
         }
