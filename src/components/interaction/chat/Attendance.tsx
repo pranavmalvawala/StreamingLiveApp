@@ -144,10 +144,12 @@ export const Attendance: React.FC<Props> = (props) => {
     }
 
     const handleVideoChat = async () => {
-        var room = (ConfigHelper.current.jitsiRoom) ? ConfigHelper.current.jitsiRoom : UniqueIdHelper.generateAlphanumeric();
-        await ApiHelper.get("/conversations/videoChat/" + selectedConnectionId + "/" + room, "MessagingApi");
-        ConfigHelper.current.jitsiRoom = room;
-        ChatHelper.onChange();
+        if (confirm('Would you like to start a video chat?')) {
+            var room = (ConfigHelper.current.jitsiRoom) ? ConfigHelper.current.jitsiRoom : UniqueIdHelper.generateAlphanumeric();
+            await ApiHelper.get("/conversations/videoChat/" + selectedConnectionId + "/" + room, "MessagingApi");
+            ConfigHelper.current.jitsiRoom = room;
+            ChatHelper.onChange();
+        }
     }
 
 
