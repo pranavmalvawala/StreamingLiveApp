@@ -47,7 +47,7 @@ export class EnvironmentHelper {
         EnvironmentHelper.MessagingApi = "https://messagingapi.staging.churchapps.org";
         EnvironmentHelper.MessagingSocket = "wss://socket.staging.churchapps.org";
         EnvironmentHelper.AdminUrl = "https://admin.staging.streaminglive.church";
-        EnvironmentHelper.ContentRoot = "";
+        EnvironmentHelper.ContentRoot = "https://content.staging.hurchapps.org";
         EnvironmentHelper.SubUrl = "https://{key}.staging.streaminglive.church";
         EnvironmentHelper.churchAppsUrl = "https://staging.churchapps.org";
     }
@@ -60,7 +60,7 @@ export class EnvironmentHelper {
         EnvironmentHelper.MessagingApi = "https://messagingapi.churchapps.org";
         EnvironmentHelper.MessagingSocket = "wss://socket.churchapps.org";
         EnvironmentHelper.AdminUrl = "https://admin.streaminglive.church";
-        EnvironmentHelper.ContentRoot = "";
+        EnvironmentHelper.ContentRoot = "https://content.churchapps.org";
         EnvironmentHelper.SubUrl = "https://{key}.streaminglive.church";
         EnvironmentHelper.GoogleAnalyticsTag = "UA-164774603-2";
         EnvironmentHelper.churchAppsUrl = "https://churchapps.org";
