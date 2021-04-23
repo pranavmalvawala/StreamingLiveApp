@@ -52,7 +52,12 @@ export const Header: React.FC<Props> = (props) => {
             </div>)
         else return null;
     }
-    const imgSrc = props.logoUrl !== undefined ? (EnvironmentHelper.ContentRoot + props.logoUrl) : '/images/logo-header.png'
+
+    var imgSrc = "/images/logo-header.png";
+    if (props.logoUrl !== undefined) {
+        if (props.logoUrl.startsWith("data:")) imgSrc = props.logoUrl;
+        else imgSrc = EnvironmentHelper.ContentRoot + "/" + props.logoUrl;
+    }
 
 
     setTimeout(() => {
