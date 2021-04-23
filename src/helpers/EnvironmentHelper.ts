@@ -47,7 +47,7 @@ export class EnvironmentHelper {
         EnvironmentHelper.MessagingApi = "https://messagingapi.staging.churchapps.org";
         EnvironmentHelper.MessagingSocket = "wss://socket.staging.churchapps.org";
         EnvironmentHelper.AdminUrl = "https://admin.staging.streaminglive.church";
-        EnvironmentHelper.ContentRoot = "https://content.staging.hurchapps.org";
+        EnvironmentHelper.ContentRoot = "https://content.staging.churchapps.org";
         EnvironmentHelper.SubUrl = "https://{key}.staging.streaminglive.church";
         EnvironmentHelper.churchAppsUrl = "https://staging.churchapps.org";
     }

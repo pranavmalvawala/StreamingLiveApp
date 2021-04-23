@@ -1,5 +1,5 @@
 import React from "react";
-import { InputBox, LinkInterface, ApiHelper, PageInterface, UniqueIdHelper } from "."
+import { InputBox, LinkInterface, ApiHelper, PageInterface, UniqueIdHelper, EnvironmentHelper } from "."
 
 interface Props { currentTab: LinkInterface, updatedFunction?: () => void }
 
@@ -63,7 +63,7 @@ export const TabEdit: React.FC<Props> = (props) => {
             if (pages === null) loadPages();
             else {
                 options = [];
-                pages.forEach(page => options.push(<option value={page.path} key={page.id}>{page.name}</option>));
+                pages.forEach(page => options.push(<option value={EnvironmentHelper.ContentRoot + "/" + page.path} key={page.id}>{page.name}</option>));
                 if (currentTab.linkData === "") currentTab.linkData = pages[0].path;
             }
             return (
