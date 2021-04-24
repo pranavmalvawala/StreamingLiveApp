@@ -49,6 +49,23 @@ export const InteractionContainer: React.FC<Props> = (props) => {
             </div>);
     }
 
+
+    const getPage = (tab: TabInterface, i: number, visible: boolean) => {
+        return (
+            <div key={i} id={"frame" + i.toString()} className="frame" style={(!visible) ? { display: "none" } : {}}>
+                <iframe src={"/pageWrapper.html?url=" + escape(tab.url)} frameBorder="0" title={"frame" + i.toString()} /> :
+            </div>);
+    }
+
+    //const getPage = async (tab: TabInterface, i: number, visible: boolean) => {
+    //  return <></>
+    /*
+    return (
+        <div key={i} id={"frame" + i.toString()} className="frame" style={(!visible) ? { display: "none" } : {}}>
+            <iframe src={'/pageWrapper.html?url=' + escape(tab.url)} frameBorder="0" title={"frame" + i.toString()} /> :
+        </div>);*/
+    //}
+
     /*
     const getMainConversation = () => {
         if (props.chatState.rooms.length > 0) return props.chatState.rooms[0].conversationId;
@@ -81,7 +98,7 @@ export const InteractionContainer: React.FC<Props> = (props) => {
                         }
                         break;
                     case "page":
-                        result.push(getIframe(t, i, visible));
+                        result.push(getPage(t, i, visible));
                         break;
                     default:
                         result.push(getIframe(t, i, visible));
