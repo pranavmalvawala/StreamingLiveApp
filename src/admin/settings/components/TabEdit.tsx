@@ -29,7 +29,7 @@ export const TabEdit: React.FC<Props> = (props) => {
     }
 
     const handleSave = () => {
-        if (currentTab.linkType === "page") currentTab.url = currentTab.linkData;
+        if (currentTab.linkType === "page") currentTab.url = currentTab.linkData + '?ts=' + new Date().getTime().toString();
         else if (currentTab.linkType !== "url") currentTab.url = "";
         ApiHelper.post("/links", [currentTab], "StreamingLiveApi").then(props.updatedFunction);
     }

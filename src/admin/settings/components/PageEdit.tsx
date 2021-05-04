@@ -5,7 +5,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { EditorState, ContentState, convertToRaw } from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
-import { PageInterface, ApiHelper, InputBox, UniqueIdHelper } from "./"
+import { PageInterface, ApiHelper, InputBox, UniqueIdHelper, LinkInterface } from "./"
 import { EnvironmentHelper } from "../../components";
 
 
@@ -36,11 +36,24 @@ export const PageEdit: React.FC<Props> = (props) => {
         setPage(p);
     }
 
-    const handleSave = () => {
+    const handleSave = async () => {
         var content = editorState.getCurrentContent();
         page.content = draftToHtml(convertToRaw(content));
 
-        ApiHelper.post("/pages", [page], "StreamingLiveApi").then(props.updatedFunction);
+        const pages: PageInterface[] = await ApiHelper.post("/pages", [page], "StreamingLiveApi");
+        await updateTabs(EnvironmentHelper.ContentRoot + "/" + pages[0].path);
+        props.updatedFunction();
+    }
+
+    const updateTabs = async (fullPath: string) => {
+        const newPath = fullPath + '?ts=' + new Date().getTime().toString();
+        const tabs = await ApiHelper.get("/links?category=tab", "StreamingLiveApi");
+        tabs.forEach((t: LinkInterface) => {
+            if (t.linkData === fullPath) {
+                t.url = newPath;
+                ApiHelper.post("/links", [t], "StreamingLiveApi");
+            }
+        });
     }
 
     const handleEditorChange = (e: EditorState) => {
