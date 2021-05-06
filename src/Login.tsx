@@ -6,16 +6,11 @@ import { useLocation } from "react-router-dom";
 import { LoginPage } from "./appBase/pageComponents/LoginPage";
 import { UserHelper, ConfigHelper } from "./helpers";
 import "./Login.css";
-
+import { useCookies } from 'react-cookie';
 
 export const Login: React.FC = (props: any) => {
-
+    const [cookies] = useCookies(['jwt']);
     let { from } = (useLocation().state as any) || { from: { pathname: "/" } };
-
-    const getCookieValue = (a: string) => {
-        var b = document.cookie.match("(^|;)\\s*" + a + "\\s*=\\s*([^;]+)");
-        return b ? b.pop() : "";
-    };
 
     const successCallback = () => {
         //UserHelper.currentChurch = c;
@@ -31,15 +26,25 @@ export const Login: React.FC = (props: any) => {
 
     if (context.userName === "" || !ApiHelper.isAuthenticated) {
         let search = new URLSearchParams(props.location.search);
-        var jwt = search.get("jwt") || getCookieValue("jwt");
+        var jwt = search.get("jwt") || cookies.jwt;
         let auth = search.get("auth");
-        if (jwt === undefined || jwt === null) jwt = "";
-        if (auth === undefined || auth === null) auth = "";
+        if (!jwt) jwt = "";
+        if (!auth) auth = "";
 
         const config = { ...ConfigHelper.current };
         const imgSrc = config.logoSquare !== undefined ? (EnvironmentHelper.ContentRoot + config.logoSquare) : ''
     
-        return (<LoginPage auth={auth} context={context} requiredKeyName={true} jwt={jwt} successCallback={successCallback} logoSquare={imgSrc} />);
+        return (
+            <LoginPage
+                auth={auth}
+                context={context}
+                requiredKeyName={true}
+                jwt={jwt}
+                successCallback={successCallback}
+                logoSquare={imgSrc}
+                appName="StreamingLive"
+            />
+        );
     } else {
         let path = from.pathname === "/" ? "/people" : from.pathname;
         return <Authenticated location={path}></Authenticated>;
