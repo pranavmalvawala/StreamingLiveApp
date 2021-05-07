@@ -24,7 +24,6 @@ export class EnvironmentHelper {
             { keyName: "StreamingLiveApi", url: EnvironmentHelper.StreamingLiveApi, jwt: "", permisssions: [] },
             { keyName: "MessagingApi", url: EnvironmentHelper.MessagingApi, jwt: "", permisssions: [] },
         ];
-        ApiHelper.defaultApi = "StreamingLiveApi";
     }
 
     static initDev = () => {
