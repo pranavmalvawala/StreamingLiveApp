@@ -1,4 +1,5 @@
 import React from "react";
+import { useCookies } from "react-cookie";
 import { ApiHelper, EnvironmentHelper } from "./helpers"
 import { Authenticated } from "./Authenticated";
 import UserContext from "./UserContext";
@@ -6,7 +7,6 @@ import { useLocation } from "react-router-dom";
 import { LoginPage } from "./appBase/pageComponents/LoginPage";
 import { UserHelper, ConfigHelper } from "./helpers";
 import "./Login.css";
-import { useCookies } from 'react-cookie';
 
 export const Login: React.FC = (props: any) => {
     const [cookies] = useCookies(['jwt']);
