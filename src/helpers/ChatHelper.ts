@@ -84,9 +84,17 @@ export class ChatHelper {
         const room = ChatHelper.getRoom(message.conversationId);
         if (room !== null) {
             room.messages.push(message);
-            if (room === ChatHelper.current.mainRoom) ConfigHelper.setTabUpdated("chat");
-            if (room === ChatHelper.current.hostRoom) ConfigHelper.setTabUpdated("hostchat");
-            else ConfigHelper.setTabUpdated("prayer");
+            switch (room) {
+                case ChatHelper.current.mainRoom:
+                    ConfigHelper.setTabUpdated("chat");
+                    break;
+                case ChatHelper.current.hostRoom:
+                    ConfigHelper.setTabUpdated("hostchat");
+                    break;
+                default:
+                    ConfigHelper.setTabUpdated("prayer");
+                    break;
+            }
             ChatHelper.onChange();
         }
     }
