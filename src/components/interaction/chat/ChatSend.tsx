@@ -36,7 +36,7 @@ export const ChatSend: React.FC<Props> = (props) => {
                 <div className="input-group-prepend">
                     <a href="about:blank" onClick={toggleEmojis} data-field="sendText" className="btn btn-outline-secondary emojiButton"><span role="img" aria-label="emoji">😀</span></a>
                 </div>
-                <input type="text" className="form-control" id="sendChatText" value={message} onChange={handleChange} onKeyDown={handleKeyDown} />
+                <input type="text" className="form-control" id="sendChatText" value={message} onChange={handleChange} onKeyDown={handleKeyDown} autoComplete="off" />
                 <div className="input-group-append">
                     <a id="sendMessageButton" className="btn btn-primary" href="about:blank" onClick={handleSendMessage}>Send</a>
                 </div>
