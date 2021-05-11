@@ -28,10 +28,45 @@ export const ServiceEdit: React.FC<Props> = (props) => {
             case "chatBefore": s.chatBefore = parseInt(val) * 60; break;
             case "chatAfter": s.chatAfter = parseInt(val) * 60; break;
             case "provider": s.provider = val; break;
-            case "providerKey": s.providerKey = val; break;
+            case "providerKey":
+                s.providerKey = val;
+                if (s.provider === "youtube_live" || s.provider === "youtube_watchparty") s.providerKey = getYouTubeKey(s.providerKey);
+                else if (s.provider === "facebook_live") s.providerKey = getFacebookKey(s.providerKey);
+                else if (s.provider === "vimeo_live" || s.provider === "vimeo_watchparty") s.providerKey = getVimeoKey(s.providerKey);
+                break;
             case "recurs": s.recurring = val === "true"; break;
         }
         setCurrentService(s);
+    }
+
+    //auto fix common bad formats.
+    const getVimeoKey = (facebookInput: string) => {
+        var result = facebookInput.split('&')[0];
+        result = result
+            .replace("https://vimeo.com/", "")
+            .replace("https://player.vimeo.com/video/", "")
+        return result;
+    }
+
+    //auto fix common bad formats.
+    const getFacebookKey = (facebookInput: string) => {
+        var result = facebookInput.split('&')[0];
+        result = result
+            .replace("https://facebook.com/video.php?v=", "")
+        return result;
+    }
+
+    //auto fix common bad formats.
+    const getYouTubeKey = (youtubeInput: string) => {
+        var result = youtubeInput.split('&')[0];
+        result = result
+            .replace("https://www.youtube.com/watch?v=", "")
+            .replace("https://youtube.com/watch?v=", "")
+            .replace("https://youtu.be/", "")
+            .replace("https://www.youtube.com/embed/", "")
+            .replace("https://studio.youtube.com/video/", "")
+            .replace("/edit", "");
+        return result;
     }
 
     const handleSave = () => {
@@ -66,7 +101,7 @@ export const ServiceEdit: React.FC<Props> = (props) => {
     switch (currentService?.provider) {
         case "youtube_live":
         case "youtube_watchparty":
-            keyLabel = <>YouTube ID <span className="description">https://youtube.com/watch?v=<b>abcd1234</b></span></>;
+            keyLabel = <>YouTube ID <span className="description">https://youtube.com/watch?v=<b style={{ color: "#24b8ff" }}>abcd1234</b></span></>;
             keyPlaceholder = "abcd1234";
             break;
         case "vimeo_live":
