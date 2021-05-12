@@ -16,7 +16,7 @@ export const Header: React.FC = () => {
         const jwt = ApiHelper.getConfig("StreamingLiveApi").jwt;
         const id = e.currentTarget.getAttribute("data-id");
         UserHelper.selectChurch(context, id);
-        window.location.href = (EnvironmentHelper.SubUrl.replace("{key}", UserHelper.currentChurch.subDomain) + "/login/" + jwt);
+        window.location.href = (EnvironmentHelper.SubUrl.replace("{key}", UserHelper.currentChurch.subDomain) + "/login?jwt=" + jwt);
     }
 
     const getChurchLinks = () => {
