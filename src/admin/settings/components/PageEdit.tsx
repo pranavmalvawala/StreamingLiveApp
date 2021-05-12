@@ -1,26 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { FormGroup } from "react-bootstrap";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { EditorState, ContentState, convertToRaw } from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
-import { PageInterface, ApiHelper, InputBox, UniqueIdHelper, LinkInterface } from "./"
+import { PageInterface, ApiHelper, InputBox, UniqueIdHelper, LinkInterface, ErrorMessages } from "./"
 import { EnvironmentHelper } from "../../components";
 
 
 interface Props { page: PageInterface, updatedFunction: () => void }
 
 export const PageEdit: React.FC<Props> = (props) => {
-    const [page, setPage] = React.useState<PageInterface>(null);
-    const [editorState, setEditorState] = React.useState<EditorState>(EditorState.createEmpty());
+    const [page, setPage] = useState<PageInterface>(null);
+    const [editorState, setEditorState] = useState<EditorState>(EditorState.createEmpty());
+    const [errors, setErrors] = useState<string[]>([]);
 
     const handleDelete = () => {
         if (window.confirm("Are you sure you wish to permanently delete this page?")) {
             ApiHelper.delete("/pages/" + page.id, "StreamingLiveApi").then(() => { setPage(null); props.updatedFunction(); });
         }
     }
-    const checkDelete = () => { if (!UniqueIdHelper.isMissing(page?.id)) return handleDelete; else return null; }
+    const checkDelete = page?.id ? handleDelete : undefined;
     const handleCancel = () => { props.updatedFunction(); }
 
 
@@ -37,6 +38,15 @@ export const PageEdit: React.FC<Props> = (props) => {
     }
 
     const handleSave = async () => {
+        let errors: string[] = [];
+
+        if (!page?.name) errors.push('Page must have a name');
+
+        if (errors.length > 0) {
+            setErrors(errors);
+            return;
+        }
+
         var content = editorState.getCurrentContent();
         page.content = draftToHtml(convertToRaw(content));
 
@@ -84,7 +94,7 @@ export const PageEdit: React.FC<Props> = (props) => {
     }, [props.page]);
 
     return (
-        <InputBox headerIcon="fas fa-code" headerText="Edit Page" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={checkDelete()} >
+        <InputBox headerIcon="fas fa-code" headerText="Edit Page" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={checkDelete} >
             <FormGroup>
                 <label>Page Name</label>
                 <input type="text" className="form-control" name="name" value={page?.name} onChange={handleChange} />
@@ -93,6 +103,7 @@ export const PageEdit: React.FC<Props> = (props) => {
                 <label>Contents</label>
                 <Editor editorState={editorState} onEditorStateChange={handleEditorChange} editorStyle={{ height: 400 }} />
             </FormGroup>
+            <ErrorMessages errors={errors} />
         </InputBox>
     );
 }
