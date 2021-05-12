@@ -1,6 +1,6 @@
 export * from '../../helpers'
 export { Header } from './Header'
-export { InputBox, DisplayBox } from "../../appBase/components"
+export { InputBox, DisplayBox, ErrorMessages } from "../../appBase/components"
 export { NavItems } from './NavItems'
 
 

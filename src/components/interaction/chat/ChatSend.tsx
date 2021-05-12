@@ -10,11 +10,15 @@ export const ChatSend: React.FC<Props> = (props) => {
 
     const handleSendMessage = (e: React.MouseEvent) => {
         e.preventDefault();
+        if (!message.trim()) {
+            setMessage("");
+            return;
+        } 
         sendMessage();
     }
 
     const sendMessage = () => {
-        const msg: MessageInterface = { churchId: ConfigHelper.current.churchId, content: message, conversationId: props.room.conversation.id, displayName: ChatHelper.current.user.displayName, messageType: "message" }
+        const msg: MessageInterface = { churchId: ConfigHelper.current.churchId, content: message.trim(), conversationId: props.room.conversation.id, displayName: ChatHelper.current.user.displayName, messageType: "message" }
         ApiHelper.postAnonymous("/messages/send", [msg], "MessagingApi");
         setMessage("");
     }
