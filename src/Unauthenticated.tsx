@@ -16,7 +16,6 @@ export const Unauthenticated = () => {
                 <Route path="/admin/settings"><Redirect to="/" /></Route>
                 <Route path="/admin/pages"><Redirect to="/" /></Route>
                 <Route path="/admin/users"><Redirect to="/" /></Route>
-                <Route path="/profile"><Redirect to="/" /></Route>
                 <Route path="/"><Home /></Route>
             </Switch>
         </>

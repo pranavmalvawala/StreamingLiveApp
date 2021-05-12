@@ -2,7 +2,6 @@ export { ErrorMessages, InputBox } from "../appBase/components";
 
 export * from '../helpers'
 export * from '../admin/components'
-export * from '../profile/components'
 export * from "./interaction";
 export { Header } from "./Header";
 export { NavItems } from "./NavItems"

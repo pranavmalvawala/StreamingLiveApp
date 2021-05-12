@@ -32,12 +32,14 @@ export const Header: React.FC = () => {
     }
 
     const getUserMenu = () => {
+        const jwt = ApiHelper.getConfig("AccessApi").jwt;
+        const profileUrl = `${EnvironmentHelper.AccountsApp}/login?jwt=${jwt}&returnUrl=/profile`;
         if (showUserMenu) return (
             <div className="container" id="userMenu">
                 <div>
                     <ul className="nav flex-column d-xl-none"><NavItems /></ul>
                     {getChurchLinks()}
-                    <Link to="/profile"><i className="fas fa-user"></i> Profile</Link>
+                    <a href={profileUrl} target="_blank" rel="noopener noreferrer"><i className="fas fa-user"></i> Profile</a>
                     <a href="mailto:support@streaminglive.church"><i className="fas fa-envelope"></i> Support</a>
                     <Link to="/logout"><i className="fas fa-lock"></i> Logout</Link>
                 </div>
