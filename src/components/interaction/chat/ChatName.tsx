@@ -22,12 +22,14 @@ export const ChatName: React.FC<Props> = (props) => {
 
     const handleUpdate = (e: React.MouseEvent) => {
         e.preventDefault();
-        if (displayName === "") alert("Please enter a name");
-        else {
-            if (ApiHelper.isAuthenticated) ApiHelper.post("/users/setDisplayName", { displayName: displayName }, "AccessApi");
-            props.updateFunction(displayName);
-            setEdit(false);
+        if (displayName.trim() === "") {
+            alert("Please enter a name");
+            setDisplayName("");
+            return;
         }
+        if (ApiHelper.isAuthenticated) ApiHelper.post("/users/setDisplayName", { displayName: displayName.trim() }, "AccessApi");
+        props.updateFunction(displayName);
+        setEdit(false);
     }
 
 
