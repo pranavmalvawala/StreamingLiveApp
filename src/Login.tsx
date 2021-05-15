@@ -5,7 +5,7 @@ import { Authenticated } from "./Authenticated";
 import UserContext from "./UserContext";
 import { useLocation } from "react-router-dom";
 import { LoginPage } from "./appBase/pageComponents/LoginPage";
-import { UserHelper, ConfigHelper } from "./helpers";
+import { UserHelper, ConfigHelper, Permissions } from "./helpers";
 import "./Login.css";
 
 export const Login: React.FC = (props: any) => {
@@ -13,13 +13,9 @@ export const Login: React.FC = (props: any) => {
     let { from } = (useLocation().state as any) || { from: { pathname: "/" } };
 
     const successCallback = () => {
-        //UserHelper.currentChurch = c;
-        UserHelper.isHost = true;
-        //UserHelper.user = { displayName: context.userName }
-        //UserHelper.name = UserHelper.user.displayName || "";
-        //context?.setUserName(UserHelper.user?.displayName || "");
-
-        //Do Stuff
+        if (UserHelper.checkAccess(Permissions.messagingApi.chat.host)) {
+            UserHelper.isHost = true;
+        }
     }
 
     const context = React.useContext(UserContext);
