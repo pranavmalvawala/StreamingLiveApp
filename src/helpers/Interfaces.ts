@@ -1,4 +1,4 @@
-export type { RoleInterface, RoleMemberInterface, UserInterface, LoadCreateUserRequestInterface, ChurchInterface } from "../appBase/interfaces";
+export type { RoleInterface, RoleMemberInterface, UserInterface, LoadCreateUserRequestInterface, ChurchInterface, UserContextInterface, PersonInterface } from "../appBase/interfaces";
 
 export interface LinkInterface { id?: string, churchId?: string, url?: string, text?: string, sort?: number, linkType: string, linkData: string, icon: string, category: string }
 export interface PageInterface { id?: string, churchId?: string, name?: string, lastModified?: Date, content?: string, path?: string }

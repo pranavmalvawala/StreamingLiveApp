@@ -7,7 +7,7 @@ import { useLocation } from "react-router-dom";
 import { LoginPage } from "./appBase/pageComponents/LoginPage";
 import { UserHelper, ConfigHelper, Permissions } from "./helpers";
 import "./Login.css";
-import { ChurchInterface } from "./appBase/interfaces";
+import { ChurchInterface, PersonInterface } from "./appBase/interfaces";
 
 export const Login: React.FC = (props: any) => {
     const [cookies] = useCookies(['jwt']);
@@ -21,8 +21,19 @@ export const Login: React.FC = (props: any) => {
     }
 
     const performGuestLogin = async (churches: ChurchInterface[]) => {
-        await UserHelper.loginAsGuest(churches);
-        context.setUserName(UserHelper.currentChurch.id.toString());
+        let person: PersonInterface;
+        try {
+            await UserHelper.loginAsGuest(churches, context);
+            person = await ApiHelper.get(`/people/userid/${UserHelper.user.id}`, "MembershipApi");
+            context.setUserName(person.name.display);
+        } catch (err) {
+            if (!person) {
+                const { id, displayName, email } = UserHelper.user;
+                const [first, last] = displayName.split(' ');
+                const newPerson: PersonInterface = { userId: id, name: { first, last }, contactInfo: { email } };
+                await ApiHelper.post("/people", [newPerson], "MembershipApi");
+            }
+        }
     }
 
     if (context.userName === "" || !ApiHelper.isAuthenticated) {

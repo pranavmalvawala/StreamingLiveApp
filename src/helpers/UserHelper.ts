@@ -1,10 +1,10 @@
 import { UserHelper as BaseUserHelper, ApiHelper } from "../appBase/helpers"
-import { ChurchInterface } from '.'
+import { ChurchInterface, UserContextInterface } from '.'
 export class UserHelper extends BaseUserHelper {
     static isHost: boolean = false;
     static isGuest: boolean = false;
 
-    static async loginAsGuest(churches: ChurchInterface[]) {
+    static async loginAsGuest(churches: ChurchInterface[], context: UserContextInterface) {
         UserHelper.isGuest = true;
         /**
          * The api for fetching church (/churches/select) requires authentication.
@@ -15,11 +15,12 @@ export class UserHelper extends BaseUserHelper {
          */
         const currentChurch = churches[0];
         UserHelper.setupApiHelper(currentChurch);
-
+        context.setChurchName(currentChurch.name);
         const keyName = window.location.hostname.split(".")[0];
         const church: ChurchInterface = await ApiHelper.post("/churches/select", { subDomain: keyName }, "AccessApi");
-        UserHelper.currentChurch = church;
-        UserHelper.setupApiHelper(UserHelper.currentChurch);
+        UserHelper.churches.push(church);
+        UserHelper.selectChurch(context, undefined, keyName);
+        context.setUserName(UserHelper.currentChurch.id.toString());
     }
 }
 
