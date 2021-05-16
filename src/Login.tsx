@@ -7,10 +7,12 @@ import { useLocation } from "react-router-dom";
 import { LoginPage } from "./appBase/pageComponents/LoginPage";
 import { UserHelper, ConfigHelper, Permissions } from "./helpers";
 import "./Login.css";
+import { ChurchInterface } from "./appBase/interfaces";
 
 export const Login: React.FC = (props: any) => {
     const [cookies] = useCookies(['jwt']);
     let { from } = (useLocation().state as any) || { from: { pathname: "/" } };
+    const context = React.useContext(UserContext);
 
     const successCallback = () => {
         if (UserHelper.checkAccess(Permissions.messagingApi.chat.host)) {
@@ -18,7 +20,10 @@ export const Login: React.FC = (props: any) => {
         }
     }
 
-    const context = React.useContext(UserContext);
+    const performGuestLogin = async (churches: ChurchInterface[]) => {
+        await UserHelper.loginAsGuest(churches);
+        context.setUserName(UserHelper.currentChurch.id.toString());
+    }
 
     if (context.userName === "" || !ApiHelper.isAuthenticated) {
         let search = new URLSearchParams(props.location.search);
@@ -39,6 +44,7 @@ export const Login: React.FC = (props: any) => {
                 successCallback={successCallback}
                 logoSquare={imgSrc}
                 appName="StreamingLive"
+                performGuestLogin={performGuestLogin}
             />
         );
     } else {

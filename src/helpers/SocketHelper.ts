@@ -33,8 +33,6 @@ export class SocketHelper {
     }
 
     static handleMessage = (payload: PayloadInterface) => {
-        console.log("RECEIVED '" + payload.action + "'");
-        console.log(payload);
         switch (payload.action) {
             case "attendance": SocketHelper.events.attendanceHandler(payload.data); break;
             case "callout": SocketHelper.events.calloutHandler(payload.data); break;
