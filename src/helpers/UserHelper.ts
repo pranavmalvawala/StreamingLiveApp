@@ -7,11 +7,11 @@ export class UserHelper extends BaseUserHelper {
     static async loginAsGuest(churches: ChurchInterface[], context: UserContextInterface) {
         UserHelper.isGuest = true;
         /**
-         * The api for fetching church (/churches/select) requires authentication.
-         * That route's main authentication purpose is to know who is logging in 
-         * and not from which church he/she belongs to, that's why we setup ApiHelper
-         * with whatever church, the user is already part of, cause it doesn't matter
-         * the jwt should just to the user info.
+         * The api for fetching church (/churches/select) requires jwt.
+         * Jwt is used only to check who the user is and not to check if he/she 
+         * belongs to the church, that's why we setup ApiHelper with whatever
+         * church the user is already part of cause it doesn't matter,
+         * the jwt is used only to find user details.
          */
         const currentChurch = churches[0];
         UserHelper.setupApiHelper(currentChurch);

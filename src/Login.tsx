@@ -30,7 +30,7 @@ export const Login: React.FC = (props: any) => {
             if (!person) {
                 const { id, displayName, email } = UserHelper.user;
                 const [first, last] = displayName.split(' ');
-                const newPerson: PersonInterface = { userId: id, name: { first, last }, contactInfo: { email } };
+                const newPerson: PersonInterface = { userId: id, name: { first, last }, contactInfo: { email }, membershipStatus: "Guest" };
                 await ApiHelper.post("/people", [newPerson], "MembershipApi");
             }
         }
