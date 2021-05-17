@@ -5,24 +5,36 @@ import { Authenticated } from "./Authenticated";
 import UserContext from "./UserContext";
 import { useLocation } from "react-router-dom";
 import { LoginPage } from "./appBase/pageComponents/LoginPage";
-import { UserHelper, ConfigHelper } from "./helpers";
+import { UserHelper, ConfigHelper, Permissions } from "./helpers";
 import "./Login.css";
+import { ChurchInterface, PersonInterface } from "./appBase/interfaces";
 
 export const Login: React.FC = (props: any) => {
     const [cookies] = useCookies(['jwt']);
     let { from } = (useLocation().state as any) || { from: { pathname: "/" } };
+    const context = React.useContext(UserContext);
 
     const successCallback = () => {
-        //UserHelper.currentChurch = c;
-        UserHelper.isHost = true;
-        //UserHelper.user = { displayName: context.userName }
-        //UserHelper.name = UserHelper.user.displayName || "";
-        //context?.setUserName(UserHelper.user?.displayName || "");
-
-        //Do Stuff
+        if (UserHelper.checkAccess(Permissions.messagingApi.chat.host)) {
+            UserHelper.isHost = true;
+        }
     }
 
-    const context = React.useContext(UserContext);
+    const performGuestLogin = async (churches: ChurchInterface[]) => {
+        let person: PersonInterface;
+        try {
+            await UserHelper.loginAsGuest(churches, context);
+            person = await ApiHelper.get(`/people/userid/${UserHelper.user.id}`, "MembershipApi");
+            context.setUserName(person.name.display);
+        } catch (err) {
+            if (!person) {
+                const { id, displayName, email } = UserHelper.user;
+                const [first, last] = displayName.split(' ');
+                const newPerson: PersonInterface = { userId: id, name: { first, last }, contactInfo: { email }, membershipStatus: "Guest" };
+                await ApiHelper.post("/people", [newPerson], "MembershipApi");
+            }
+        }
+    }
 
     if (context.userName === "" || !ApiHelper.isAuthenticated) {
         let search = new URLSearchParams(props.location.search);
@@ -43,6 +55,7 @@ export const Login: React.FC = (props: any) => {
                 successCallback={successCallback}
                 logoSquare={imgSrc}
                 appName="StreamingLive"
+                performGuestLogin={performGuestLogin}
             />
         );
     } else {

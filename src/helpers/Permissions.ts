@@ -2,9 +2,6 @@ import { Permissions as PermissionsBase } from "../appBase/interfaces/Permission
 
 export class Permissions extends PermissionsBase {
     static streamingLiveApi = {
-        chat: {
-            host: { api: "StreamingLiveApi", contentType: "Chat", action: "Host" }
-        },
         links: {
             edit: { api: "StreamingLiveApi", contentType: "Links", action: "Edit" }
         },
@@ -22,4 +19,9 @@ export class Permissions extends PermissionsBase {
         }
     };
 
+    static messagingApi = {
+        chat: {
+            host: { api: "MessagingApi", contentType: "Chat", action: "Host" }
+        }
+    }
 }

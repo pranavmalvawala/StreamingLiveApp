@@ -6,6 +6,7 @@ export class EnvironmentHelper {
     static StreamingLiveApi = "";
     static MessagingApi = "";
     static MessagingSocket = "";
+    static MembershipApi = "";
     static AdminUrl = "";
     static ContentRoot = "";
     static SubUrl = "";
@@ -23,6 +24,7 @@ export class EnvironmentHelper {
             { keyName: "AccessApi", url: EnvironmentHelper.AccessApi, jwt: "", permisssions: [] },
             { keyName: "StreamingLiveApi", url: EnvironmentHelper.StreamingLiveApi, jwt: "", permisssions: [] },
             { keyName: "MessagingApi", url: EnvironmentHelper.MessagingApi, jwt: "", permisssions: [] },
+            { keyName: "MembershipApi", url: EnvironmentHelper.MembershipApi, jwt: "", permisssions: [] }
         ];
     }
 
@@ -32,6 +34,7 @@ export class EnvironmentHelper {
         EnvironmentHelper.StreamingLiveApi = process.env.REACT_APP_STREAMINGLIVE_API || "";
         EnvironmentHelper.MessagingApi = process.env.REACT_APP_MESSAGING_API || "";
         EnvironmentHelper.MessagingSocket = process.env.REACT_APP_MESSAGING_SOCKET || "";
+        EnvironmentHelper.MembershipApi = process.env.REACT_APP_MEMBERSHIP_API || "";
         EnvironmentHelper.AdminUrl = process.env.REACT_APP_ADMIN_URL || "";
         EnvironmentHelper.ContentRoot = process.env.REACT_APP_CONTENT_ROOT || "";
         EnvironmentHelper.SubUrl = process.env.REACT_APP_SUB_URL || "";
@@ -45,6 +48,7 @@ export class EnvironmentHelper {
         EnvironmentHelper.StreamingLiveApi = "https://api.staging.streaminglive.church";
         EnvironmentHelper.MessagingApi = "https://messagingapi.staging.churchapps.org";
         EnvironmentHelper.MessagingSocket = "wss://socket.staging.churchapps.org";
+        EnvironmentHelper.MembershipApi = "https://membershipapi.staging.churchapps.org";
         EnvironmentHelper.AdminUrl = "https://admin.staging.streaminglive.church";
         EnvironmentHelper.ContentRoot = "https://content.staging.churchapps.org";
         EnvironmentHelper.SubUrl = "https://{key}.staging.streaminglive.church";
@@ -58,6 +62,7 @@ export class EnvironmentHelper {
         EnvironmentHelper.StreamingLiveApi = "https://api.streaminglive.church";
         EnvironmentHelper.MessagingApi = "https://messagingapi.churchapps.org";
         EnvironmentHelper.MessagingSocket = "wss://socket.churchapps.org";
+        EnvironmentHelper.MembershipApi = "https://membershipapi.churchapps.org"
         EnvironmentHelper.AdminUrl = "https://admin.streaminglive.church";
         EnvironmentHelper.ContentRoot = "https://content.churchapps.org";
         EnvironmentHelper.SubUrl = "https://{key}.streaminglive.church";
