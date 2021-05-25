@@ -38,7 +38,7 @@ export class EnvironmentHelper {
         EnvironmentHelper.AdminUrl = process.env.REACT_APP_ADMIN_URL || "";
         EnvironmentHelper.ContentRoot = process.env.REACT_APP_CONTENT_ROOT || "";
         EnvironmentHelper.SubUrl = process.env.REACT_APP_SUB_URL || "";
-        EnvironmentHelper.churchAppsUrl = process.env.REACT_APP_CHURCH_APPS || "";
+        EnvironmentHelper.churchAppsUrl = process.env.REACT_APP_CHURCH_APPS_URL || "";
     }
 
     //NOTE: None of these values are secret.
