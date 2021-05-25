@@ -29,7 +29,7 @@ export class EnvironmentHelper {
     }
 
     static initDev = () => {
-        EnvironmentHelper.AccountsApp = process.env.REACT_APP_ACCOUNTS_APP || "";
+        EnvironmentHelper.AccountsApp = process.env.REACT_APP_ACCOUNTS_APP_URL || "";
         EnvironmentHelper.AccessApi = process.env.REACT_APP_ACCESS_API || "";
         EnvironmentHelper.StreamingLiveApi = process.env.REACT_APP_STREAMINGLIVE_API || "";
         EnvironmentHelper.MessagingApi = process.env.REACT_APP_MESSAGING_API || "";
@@ -38,7 +38,7 @@ export class EnvironmentHelper {
         EnvironmentHelper.AdminUrl = process.env.REACT_APP_ADMIN_URL || "";
         EnvironmentHelper.ContentRoot = process.env.REACT_APP_CONTENT_ROOT || "";
         EnvironmentHelper.SubUrl = process.env.REACT_APP_SUB_URL || "";
-        EnvironmentHelper.churchAppsUrl = process.env.REACT_APP_CHURCH_APPS || "";
+        EnvironmentHelper.churchAppsUrl = process.env.REACT_APP_CHURCH_APPS_URL || "";
     }
 
     //NOTE: None of these values are secret.
