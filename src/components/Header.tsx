@@ -1,11 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom"
-import { NavItems, ButtonInterface, UserInterface, ChatName, UserHelper, EnvironmentHelper, ApiHelper, ChatHelper } from "."
+import { NavItems, UserInterface, ChatName, UserHelper, EnvironmentHelper, ApiHelper, ChatHelper, ConfigHelper } from "."
+import { AppearanceHelper } from "../appBase/helpers/AppearanceHelper";
 
 interface Props {
-    logoUrl: string,
     user: UserInterface,
-    buttons: ButtonInterface[],
     nameUpdateFunction: (displayName: string) => void
 }
 
@@ -30,7 +29,7 @@ export const Header: React.FC<Props> = (props) => {
         else {
             const jwt = ApiHelper.getConfig("AccessApi").jwt;
             const profileUrl = `${EnvironmentHelper.AccountsApp}/login?jwt=${jwt}&returnUrl=/profile`;
-            return (<li className="nav-item" ><a href={profileUrl} target="_blank" rel="noopener noreferrer" className="nav-link">Profile</a></li>);   
+            return (<li className="nav-item" ><a href={profileUrl} target="_blank" rel="noopener noreferrer" className="nav-link">Profile</a></li>);
         }
     }
     const getSettingLink = () => {
@@ -44,7 +43,7 @@ export const Header: React.FC<Props> = (props) => {
             <div id="userMenu">
                 <div>
                     <ul className="nav flex-column d-xl-none">
-                        <NavItems buttons={props.buttons} />
+                        <NavItems />
                     </ul>
                     <ul className="nav flex-column">
                         {getSettingLink()}
@@ -56,11 +55,13 @@ export const Header: React.FC<Props> = (props) => {
         else return null;
     }
 
+    /*
     var imgSrc = "/images/logo-header.png";
     if (props.logoUrl !== undefined) {
         if (props.logoUrl.startsWith("data:")) imgSrc = props.logoUrl;
         else imgSrc = EnvironmentHelper.ContentRoot + "/" + props.logoUrl;
-    }
+    }*/
+    let imgSrc = AppearanceHelper.getLogoHeader(ConfigHelper.current?.appearance, "/images/logo.png");
 
 
     setTimeout(() => {
@@ -83,7 +84,7 @@ export const Header: React.FC<Props> = (props) => {
                 <div id="liveButtons" className="d-none d-xl-flex" >
                     <div>
                         <ul className="nav nav-fill">
-                            <NavItems buttons={props.buttons} />
+                            <NavItems />
                         </ul>
                     </div>
                 </div>

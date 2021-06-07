@@ -1,6 +1,6 @@
 import React from "react";
 import { useCookies } from "react-cookie";
-import { ApiHelper, EnvironmentHelper } from "./helpers"
+import { ApiHelper } from "./helpers"
 import { Authenticated } from "./Authenticated";
 import UserContext from "./UserContext";
 import { useLocation } from "react-router-dom";
@@ -8,6 +8,7 @@ import { LoginPage } from "./appBase/pageComponents/LoginPage";
 import { UserHelper, ConfigHelper, Permissions } from "./helpers";
 import "./Login.css";
 import { ChurchInterface, PersonInterface } from "./appBase/interfaces";
+import { AppearanceHelper } from "./appBase/helpers/AppearanceHelper";
 
 export const Login: React.FC = (props: any) => {
     const [cookies] = useCookies(['jwt']);
@@ -43,9 +44,9 @@ export const Login: React.FC = (props: any) => {
         if (!jwt) jwt = "";
         if (!auth) auth = "";
 
-        const config = { ...ConfigHelper.current };
-        const imgSrc = config.logoSquare !== undefined ? (EnvironmentHelper.ContentRoot + config.logoSquare) : ''
-    
+        //const config = { ...ConfigHelper.current };
+        //const imgSrc = config.logoSquare !== undefined ? (EnvironmentHelper.ContentRoot + config.logoSquare) : ''
+
         return (
             <LoginPage
                 auth={auth}
@@ -53,7 +54,7 @@ export const Login: React.FC = (props: any) => {
                 requiredKeyName={true}
                 jwt={jwt}
                 successCallback={successCallback}
-                logoSquare={imgSrc}
+                logoSquare={AppearanceHelper.getLogoSquare(ConfigHelper.current?.appearance, null)}
                 appName="StreamingLive"
                 performGuestLogin={performGuestLogin}
             />

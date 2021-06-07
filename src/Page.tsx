@@ -27,7 +27,7 @@ export const Page = ({ match }: RouteComponentProps<TParams>) => {
 
     return (
         <>
-            <Theme config={config} />
+            <Theme />
             <div dangerouslySetInnerHTML={{ __html: content }} style={{ padding: 5 }} />
         </>);
 }

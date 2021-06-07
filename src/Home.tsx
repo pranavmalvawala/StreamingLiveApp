@@ -1,5 +1,5 @@
 import React from "react";
-import { ServicesHelper, ConversationInterface, ApiHelper, UserHelper, ConfigHelper, ConfigurationInterface, ServiceInterface, Header, VideoContainer, InteractionContainer, ChatStateInterface, Loading, Theme } from "./components";
+import { ServicesHelper, ConversationInterface, ApiHelper, UserHelper, ConfigHelper, ConfigurationInterface, ServiceInterface, Header, VideoContainer, InteractionContainer, ChatStateInterface, Theme } from "./components";
 import { ChatHelper } from "./helpers/ChatHelper";
 import { SocketHelper } from "./helpers/SocketHelper";
 import Cookies from 'js-cookie';
@@ -10,16 +10,17 @@ export const Home: React.FC = () => {
   const [chatState, setChatState] = React.useState<ChatStateInterface>(null);
 
   const loadConfig = React.useCallback(async () => {
-    const keyName = window.location.hostname.split(".")[0];
-    const localThemeConfig = localStorage.getItem(`theme_${keyName}`);
-    setConfig(JSON.parse(localThemeConfig) || {});
+    setConfig(ConfigHelper.current);
+    //const keyName = window.location.hostname.split(".")[0];
+    //const localThemeConfig = localStorage.getItem(`theme_${keyName}`);
+    //setConfig(JSON.parse(localThemeConfig) || {});
 
-    ConfigHelper.load(keyName).then(data => {
-      var d: ConfigurationInterface = data;
-      ChatHelper.initChat().then(() => joinMainRoom(data.churchId));
-      checkHost(d);
-      setConfig(c => ({ ...c, ...d }));
-    });
+    //ConfigHelper.load(keyName).then(data => {
+    //var d: ConfigurationInterface = data;
+    ChatHelper.initChat().then(() => joinMainRoom(ConfigHelper.current.churchId));
+    checkHost(ConfigHelper.current);
+    setConfig(c => ({ ...c, ...ConfigHelper.current }));
+    //});
   }, []);
 
 
@@ -62,6 +63,7 @@ export const Home: React.FC = () => {
       chatUser.displayName = UserHelper.user?.displayName || "Anonymous";
       chatUser.isHost = true;
       ChatHelper.current.user = chatUser;
+      ChatHelper.onChange();
     }
   }
 
@@ -76,12 +78,12 @@ export const Home: React.FC = () => {
     initUser();
   }, [loadConfig]);
 
-  if (config.keyName === undefined) return <Loading config={config} />
-  else return (
+  console.log(chatState?.user)
+  return (
     <>
-      <Theme config={config} />
+      <Theme />
       <div id="liveContainer">
-        <Header logoUrl={config?.logoHeader} buttons={config.buttons} user={chatState?.user} nameUpdateFunction={handleNameUpdate} />
+        <Header user={chatState?.user} nameUpdateFunction={handleNameUpdate} />
         <div id="body">
           <VideoContainer currentService={currentService} jitsiRoom={config.jitsiRoom} user={chatState?.user} />
           <InteractionContainer chatState={chatState} config={config} />
