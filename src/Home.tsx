@@ -2,7 +2,7 @@ import React from "react";
 import { ServicesHelper, ConversationInterface, ApiHelper, UserHelper, ConfigHelper, ConfigurationInterface, ServiceInterface, Header, VideoContainer, InteractionContainer, ChatStateInterface, Theme } from "./components";
 import { ChatHelper } from "./helpers/ChatHelper";
 import { SocketHelper } from "./helpers/SocketHelper";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
 export const Home: React.FC = () => {
   const [config, setConfig] = React.useState<ConfigurationInterface>({} as ConfigurationInterface);
@@ -23,7 +23,6 @@ export const Home: React.FC = () => {
     //});
   }, []);
 
-
   const joinMainRoom = async (churchId: string) => {
     const conversation: ConversationInterface = await ApiHelper.getAnonymous("/conversations/current/" + churchId + "/streamingLive/chat", "MessagingApi");
     ChatHelper.current.mainRoom = ChatHelper.createRoom(conversation);
@@ -32,7 +31,6 @@ export const Home: React.FC = () => {
     ChatHelper.joinRoom(conversation.id, conversation.churchId);
     ChatHelper.current.mainRoom.joined = true;
   }
-
 
   const checkHost = async (d: ConfigurationInterface) => {
     if (UserHelper.isHost) {
@@ -55,7 +53,6 @@ export const Home: React.FC = () => {
     Cookies.set("displayName", displayName);
     ChatHelper.onChange();
   }
-
 
   const initUser = () => {
     const chatUser = ChatHelper.getUser();

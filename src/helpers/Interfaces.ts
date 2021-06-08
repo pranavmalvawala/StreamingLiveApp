@@ -4,7 +4,6 @@ export interface LinkInterface { id?: string, churchId?: string, url?: string, t
 export interface PageInterface { id?: string, churchId?: string, name?: string, lastModified?: Date, content?: string, path?: string }
 export interface AdminServiceInterface { id?: string, churchId?: string, serviceTime?: Date, earlyStart?: number, duration: number, chatBefore: number, chatAfter: number, provider: string, providerKey: string, videoUrl: string, timezoneOffset: number, recurring: boolean, label: string }
 
-
 export interface ConnectionInterface { churchId: string, conversationId: string, displayName: string, socketId: string }
 export interface ViewerInterface { displayName: string, id: string }
 export interface AttendanceInterface { viewers?: ViewerInterface[], totalViewers?: number, conversationId: string }
@@ -12,8 +11,6 @@ export interface ConversationInterface { id?: string, churchId?: string, content
 export interface MessageInterface { id?: string, churchId?: string, conversationId?: string, userId?: string, displayName?: string, timeSent?: Date, messageType?: string, content?: string }
 export type PayloadAction = "message" | "deleteMessage" | "callout" | "attendance" | "prayerRequest" | "socketId" | "privateMessage" | "privateRoomAdded" | "videoChatInvite";
 export interface PayloadInterface { churchId: string, conversationId: string, action: PayloadAction, data: any }
-
-
 
 export interface ChatEventsInterface {
     messageHandler: (message: MessageInterface) => void,
@@ -27,7 +24,6 @@ export interface ChatEventsInterface {
     disconnectHandler: () => void,
 }
 
-
 export interface ChatRoomInterface {
     //title: string,
     //conversationId: string,
@@ -39,7 +35,6 @@ export interface ChatRoomInterface {
     //contentId: string,
     joined: boolean
 }
-
 
 export interface ChatStateInterface { mainRoom: ChatRoomInterface, hostRoom: ChatRoomInterface, privateRooms: ChatRoomInterface[], chatEnabled: boolean, user: ChatUserInterface }
 export interface ChatUserInterface { displayName: string, isHost: boolean }

@@ -43,6 +43,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "lint:only": "eslint --ext ts,tsx",
+    "lint:fix": "npm run lint:only -- --fix",
     "predeploy-staging": "export REACT_APP_STAGE=staging&& npm run build",
     "exec-deploy-staging": "aws s3 sync build/ s3://staging-streaminglive-sub",
     "postdeploy-staging": "aws cloudfront create-invalidation --distribution-id E2CBYEJ9SM6ZSJ --paths \"/*\"",
@@ -50,10 +52,13 @@
     "predeploy-prod": "export REACT_APP_STAGE=prod&& npm run build",
     "exec-deploy-prod": "aws s3 sync build/ s3://streaminglive-sub",
     "postdeploy-prod": "aws cloudfront create-invalidation --distribution-id E3JWFNKXJ8G3ZY --paths \"/*\"",
-    "deploy-prod": "npm run predeploy-prod && npm run exec-deploy-prod && npm run postdeploy-prod"
+    "deploy-prod": "npm run predeploy-prod && npm run exec-deploy-prod && npm run postdeploy-prod",
+    "prepare": "husky install"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "lint-staged": {
+    "src/**/*.{ts,tsx}": [
+      "npm run lint:fix"
+    ]
   },
   "browserslist": {
     "production": [
@@ -73,6 +78,8 @@
     "@types/react-csv": "^1.1.1",
     "@types/react-ga": "^2.3.0",
     "@types/react-helmet": "^6.1.0",
-    "@types/react-router-dom": "^5.1.5"
+    "@types/react-router-dom": "^5.1.5",
+    "husky": "^6.0.0",
+    "lint-staged": "^11.0.0"
   }
 }
