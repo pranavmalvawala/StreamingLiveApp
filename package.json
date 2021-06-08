@@ -43,6 +43,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "lint:only": "eslint --ext ts,tsx",
+    "lint:fix": "npm run lint:only -- --fix",
     "predeploy-staging": "export REACT_APP_STAGE=staging&& npm run build",
     "exec-deploy-staging": "aws s3 sync build/ s3://staging-streaminglive-sub",
     "postdeploy-staging": "aws cloudfront create-invalidation --distribution-id E2CBYEJ9SM6ZSJ --paths \"/*\"",
@@ -51,9 +53,6 @@
     "exec-deploy-prod": "aws s3 sync build/ s3://streaminglive-sub",
     "postdeploy-prod": "aws cloudfront create-invalidation --distribution-id E3JWFNKXJ8G3ZY --paths \"/*\"",
     "deploy-prod": "npm run predeploy-prod && npm run exec-deploy-prod && npm run postdeploy-prod"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "browserslist": {
     "production": [
