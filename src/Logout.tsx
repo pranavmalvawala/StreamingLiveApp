@@ -5,12 +5,12 @@ import { LogoutPage } from "./appBase/pageComponents";
 import { UserHelper } from "./helpers/UserHelper";
 
 export const Logout = () => {
-    try {
-        //ChatHelper.setName("Anonymous");
-    } catch { }
-    UserHelper.user.displayName = "Anonymous";
-    UserHelper.isHost = false;
+  try {
+    //ChatHelper.setName("Anonymous");
+  } catch { }
+  UserHelper.user.displayName = "Anonymous";
+  UserHelper.isHost = false;
 
-    const context = React.useContext(UserContext)
-    return (<LogoutPage context={context} />);
+  const context = React.useContext(UserContext)
+  return (<LogoutPage context={context} />);
 }

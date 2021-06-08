@@ -8,18 +8,18 @@ import ReactGA from "react-ga";
 import { useLocation } from "react-router-dom";
 
 export const Routing: React.FC = () => {
-    const location = useLocation();
-    if (EnvironmentHelper.GoogleAnalyticsTag !== "") {
-        ReactGA.initialize(EnvironmentHelper.GoogleAnalyticsTag);
-        ReactGA.pageview(window.location.pathname + window.location.search);
-    }
-    React.useEffect(() => { if (EnvironmentHelper.GoogleAnalyticsTag !== "") ReactGA.pageview(location.pathname + location.search); }, [location]);
+  const location = useLocation();
+  if (EnvironmentHelper.GoogleAnalyticsTag !== "") {
+    ReactGA.initialize(EnvironmentHelper.GoogleAnalyticsTag);
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  }
+  React.useEffect(() => { if (EnvironmentHelper.GoogleAnalyticsTag !== "") ReactGA.pageview(location.pathname + location.search); }, [location]);
 
-    var user = React.useContext(UserContext)?.userName; //to force rerender on login
-    if (user === null || !ApiHelper.isAuthenticated) {
-        return <Unauthenticated />;
-    }
-    else {
-        return <Authenticated location="/" />;
-    }
+  let user = React.useContext(UserContext)?.userName; //to force rerender on login
+  if (user === null || !ApiHelper.isAuthenticated) {
+    return <Unauthenticated />;
+  }
+  else {
+    return <Authenticated location="/" />;
+  }
 }
