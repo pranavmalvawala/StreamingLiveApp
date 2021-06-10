@@ -35,7 +35,7 @@ export const TabEdit: React.FC<Props> = (props) => {
 
     if (!currentTab.text) errors.push("Please enter valid text");
     if (currentTab?.linkType === "page" && pages.length === 0) errors.push("No page! Please create one before adding it to tab");
-    if (currentTab?.linkType === "url" && !currentTab.linkData) errors.push("Enter a valid URL");
+    if (currentTab?.linkType === "url" && !currentTab.url) errors.push("Enter a valid URL");
 
     if (errors.length > 0) {
       setErrors(errors);
