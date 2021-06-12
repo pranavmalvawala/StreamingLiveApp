@@ -61,7 +61,7 @@ export const Header: React.FC<Props> = (props) => {
         if (props.logoUrl.startsWith("data:")) imgSrc = props.logoUrl;
         else imgSrc = EnvironmentHelper.ContentRoot + "/" + props.logoUrl;
     }*/
-  let imgSrc = AppearanceHelper.getLogo(ConfigHelper.current?.appearance, "/images/logo.png", ConfigHelper.current?.appearance?.primaryColor || "#FFF");
+  let imgSrc = AppearanceHelper.getLogo(ConfigHelper.current?.appearance, "images/logo-header.png", "/images/logo.png", ConfigHelper.current?.appearance?.primaryColor || "#FFF");
 
   setTimeout(() => {
     try {
