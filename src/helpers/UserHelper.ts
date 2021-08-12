@@ -1,6 +1,4 @@
-import { UserHelper as BaseUserHelper, ApiHelper } from "../appBase/helpers"
-import { ChurchInterface, UserContextInterface } from "."
-import { PersonInterface } from "../components";
+import { UserHelper as BaseUserHelper } from "../appBase/helpers"
 export class UserHelper extends BaseUserHelper {
   static isHost: boolean = false;
   static isGuest: boolean = false;
