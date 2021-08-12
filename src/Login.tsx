@@ -7,7 +7,7 @@ import { useLocation } from "react-router-dom";
 import { LoginPage } from "./appBase/pageComponents/LoginPage";
 import { UserHelper, ConfigHelper, Permissions } from "./helpers";
 import "./Login.css";
-import { ChurchInterface, PersonInterface } from "./appBase/interfaces";
+import { ChurchInterface, LoginResponseInterface, PersonInterface } from "./appBase/interfaces";
 import { AppearanceHelper } from "./appBase/helpers/AppearanceHelper";
 
 export const Login: React.FC = (props: any) => {
@@ -21,19 +21,14 @@ export const Login: React.FC = (props: any) => {
     }
   }
 
-  const performGuestLogin = async (churches: ChurchInterface[]) => {
-    let person: PersonInterface;
-    try {
-      await UserHelper.loginAsGuest(churches, context);
-      person = await ApiHelper.get(`/people/userid/${UserHelper.user.id}`, "MembershipApi");
-      context.setUserName(person.name.display);
-    } catch (err) {
-      if (!person) {
-        const { id, firstName: first, lastName: last, email } = UserHelper.user;
-        const newPerson: PersonInterface = { userId: id, name: { first, last }, contactInfo: { email }, membershipStatus: "Guest" };
-        await ApiHelper.post("/people", [newPerson], "MembershipApi");
-      }
-    }
+  const performGuestLogin = async (loginResponse: LoginResponseInterface) => {
+    //const displayName = await UserHelper.loginAsGuest(churches, context);
+    UserHelper.isGuest = true;
+    const response: { church: ChurchInterface, person: PersonInterface } = await UserHelper.loginAsGuest(loginResponse);
+    UserHelper.selectChurch(context, undefined, response.church.subDomain);
+    context.setUserName(UserHelper.currentChurch.id.toString());
+
+    context.setUserName(response.person.name.display);
   }
 
   if (context.userName === "" || !ApiHelper.isAuthenticated) {
@@ -53,6 +48,8 @@ export const Login: React.FC = (props: any) => {
         logo={AppearanceHelper.getLogoLight(ConfigHelper.current?.appearance, null)}
         appName="StreamingLive"
         performGuestLogin={performGuestLogin}
+        allowRegister={true}
+        appUrl={window.location.href}
       />
     );
   } else {
