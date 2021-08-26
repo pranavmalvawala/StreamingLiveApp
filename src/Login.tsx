@@ -6,7 +6,6 @@ import UserContext from "./UserContext";
 import { useLocation } from "react-router-dom";
 import { LoginPage } from "./appBase/pageComponents/LoginPage";
 import { UserHelper, ConfigHelper, Permissions } from "./helpers";
-import "./Login.css";
 import { AppearanceHelper } from "./appBase/helpers/AppearanceHelper";
 
 export const Login: React.FC = (props: any) => {
