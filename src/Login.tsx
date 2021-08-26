@@ -7,7 +7,6 @@ import { useLocation } from "react-router-dom";
 import { LoginPage } from "./appBase/pageComponents/LoginPage";
 import { UserHelper, ConfigHelper, Permissions } from "./helpers";
 import "./Login.css";
-import { ChurchInterface, LoginResponseInterface, PersonInterface } from "./appBase/interfaces";
 import { AppearanceHelper } from "./appBase/helpers/AppearanceHelper";
 
 export const Login: React.FC = (props: any) => {
@@ -20,16 +19,17 @@ export const Login: React.FC = (props: any) => {
       UserHelper.isHost = true;
     }
   }
+  /*
+    const performGuestLogin = async (loginResponse: LoginResponseInterface) => {
+      //const displayName = await UserHelper.loginAsGuest(churches, context);
+      UserHelper.isGuest = true;
+      const response: { church: ChurchInterface, person: PersonInterface } = await UserHelper.loginAsGuest(loginResponse);
+      UserHelper.selectChurch(context, undefined, response.church.subDomain);
+      context.setUserName(UserHelper.currentChurch.id.toString());
 
-  const performGuestLogin = async (loginResponse: LoginResponseInterface) => {
-    //const displayName = await UserHelper.loginAsGuest(churches, context);
-    UserHelper.isGuest = true;
-    const response: { church: ChurchInterface, person: PersonInterface } = await UserHelper.loginAsGuest(loginResponse);
-    UserHelper.selectChurch(context, undefined, response.church.subDomain);
-    context.setUserName(UserHelper.currentChurch.id.toString());
-
-    context.setUserName(response.person.name.display);
-  }
+      context.setUserName(response.person.name.display);
+    }
+  */
 
   if (context.userName === "" || !ApiHelper.isAuthenticated) {
     let search = new URLSearchParams(props.location.search);
@@ -47,7 +47,6 @@ export const Login: React.FC = (props: any) => {
         successCallback={successCallback}
         logo={AppearanceHelper.getLogoLight(ConfigHelper.current?.appearance, null)}
         appName="StreamingLive"
-        performGuestLogin={performGuestLogin}
         allowRegister={true}
         appUrl={window.location.href}
       />
