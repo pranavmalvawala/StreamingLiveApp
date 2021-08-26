@@ -47,7 +47,6 @@ export const Login: React.FC = (props: any) => {
         successCallback={successCallback}
         logo={AppearanceHelper.getLogoLight(ConfigHelper.current?.appearance, null)}
         appName="StreamingLive"
-        allowRegister={true}
         appUrl={window.location.href}
       />
     );
