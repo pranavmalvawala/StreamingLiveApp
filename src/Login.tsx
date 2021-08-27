@@ -7,6 +7,8 @@ import { useLocation } from "react-router-dom";
 import { LoginPage } from "./appBase/pageComponents/LoginPage";
 import { UserHelper, ConfigHelper, Permissions } from "./helpers";
 import { AppearanceHelper } from "./appBase/helpers/AppearanceHelper";
+import ReactGA from "react-ga";
+import { ChurchInterface, UserInterface, EnvironmentHelper } from "./helpers";
 
 export const Login: React.FC = (props: any) => {
   const [cookies] = useCookies(["jwt"]);
@@ -18,17 +20,14 @@ export const Login: React.FC = (props: any) => {
       UserHelper.isHost = true;
     }
   }
-  /*
-    const performGuestLogin = async (loginResponse: LoginResponseInterface) => {
-      //const displayName = await UserHelper.loginAsGuest(churches, context);
-      UserHelper.isGuest = true;
-      const response: { church: ChurchInterface, person: PersonInterface } = await UserHelper.loginAsGuest(loginResponse);
-      UserHelper.selectChurch(context, undefined, response.church.subDomain);
-      context.setUserName(UserHelper.currentChurch.id.toString());
 
-      context.setUserName(response.person.name.display);
-    }
-  */
+  const trackChurchRegister = async (church: ChurchInterface) => {
+    if (EnvironmentHelper.GoogleAnalyticsTag !== "") ReactGA.event({ category: "Church", action: "Register" });
+  }
+
+  const trackUserRegister = async (user: UserInterface) => {
+    if (EnvironmentHelper.GoogleAnalyticsTag !== "") ReactGA.event({ category: "User", action: "Register" });
+  }
 
   if (context.userName === "" || !ApiHelper.isAuthenticated) {
     let search = new URLSearchParams(props.location.search);
@@ -43,10 +42,12 @@ export const Login: React.FC = (props: any) => {
         context={context}
         requiredKeyName={true}
         jwt={jwt}
-        successCallback={successCallback}
+        loginSuccessOverride={successCallback}
         logo={AppearanceHelper.getLogoLight(ConfigHelper.current?.appearance, null)}
         appName="StreamingLive"
         appUrl={window.location.href}
+        churchRegisteredCallback={trackChurchRegister}
+        userRegisteredCallback={trackUserRegister}
       />
     );
   } else {
