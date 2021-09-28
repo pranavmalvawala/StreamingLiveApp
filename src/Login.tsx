@@ -35,12 +35,13 @@ export const Login: React.FC = (props: any) => {
     let auth = search.get("auth");
     if (!jwt) jwt = "";
     if (!auth) auth = "";
+    const keyName = window.location.hostname.split(".")[0];
 
     return (
       <LoginPage
         auth={auth}
         context={context}
-        requiredKeyName={true}
+        keyName={keyName}
         jwt={jwt}
         loginSuccessOverride={successCallback}
         logo={AppearanceHelper.getLogoLight(ConfigHelper.current?.appearance, null)}
