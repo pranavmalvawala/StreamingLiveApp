@@ -9,6 +9,7 @@ import { UserHelper, ConfigHelper, Permissions } from "./helpers";
 import { AppearanceHelper } from "./appBase/helpers/AppearanceHelper";
 import ReactGA from "react-ga";
 import { ChurchInterface, UserInterface, EnvironmentHelper } from "./helpers";
+import Cookies from "js-cookie";
 
 export const Login: React.FC = (props: any) => {
   const [cookies] = useCookies(["jwt"]);
@@ -16,6 +17,7 @@ export const Login: React.FC = (props: any) => {
   const context = React.useContext(UserContext);
 
   const successCallback = () => {
+    Cookies.set("displayName", "Anonymous");
     if (UserHelper.checkAccess(Permissions.messagingApi.chat.host)) {
       UserHelper.isHost = true;
     }
@@ -52,7 +54,7 @@ export const Login: React.FC = (props: any) => {
       />
     );
   } else {
-    let path = from.pathname === "/" ? "/people" : from.pathname;
+    let path = from.pathname === "/" ? "/" : from.pathname;
     return <Authenticated location={path}></Authenticated>;
   }
 };
