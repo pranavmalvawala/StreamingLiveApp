@@ -48,12 +48,12 @@ export const Home: React.FC = () => {
     }
   }
 
-  const handleNameUpdate = (firstName: string, lastName: string) => {
-    const displayName = `${firstName} ${lastName}`
+  const handleNameUpdate = (displayName: string) => {
+    //const displayName = `${firstName} ${lastName}`
     const data = { socketId: SocketHelper.socketId, name: displayName };
     ApiHelper.postAnonymous("/connections/setName", data, "MessagingApi");
-    ChatHelper.current.user.firstName = firstName;
-    ChatHelper.current.user.lastName = lastName;
+    ChatHelper.current.user.firstName = displayName;
+    ChatHelper.current.user.lastName = "";
     Cookies.set("displayName", displayName);
     ChatHelper.onChange();
   }

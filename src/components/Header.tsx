@@ -5,7 +5,7 @@ import { AppearanceHelper } from "../appBase/helpers/AppearanceHelper";
 
 interface Props {
   user: UserInterface,
-  nameUpdateFunction: (firstName: string, lastName: string) => void
+  nameUpdateFunction: (displayName: string) => void
 }
 
 export const Header: React.FC<Props> = (props) => {
@@ -14,9 +14,9 @@ export const Header: React.FC<Props> = (props) => {
 
   const toggleUserMenu = (e: React.MouseEvent) => { e.preventDefault(); setShowUserMenu(!showUserMenu); }
 
-  const updateName = (firstName: string, lastName: string) => {
+  const updateName = (displayName: string) => {
     setShowUserMenu(false);
-    props.nameUpdateFunction(firstName, lastName);
+    props.nameUpdateFunction(displayName);
   }
 
   const getLoginLink = () => {

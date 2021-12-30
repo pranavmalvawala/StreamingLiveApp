@@ -3,15 +3,14 @@ import { UserInterface, ApiHelper } from "../../../helpers";
 import { Row, Col, InputGroup } from "react-bootstrap"
 
 interface Props {
-    user: UserInterface,
-    updateFunction: (firstName: string, lastName: string) => void,
-    promptName: boolean
+  user: UserInterface,
+  updateFunction: (displayName: string) => void,
+  promptName: boolean
 }
 
 export const ChatName: React.FC<Props> = (props) => {
   const [edit, setEdit] = React.useState(false);
-  const [firstName, setFirstName] = React.useState("");
-  const [lastName, setLastName] = React.useState("");
+  const [displayName, setDisplayName] = React.useState("");
 
   const editMode = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -20,11 +19,8 @@ export const ChatName: React.FC<Props> = (props) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.currentTarget.value;
     switch (e.currentTarget.name) {
-      case "firstName":
-        setFirstName(val);
-        break;
-      case "lastName":
-        setLastName(val);
+      case "displayName":
+        setDisplayName(val);
         break;
       default:
         break;
@@ -33,14 +29,13 @@ export const ChatName: React.FC<Props> = (props) => {
 
   const handleUpdate = (e: React.MouseEvent) => {
     e.preventDefault();
-    const trimmedFirst = firstName.trim();
-    const trimmedLast = lastName.trim();
-    if (!trimmedFirst || !trimmedLast) {
+    const trimmedName = displayName.trim();
+    if (!trimmedName) {
       alert("Please enter a full name");
       return;
     }
-    if (ApiHelper.isAuthenticated) ApiHelper.post("/users/setDisplayName", { firstName: trimmedFirst, lastName: trimmedLast }, "AccessApi");
-    props.updateFunction(trimmedFirst, trimmedLast);
+    //if (ApiHelper.isAuthenticated) ApiHelper.post("/users/setDisplayName", { firstName: trimmedFirst, lastName: trimmedLast }, "AccessApi");
+    props.updateFunction(trimmedName);
     setEdit(false);
   }
 
@@ -51,8 +46,7 @@ export const ChatName: React.FC<Props> = (props) => {
     <Row style={{ marginRight: 0 }}>
       <Col>
         <InputGroup size="sm">
-          <input id="nameText" name="firstName" type="text" className="form-control form-control-sm" placeholder="John" value={firstName} onChange={handleChange} />
-          <input id="nameText" name="lastName" type="text" className="form-control form-control-sm" placeholder="Smith" value={lastName} onChange={handleChange} />
+          <input id="nameText" name="displayName" type="text" className="form-control form-control-sm" placeholder="John Smith" value={displayName} onChange={handleChange} />
           <InputGroup.Append>
             <button id="setNameButton" className="btn btn-primary btn-sm" onClick={handleUpdate}>Update</button>
           </InputGroup.Append>
