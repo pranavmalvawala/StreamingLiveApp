@@ -17,4 +17,3 @@ export class UserHelper extends BaseUserHelper {
   }*/
 
 }
-

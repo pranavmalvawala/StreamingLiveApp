@@ -9,35 +9,35 @@ export interface ServiceInterface { videoUrl: string, serviceTime: string, durat
 export interface ConfigurationInterface { keyName?: string, churchId?: string, appearance: AppearanceInterface, buttons?: ButtonInterface[], tabs?: TabInterface[], services?: ServiceInterface[], switchToConversationId: string, jitsiRoom: string }
 
 export class ConfigHelper {
-    static current: ConfigurationInterface;
+  static current: ConfigurationInterface;
 
-    static async load(keyName: string) {
-      let result: ConfigurationInterface = await fetch(`${EnvironmentHelper.StreamingLiveApi}/preview/data/${keyName}`).then(response => response.json());
-      result.appearance = await AppearanceHelper.load(result.churchId);
-      ServicesHelper.updateServiceTimes(result);
-      result.keyName = keyName;
-      ConfigHelper.current = result;
-      return result;
-    }
+  static async load(keyName: string) {
+    let result: ConfigurationInterface = await fetch(`${EnvironmentHelper.StreamingLiveApi}/preview/data/${keyName}`).then(response => response.json());
+    result.appearance = await AppearanceHelper.load(result.churchId);
+    ServicesHelper.updateServiceTimes(result);
+    result.keyName = keyName;
+    ConfigHelper.current = result;
+    return result;
+  }
 
-    static setTabUpdated(tabType: string) {
-      for (let i = 0; i < ConfigHelper.current.tabs.length; i++) {
-        let t = ConfigHelper.current.tabs[i];
-        if (t.type === tabType) t.updated = true;
-      }
+  static setTabUpdated(tabType: string) {
+    for (let i = 0; i < ConfigHelper.current.tabs.length; i++) {
+      let t = ConfigHelper.current.tabs[i];
+      if (t.type === tabType) t.updated = true;
     }
+  }
 
-    static addMissingPrivateTab() {
-      let prayerTabIndex = -1;
-      for (let i = 0; i < ConfigHelper.current.tabs.length; i++) {
-        const t = ConfigHelper.current.tabs[i];
-        if (t.type === "prayer") prayerTabIndex = i;
-      }
-      if (prayerTabIndex === -1) {
-        ConfigHelper.current.tabs.push({ type: "prayer", icon: "fas fa-envelope", text: "Private Messages", url: "", data: "" })
-        ChatHelper.onChange();
-      }
+  static addMissingPrivateTab() {
+    let prayerTabIndex = -1;
+    for (let i = 0; i < ConfigHelper.current.tabs.length; i++) {
+      const t = ConfigHelper.current.tabs[i];
+      if (t.type === "prayer") prayerTabIndex = i;
     }
+    if (prayerTabIndex === -1) {
+      ConfigHelper.current.tabs.push({ type: "prayer", icon: "fas fa-envelope", text: "Private Messages", url: "", data: "" })
+      ChatHelper.onChange();
+    }
+  }
 
 }
 

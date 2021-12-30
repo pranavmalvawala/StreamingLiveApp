@@ -13,27 +13,27 @@ export type PayloadAction = "message" | "deleteMessage" | "callout" | "attendanc
 export interface PayloadInterface { churchId: string, conversationId: string, action: PayloadAction, data: any }
 
 export interface ChatEventsInterface {
-    messageHandler: (message: MessageInterface) => void,
-    deleteHandler: (messageId: string) => void,
-    calloutHandler: (message: MessageInterface) => void,
-    attendanceHandler: (attendance: AttendanceInterface) => void,
-    prayerRequestHandler: (conversation: ConversationInterface) => void,
-    privateMessageHandler: (conversation: ConversationInterface) => void,
-    privateRoomAddedHandler: (conversation: ConversationInterface) => void,
-    videoChatInviteHandler: (roomName: string) => void,
-    disconnectHandler: () => void,
+  messageHandler: (message: MessageInterface) => void,
+  deleteHandler: (messageId: string) => void,
+  calloutHandler: (message: MessageInterface) => void,
+  attendanceHandler: (attendance: AttendanceInterface) => void,
+  prayerRequestHandler: (conversation: ConversationInterface) => void,
+  privateMessageHandler: (conversation: ConversationInterface) => void,
+  privateRoomAddedHandler: (conversation: ConversationInterface) => void,
+  videoChatInviteHandler: (roomName: string) => void,
+  disconnectHandler: () => void,
 }
 
 export interface ChatRoomInterface {
-    //title: string,
-    //conversationId: string,
-    conversation: ConversationInterface
-    attendance: AttendanceInterface,
-    messages: MessageInterface[],
-    callout: MessageInterface,
-    prayerRequests?: ConversationInterface[],
-    //contentId: string,
-    joined: boolean
+  //title: string,
+  //conversationId: string,
+  conversation: ConversationInterface
+  attendance: AttendanceInterface,
+  messages: MessageInterface[],
+  callout: MessageInterface,
+  prayerRequests?: ConversationInterface[],
+  //contentId: string,
+  joined: boolean
 }
 
 export interface ChatStateInterface { mainRoom: ChatRoomInterface, hostRoom: ChatRoomInterface, privateRooms: ChatRoomInterface[], chatEnabled: boolean, user: ChatUserInterface }
