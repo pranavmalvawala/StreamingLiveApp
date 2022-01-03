@@ -1,19 +1,18 @@
 import React from "react";
 import { Theme, EnvironmentHelper } from "./components";
-import { RouteComponentProps } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-type TParams = { churchId: string, id: string };
-
-export const Page = ({ match }: RouteComponentProps<TParams>) => {
+export const Page = () => {
+  const params = useParams();
 
   const [content, setContent] = React.useState("");
 
   const init = React.useCallback(async () => {
-    const path = `${EnvironmentHelper.ContentRoot}/${match.params.churchId}/pages/${match.params.id}.html`;
+    const path = `${EnvironmentHelper.ContentRoot}/${params.churchId}/pages/${params.id}.html`;
     fetch(path)
       .then(response => response.text())
       .then(c => { setContent(c) });
-  }, [match.params.id, match.params.churchId]);
+  }, [params.id, params.churchId]);
 
   React.useEffect(() => {
     init()

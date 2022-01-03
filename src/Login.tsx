@@ -3,7 +3,7 @@ import { useCookies } from "react-cookie";
 import { ApiHelper } from "./helpers"
 import { Authenticated } from "./Authenticated";
 import UserContext from "./UserContext";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { LoginPage } from "./appBase/pageComponents/LoginPage";
 import { UserHelper, ConfigHelper, Permissions } from "./helpers";
 import { AppearanceHelper } from "./appBase/helpers/AppearanceHelper";
@@ -11,10 +11,11 @@ import ReactGA from "react-ga";
 import { ChurchInterface, UserInterface, EnvironmentHelper } from "./helpers";
 import Cookies from "js-cookie";
 
-export const Login: React.FC = (props: any) => {
+export const Login: React.FC = () => {
   const [cookies] = useCookies(["jwt"]);
   let { from } = (useLocation().state as any) || { from: { pathname: "/" } };
   const context = React.useContext(UserContext);
+  const navigate = useNavigate();
 
   const successCallback = () => {
     Cookies.set("displayName", "Anonymous");
@@ -32,7 +33,7 @@ export const Login: React.FC = (props: any) => {
   }
 
   if (context.userName === "" || !ApiHelper.isAuthenticated) {
-    let search = new URLSearchParams(props.location.search);
+    let search = new URLSearchParams(window.location.search);
     let jwt = search.get("jwt") || cookies.jwt;
     let auth = search.get("auth");
     if (!jwt) jwt = "";
@@ -55,6 +56,6 @@ export const Login: React.FC = (props: any) => {
     );
   } else {
     let path = from.pathname === "/" ? "/" : from.pathname;
-    return <Authenticated location={path}></Authenticated>;
+    navigate(path)
   }
 };

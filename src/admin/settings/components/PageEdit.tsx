@@ -28,9 +28,9 @@ export const PageEdit: React.FC<Props> = (props) => {
     let p = { ...page };
     switch (e.currentTarget.name) {
       case "name": p.name = val; break;
-            //case "type": t.tabType = val; break;
-            //case "page": t.tabData = val; break;
-            //case "url": t.url = val; break;
+      //case "type": t.tabType = val; break;
+      //case "page": t.tabData = val; break;
+      //case "url": t.url = val; break;
     }
     setPage(p);
   }
@@ -74,11 +74,9 @@ export const PageEdit: React.FC<Props> = (props) => {
     if (UniqueIdHelper.isMissing(props.page.id)) setEditorState(EditorState.createWithContent(ContentState.createFromText("")));
     else {
       const path = `${EnvironmentHelper.ContentRoot}/${props.page.churchId}/pages/${props.page.id}.html`;
-      console.log(path);
       fetch(path)
         .then(response => response.text())
         .then(content => {
-          console.log(content);
           const draft = htmlToDraft(content)
           setEditorState(EditorState.createWithContent(ContentState.createFromBlockArray(draft.contentBlocks)));
         })

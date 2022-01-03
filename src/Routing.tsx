@@ -20,6 +20,6 @@ export const Routing: React.FC = () => {
     return <Unauthenticated />;
   }
   else {
-    return <Authenticated location="/" />;
+    return <Authenticated />;
   }
 }

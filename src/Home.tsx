@@ -3,13 +3,13 @@ import { ServicesHelper, ConversationInterface, ApiHelper, UserHelper, ConfigHel
 import { ChatHelper } from "./helpers/ChatHelper";
 import { SocketHelper } from "./helpers/SocketHelper";
 import Cookies from "js-cookie";
-import { useHistory } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 export const Home: React.FC = () => {
   const [config, setConfig] = React.useState<ConfigurationInterface>({} as ConfigurationInterface);
   const [currentService, setCurrentService] = React.useState<ServiceInterface | null>(null);
   const [chatState, setChatState] = React.useState<ChatStateInterface>(null);
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const loadConfig = React.useCallback(async () => {
     setConfig(ConfigHelper.current);
@@ -85,9 +85,9 @@ export const Home: React.FC = () => {
     const jwt = Cookies.get("jwt")
 
     if (jwt && ChatHelper.current.user.firstName === "Anonymous") {
-      history.push("/login")
+      navigate("/login")
     }
-  }, [history])
+  }, [navigate])
 
   return (
     <>

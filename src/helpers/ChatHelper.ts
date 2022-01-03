@@ -104,7 +104,6 @@ export class ChatHelper {
   }
 
   static handleVideoChatInvite = (roomName: string) => {
-    console.log("handleVideoChatInvite called")
     ConfigHelper.current.jitsiRoom = roomName;
     ChatHelper.onChange();
   }

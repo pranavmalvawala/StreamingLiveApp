@@ -25,7 +25,6 @@ export const ChatSend: React.FC<Props> = (props) => {
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e);
     setMessage(e.currentTarget.value);
   }
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => { if (e.keyCode === 13) sendMessage(); }

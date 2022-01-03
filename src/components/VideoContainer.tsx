@@ -23,7 +23,6 @@ export const VideoContainer: React.FC<Props> = (props) => {
   }
 
   const leaveJitsi = () => {
-    console.log("LEAVING")
     ConfigHelper.current.jitsiRoom = null;
     ChatHelper.onChange();
   }
