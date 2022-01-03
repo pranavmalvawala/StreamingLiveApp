@@ -1,7 +1,6 @@
 import React from "react";
 import { useCookies } from "react-cookie";
 import { ApiHelper } from "./helpers"
-import { Authenticated } from "./Authenticated";
 import UserContext from "./UserContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { LoginPage } from "./appBase/pageComponents/LoginPage";
