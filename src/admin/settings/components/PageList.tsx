@@ -1,7 +1,13 @@
 import React from "react";
 import { DisplayBox, PageInterface } from "."
+import { Loading } from "../../../appBase/components";
 
-interface Props { pages: PageInterface[], addFunction?: () => void, editFunction?: (page: PageInterface) => void }
+interface Props {
+  pages: PageInterface[],
+  addFunction?: () => void,
+  editFunction?: (page: PageInterface) => void
+  isLoading: boolean
+}
 
 export const PageList: React.FC<Props> = (props) => {
   const getEditContent = () => <a href="about:blank" onClick={handleAdd}><i className="fas fa-plus"></i></a>
@@ -26,14 +32,16 @@ export const PageList: React.FC<Props> = (props) => {
       });
       return rows;
     }
+  }
 
+  const getTable = () => {
+    if (props.isLoading) return <Loading />
+    else return (<table className="table table-sm">{getRows()}</table>);
   }
 
   return (
     <DisplayBox headerIcon="fas fa-code" headerText="Pages" editContent={getEditContent()}>
-      <table className="table table-sm">
-        {getRows()}
-      </table>
+      {getTable()}
     </DisplayBox>
   );
 }

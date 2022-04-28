@@ -1,10 +1,12 @@
 import React from "react";
 import { DisplayBox, ServiceEdit, AdminServiceInterface, ApiHelper, UserHelper } from ".";
+import { Loading } from "../../../appBase/components";
 import { DateHelper } from "../../../helpers";
 
 export const Services: React.FC = () => {
   const [services, setServices] = React.useState<AdminServiceInterface[]>([]);
   const [currentService, setCurrentService] = React.useState<AdminServiceInterface>(null);
+  const [isLoading, setIsLoading] = React.useState(true);
 
   const handleUpdated = () => { setCurrentService(null); loadData(); }
   const getEditContent = () => <a href="about:blank" onClick={handleAdd}><i className="fas fa-plus"></i></a>
@@ -15,6 +17,7 @@ export const Services: React.FC = () => {
         s.serviceTime.setMinutes(s.serviceTime.getMinutes() + s.timezoneOffset);
       })
       setServices(data);
+      setIsLoading(false);
     });
   }
 
@@ -55,18 +58,22 @@ export const Services: React.FC = () => {
     return rows;
   }
 
+  const getTable = () => {
+    if (isLoading) return <Loading />
+    else return (<table className="table table-sm">
+      <tbody>
+        {getRows()}
+      </tbody>
+    </table>);
+  }
+
   React.useEffect(() => { loadData(); }, []);
 
   if (currentService !== null) return <ServiceEdit currentService={currentService} updatedFunction={handleUpdated} />;
   else return (
     <DisplayBox headerIcon="far fa-calendar-alt" headerText="Services" editContent={getEditContent()} id="servicesBox">
-      <table className="table table-sm">
-        <tbody>
-          {getRows()}
-        </tbody>
-      </table>
+      {getTable()}
     </DisplayBox>
-
   );
 
 }

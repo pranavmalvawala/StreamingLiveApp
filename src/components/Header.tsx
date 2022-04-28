@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom"
-import { NavItems, UserInterface, ChatName, UserHelper, EnvironmentHelper, ApiHelper, ChatHelper, ConfigHelper } from "."
+import { NavItems, UserInterface, ChatName, UserHelper, EnvironmentHelper, ApiHelper, ChatHelper, ConfigHelper, ConfigurationInterface } from "."
 import { AppearanceHelper } from "../appBase/helpers/AppearanceHelper";
 
 interface Props {
   user: UserInterface,
-  nameUpdateFunction: (displayName: string) => void
+  nameUpdateFunction: (displayName: string) => void,
+  config?: ConfigurationInterface
 }
 
 export const Header: React.FC<Props> = (props) => {
@@ -13,6 +14,7 @@ export const Header: React.FC<Props> = (props) => {
   const [promptName, setPromptName] = React.useState(false);
 
   const toggleUserMenu = (e: React.MouseEvent) => { e.preventDefault(); setShowUserMenu(!showUserMenu); }
+  const config = (props.config) ? props.config : ConfigHelper.current;
 
   const updateName = (displayName: string) => {
     setShowUserMenu(false);
@@ -43,7 +45,7 @@ export const Header: React.FC<Props> = (props) => {
       <div id="userMenu">
         <div>
           <ul className="nav flex-column d-xl-none">
-            <NavItems />
+            <NavItems config={config} />
           </ul>
           <ul className="nav flex-column">
             {getSettingLink()}
@@ -55,26 +57,22 @@ export const Header: React.FC<Props> = (props) => {
     else return null;
   }
 
-  /*
-    var imgSrc = "/images/logo-header.png";
-    if (props.logoUrl !== undefined) {
-        if (props.logoUrl.startsWith("data:")) imgSrc = props.logoUrl;
-        else imgSrc = EnvironmentHelper.ContentRoot + "/" + props.logoUrl;
-    }*/
-  let imgSrc = AppearanceHelper.getLogo(ConfigHelper.current?.appearance, "images/logo-header.png", "/images/logo.png", ConfigHelper.current?.appearance?.primaryColor || "#FFF");
+  let imgSrc = AppearanceHelper.getLogo(config.appearance, "images/logo-header.png", "/images/logo.png", config.appearance?.primaryColor || "#FFF");
 
-  setTimeout(() => {
-    try {
-      const { firstName, lastName } = ChatHelper.current.user;
-      const displayName = `${firstName} ${lastName}`;
-      if (displayName.trim() === "" || displayName === "Anonymous") {
-        if (!promptName) {
-          setShowUserMenu(true);
-          setPromptName(true);
+  if (!props.config) {
+    setTimeout(() => {
+      try {
+        const { firstName, lastName } = ChatHelper.current.user;
+        const displayName = `${firstName} ${lastName}`;
+        if (displayName.trim() === "" || displayName === "Anonymous") {
+          if (!promptName) {
+            setShowUserMenu(true);
+            setPromptName(true);
+          }
         }
-      }
-    } catch { }
-  }, 30000);
+      } catch { }
+    }, 30000);
+  }
 
   const { firstName, lastName } = props.user || {};
 
@@ -85,7 +83,7 @@ export const Header: React.FC<Props> = (props) => {
         <div id="liveButtons" className="d-none d-xl-flex">
           <div>
             <ul className="nav nav-fill">
-              <NavItems />
+              <NavItems config={config} />
             </ul>
           </div>
         </div>

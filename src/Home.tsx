@@ -13,16 +13,9 @@ export const Home: React.FC = () => {
 
   const loadConfig = React.useCallback(async () => {
     setConfig(ConfigHelper.current);
-    //const keyName = window.location.hostname.split(".")[0];
-    //const localThemeConfig = localStorage.getItem(`theme_${keyName}`);
-    //setConfig(JSON.parse(localThemeConfig) || {});
-
-    //ConfigHelper.load(keyName).then(data => {
-    //var d: ConfigurationInterface = data;
     ChatHelper.initChat().then(() => joinMainRoom(ConfigHelper.current.churchId));
     checkHost(ConfigHelper.current);
     setConfig(c => ({ ...c, ...ConfigHelper.current }));
-    //});
   }, []);
 
   const joinMainRoom = async (churchId: string) => {

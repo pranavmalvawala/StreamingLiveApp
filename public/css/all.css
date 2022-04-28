@@ -1,18 +1,24 @@
-body{background-color: #EEE !important;}
+body {
+  background-color: #EEE !important;
+}
+
 #liveContainer {
   height: 100%;
   width: 100%;
   background-color: #000;
 }
+
 #root {
   height: 100vh;
 }
+
 body {
   margin: 0px;
   padding: 0px;
   background-color: #000;
   font-family: "Roboto", sans-serif !important;
 }
+
 #liveContainer {
   display: flex;
   flex-direction: column;
@@ -26,6 +32,7 @@ body {
   padding-bottom: 3px;
   box-shadow: 0px 3px 3px 0px #000;
 }
+
 #logo {
   flex: 1;
   padding-left: 20px;
@@ -33,12 +40,14 @@ body {
   flex-direction: row;
   align-content: space-around;
 }
+
 #logo img {
   max-width: 100%;
   align-self: center;
   display: flex;
   max-height: 45px;
 }
+
 #logo a {
   flex: 1 1 0px;
   align-self: center;
@@ -51,14 +60,17 @@ body {
   align-content: space-around;
   text-align: right;
 }
+
 #userLink div {
   align-self: center;
   flex: 1 1 100%;
   padding-right: 20px;
 }
+
 #userLink div a {
   color: var(--primaryContrast);
 }
+
 #userLink div a:hover {
   text-decoration: none;
 }
@@ -70,7 +82,8 @@ body {
   left: 0px;
   right: 0px;
 }
-#userMenu > div {
+
+#userMenu>div {
   width: 250px;
   max-width: 100%;
   position: relative;
@@ -80,13 +93,16 @@ body {
   color: var(--primaryContrast);
   padding: 8px;
 }
+
 #userMenu a {
   color: var(--primaryContrast);
 }
+
 #userMenu .nav-item,
 #userMenu .divider {
   border-bottom: 1px solid var(--primaryContrast);
 }
+
 #userMenu .nav:last-child .nav-item:last-child {
   border-bottom: none;
 }
@@ -97,22 +113,26 @@ body {
   flex-direction: row;
   align-content: space-around;
 }
+
 #liveButtons div {
   align-self: center;
   flex: 1 1 100%;
   padding-right: 5px;
 }
+
 #liveButtons ul {
   margin-left: auto;
   margin-right: auto;
   width: max-content;
 }
+
 #liveButtons a {
   color: var(--primaryContrast);
   padding-left: 20px;
   padding-right: 20px;
   border-right: 1px solid var(--primaryContrast);
 }
+
 #liveButtons li:last-child a {
   border-right: none;
 }
@@ -122,11 +142,13 @@ body {
   background-color: var(--primaryColor);
   border-color: var(--primaryContrast);
 }
+
 .btn-secondary {
   color: var(--primaryColor);
   background-color: var(--primaryContrast);
   border-color: var(--primaryColor);
 }
+
 .btn-secondary:hover {
   color: var(--primaryContrast);
   background-color: var(--primaryColor);
@@ -137,18 +159,21 @@ body {
   flex: 9;
   display: flex;
 }
+
 #videoContainer {
   flex: 3;
   overflow: hidden;
   display: flex;
   flex-direction: row;
 }
+
 #videoContainer iframe {
   width: 100%;
   flex: 1 1 100%;
   align-self: center;
   height: 100%;
 }
+
 #noVideoContent {
   width: 100%;
   color: #fff;
@@ -159,15 +184,18 @@ body {
   text-align: center;
   align-self: center;
 }
+
 #interactionContainer {
   flex: 1;
   background-color: #fff;
   display: flex;
   flex-direction: column;
 }
+
 #interactionContainer iframe {
   width: 100%;
 }
+
 /*
 #tabs {flex:0 0 40px;display:flex;background-color:#FFF; border-bottom:2px solid var(--primaryColor); }
 #tabs > *:not(:first-child) {border-left:1px solid #005288;}
@@ -182,10 +210,12 @@ body {
   color: var(--secondaryContrast);
   background-color: var(--secondaryColor);
 }
+
 .tab:hover {
   text-decoration: none;
   color: var(--secondaryContrast);
 }
+
 .tab i {
   padding-right: 10px;
   padding-left: 10px;
@@ -210,12 +240,14 @@ body {
   background-color: #fff;
   flex: 1;
 }
+
 #chatReceive,
 #prayerReceive {
   flex: 1 0 0;
   padding: 10px;
   overflow-y: scroll;
 }
+
 #callout {
   padding-bottom: 5px;
   border-bottom: 2px solid #eee;
@@ -225,6 +257,7 @@ body {
   padding-top: 5px;
   background-color: #ffffd0;
 }
+
 #fbComments {
   padding-bottom: 5px;
   border-bottom: 2px solid #eee;
@@ -234,6 +267,7 @@ body {
   padding-top: 5px;
   background-color: #ffffd0;
 }
+
 #prayerContainer {
   padding-left: 25%;
   padding-right: 25%;
@@ -254,30 +288,42 @@ body {
   padding: 10px;
   overflow-y: scroll;
 }
+
 #attendance span {
   float: right;
   color: #999;
 }
+
 #attendance i {
   color: #999;
   margin-right: 10px;
 }
+
 #attendanceCount {
   flex: 0 0 25px;
   background-color: #ddd;
   display: block;
   text-align: center;
 }
+
 #attendanceCount:hover {
   text-decoration: none;
 }
-.attendanceExpanded {padding-left: 20px;}
-.attendanceExpanded span.id {font-size: 11px;float:none !important;}
+
+.attendanceExpanded {
+  padding-left: 20px;
+}
+
+.attendanceExpanded span.id {
+  font-size: 11px;
+  float: none !important;
+}
 
 #chatSend,
 prayerSend {
   flex: 0 0 0px;
 }
+
 #chatName,
 #prayerName {
   flex: 0 0 0px;
@@ -290,9 +336,11 @@ prayerSend {
   border-color: #3975ea !important;
   color: #fff;
 }
+
 .fbButton i {
   font-size: 18px;
 }
+
 .fbButton:hover {
   color: #fff;
   text-decoration: none;
@@ -302,6 +350,7 @@ prayerSend {
   padding: 0px;
   width: 50%;
 }
+
 #chatTabs a {
   padding-top: 4px;
   padding-bottom: 4px;
@@ -318,6 +367,7 @@ prayerSend {
   color: var(--primaryColor);
   background-color: #fff;
 }
+
 #sendMessageButton {
   border-radius: 0px;
 }
@@ -326,17 +376,21 @@ prayerSend {
   display: none;
   width: 100%;
 }
+
 #altTabs td {
   margin: 0px;
   padding-top: 0px;
   padding-bottom: 0px;
 }
+
 #altTabs td:first-child {
   padding-left: 0px;
 }
+
 #altTabs td:last-child {
   padding-right: 0px;
 }
+
 .altTab {
   color: var(--primaryContrast);
   background-color: var(--primaryColor);
@@ -348,10 +402,12 @@ prayerSend {
   font-weight: bold;
   font-size: 18px;
 }
+
 .altTab:hover {
   text-decoration: none;
   color: var(--primaryContrast);
 }
+
 .altTab.active {
   color: var(--primaryColor);
   background-color: var(--primaryContrast);
@@ -361,6 +417,7 @@ prayerSend {
   border: 1px solid #e7e7e7;
   margin-bottom: 30px;
 }
+
 .inputBox .header {
   border-top: 4px solid #03a9f4;
   background-color: #fff;
@@ -370,15 +427,19 @@ prayerSend {
   color: #333;
   border-bottom: 1px solid #ddd;
 }
+
 .inputBox .header i {
   margin-right: 5px;
 }
+
 .inputBox .header .col-4 i {
   color: #77cc00;
 }
+
 .inputBox .header .btn {
   margin-top: -2px;
 }
+
 .inputBox .subhead {
   background-color: #fff;
   font-weight: 600;
@@ -387,35 +448,45 @@ prayerSend {
   color: #333;
   border-bottom: 1px solid #ddd;
 }
+
 .inputBox .content {
   padding: 10px;
   background-color: #ffffff;
 }
+
 .inputBox .content p {
   color: #666;
 }
+
 .inputBox .footer .btn {
   border-radius: 0px;
 }
+
 .inputBox .footer .col {
   padding-left: 0px;
   padding-right: 0px;
 }
+
 .inputBox .footer .col:first-child {
   padding-left: 15px;
 }
+
 .inputBox .footer .col:first-child .btn {
   border-bottom-left-radius: 5px;
 }
+
 .inputBox .footer .col:last-child {
   padding-right: 15px;
 }
+
 .inputBox .footer .col:last-child .btn {
   border-bottom-right-radius: 5px;
 }
+
 .inputBox .content label {
   color: #999;
 }
+
 .inputBox .section {
   font-weight: 600;
   font-size: 16px;
@@ -427,13 +498,16 @@ prayerSend {
 .inputBox .content ul {
   padding-left: 0px;
 }
+
 .inputBox .content li {
   list-style-type: none;
   margin-bottom: 10px;
 }
+
 .inputBox .content li i {
   margin-right: 5px;
 }
+
 .inputBox .content td i {
   margin-right: 5px;
 }
@@ -441,6 +515,7 @@ prayerSend {
 .message .delete {
   float: right;
 }
+
 .message.understate {
   color: #777;
 }
@@ -451,6 +526,7 @@ prayerSend {
   padding-right: 20px;
   border-top: 1px solid #999;
 }
+
 #emojiContent a:hover {
   text-decoration: none;
 }
@@ -468,37 +544,42 @@ prayerSend {
   color: var(--primaryColor);
 }
 
+#signInButton {
+  color: #FFF;
+}
+
 @media (max-aspect-ratio: 5/3) {
   #body {
     flex-direction: column;
   }
+
   #videoContainer {
     flex: 2;
   }
+
   #interactionContainer {
     flex: 3;
   }
+
   .tab {
     display: none;
   }
+
   #altTabs {
     display: table;
   }
 }
-/*
-@keyframes pulse {
-    0% { background-color:var(--primaryColor); }
-    50% { background-color:#FFFFD0; }
-    100% { background-color:var(--primaryColor); } 
- } 
-*/
+
+
 @keyframes pulse {
   0% {
     opacity: 1;
   }
+
   50% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }

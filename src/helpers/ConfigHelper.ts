@@ -11,12 +11,19 @@ export interface ConfigurationInterface { keyName?: string, churchId?: string, a
 export class ConfigHelper {
   static current: ConfigurationInterface;
 
+  static loadCached(keyName: string) {
+    const json = localStorage.getItem("config_" + keyName);
+    if (!json) return null;
+    else return JSON.parse(json) as ConfigurationInterface;
+  }
+
   static async load(keyName: string) {
     let result: ConfigurationInterface = await fetch(`${EnvironmentHelper.StreamingLiveApi}/preview/data/${keyName}`).then(response => response.json());
     result.appearance = await AppearanceHelper.load(result.churchId);
     ServicesHelper.updateServiceTimes(result);
     result.keyName = keyName;
     ConfigHelper.current = result;
+    localStorage.setItem("config_" + keyName, JSON.stringify(ConfigHelper.current));
     return result;
   }
 

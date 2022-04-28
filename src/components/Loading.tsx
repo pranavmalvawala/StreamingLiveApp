@@ -1,11 +1,14 @@
 import React from "react";
+import { Loading as LoadingComponent } from "../appBase/components"
 
 export const Loading = () => {
-  const imgSrc = "/images/logo-login.png";
+  const imgSrc = "/images/logo-loading.png";
   return (
-    <div className="smallCenterBlock" style={{ marginTop: 100 }}>
-      <img src={imgSrc} alt="logo" className="img-fluid" style={{ marginBottom: 50 }} />
-      <div className="text-center">Loading..</div>
+    <div id="liveContainer">
+      <div className="smallCenterBlock" style={{ marginTop: 150 }}>
+        <img src={imgSrc} alt="logo" className="img-fluid" />
+        <LoadingComponent color="#FFFFFF" />
+      </div>
     </div>
   )
 }

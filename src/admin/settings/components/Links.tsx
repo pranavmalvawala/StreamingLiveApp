@@ -1,13 +1,15 @@
 import React from "react";
 import { DisplayBox, LinkInterface, LinkEdit, ApiHelper, UserHelper } from "."
+import { Loading } from "../../../appBase/components";
 
 export const Links: React.FC = () => {
   const [links, setLinks] = React.useState<LinkInterface[]>([]);
   const [currentLink, setCurrentLink] = React.useState<LinkInterface>(null);
+  const [isLoading, setIsLoading] = React.useState(true);
 
   const handleUpdated = () => { setCurrentLink(null); loadData(); }
   const getEditContent = () => <a href="about:blank" onClick={handleAdd}><i className="fas fa-plus"></i></a>
-  const loadData = () => { ApiHelper.get("/links?category=link", "StreamingLiveApi").then(data => setLinks(data)); }
+  const loadData = () => { ApiHelper.get("/links?category=link", "StreamingLiveApi").then(data => { setLinks(data); setIsLoading(false); }); }
   const saveChanges = () => { ApiHelper.post("/links", links, "StreamingLiveApi").then(loadData); }
 
   const handleAdd = (e: React.MouseEvent) => {
@@ -59,16 +61,20 @@ export const Links: React.FC = () => {
     return rows;
   }
 
+  const getTable = () => {
+    if (isLoading) return <Loading />
+    else return (<table className="table table-sm">
+      <tbody>
+        {getLinks()}
+      </tbody>
+    </table>)
+  }
   React.useEffect(() => { loadData(); }, []);
 
   if (currentLink !== null) return <LinkEdit currentLink={currentLink} updatedFunction={handleUpdated} />;
   else return (
     <DisplayBox headerIcon="fas fa-link" headerText="Header Links" editContent={getEditContent()}>
-      <table className="table table-sm">
-        <tbody>
-          {getLinks()}
-        </tbody>
-      </table>
+      {getTable()}
     </DisplayBox>
   );
 }

@@ -4,8 +4,9 @@ import { PageList, PageEdit, ApiHelper, PageInterface, UserHelper } from "./"
 export const Pages: React.FC = () => {
   const [pages, setPages] = React.useState<PageInterface[]>([]);
   const [currentPage, setCurrentPage] = React.useState<PageInterface>(null);
+  const [isLoading, setIsLoading] = React.useState(true);
 
-  const loadData = () => { ApiHelper.get("/pages", "StreamingLiveApi").then(data => setPages(data)); }
+  const loadData = () => { ApiHelper.get("/pages", "StreamingLiveApi").then(data => { setPages(data); setIsLoading(false); }) }
   const loadPage = (id: string) => { ApiHelper.get("/pages/" + id, "StreamingLiveApi").then(data => setCurrentPage(data)); }
   const handleUpdate = () => { setCurrentPage(null); loadData(); }
   const handleAdd = () => { setCurrentPage({ churchId: UserHelper.currentChurch.id, lastModified: new Date(), name: "" }) }
@@ -15,7 +16,7 @@ export const Pages: React.FC = () => {
 
   const getContent = () => {
     if (currentPage !== null) return <PageEdit page={currentPage} updatedFunction={handleUpdate} />;
-    else return <PageList pages={pages} addFunction={handleAdd} editFunction={handleEdit} />
+    else return <PageList pages={pages} addFunction={handleAdd} editFunction={handleEdit} isLoading={isLoading} />
   }
 
   return (<>{getContent()}</>);

@@ -1,11 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom"
-import { ConfigHelper } from "../helpers";
+import { ConfigHelper, ConfigurationInterface } from "../helpers";
 
-export const NavItems = () => {
+interface Props { config: ConfigurationInterface }
+
+export const NavItems: React.FC<Props> = (props) => {
   let items = [];
-  for (let i = 0; i < ConfigHelper.current.buttons?.length; i++) {
-    let b = ConfigHelper.current.buttons[i];
+
+  for (let i = 0; i < props.config.buttons?.length; i++) {
+    let b = props.config.buttons[i];
     if (b.url === "/settings") {
       items.push(<li key={i} className="nav-item"><Link className="nav-link" to={b.url}>{b.text}</Link></li>);
     }
