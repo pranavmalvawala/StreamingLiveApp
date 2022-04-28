@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom"
-import { ConfigHelper, ConfigurationInterface } from "../helpers";
+import { ConfigurationInterface } from "../helpers";
 
 interface Props { config: ConfigurationInterface }
 
