@@ -5,6 +5,13 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "version": "dev",
+      "name": "Launch Edge",
+      "request": "launch",
+      "type": "msedge",
+      "url": "http://localhost:3201",
+      "webRoot": "${workspaceFolder}"
+    },{
       "type": "pwa-chrome",
       "request": "launch",
       "name": "Debug in Chrome",
