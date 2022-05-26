@@ -100,21 +100,26 @@ export const ServiceEdit: React.FC<Props> = (props) => {
   switch (currentService?.provider) {
     case "youtube_live":
     case "youtube_watchparty":
-      keyLabel = <>YouTube ID <span className="description">https://youtube.com/watch?v=<b style={{ color: "#24b8ff" }}>abcd1234</b></span></>;
+      keyLabel = <>YouTube ID <span className="description" style={{float: "right", marginTop: "5px"}}>https://youtube.com/watch?v=<b style={{ color: "#24b8ff" }}>abcd1234</b></span></>;
       keyPlaceholder = "abcd1234";
       break;
     case "vimeo_live":
     case "vimeo_watchparty":
-      keyLabel = <>Vimeo ID <span className="description">https://vimeo.com/<b>123456789</b></span></>;
+      keyLabel = <>Vimeo ID <span className="description" style={{float: "right", marginTop: "5px"}}>https://vimeo.com/<b>123456789</b></span></>;
       keyPlaceholder = "123456789";
       break;
     case "facebook_live":
-      keyLabel = <>Video ID <span className="description">https://facebook.com/video.php?v=<b>123456789</b></span></>;
+      keyLabel = <>Video ID <span className="description" style={{float: "right", marginTop: "5px"}}>https://facebook.com/video.php?v=<b>123456789</b></span></>;
       keyPlaceholder = "123456789";
       break;
   }
 
   let localServiceTime = currentService?.serviceTime;
+
+  let videoStartTime = currentService?.serviceTime?.getTime() - currentService?.earlyStart * 1000;
+  let videoEndTime = currentService?.serviceTime?.getTime() + currentService?.duration * 1000;
+  let chatAndPrayerStartTime = currentService?.serviceTime?.getTime() - currentService?.chatBefore * 1000;
+  let chatAndPrayerEndTime = currentService?.serviceTime?.getTime() + currentService?.chatAfter * 1000;
   return (
     <InputBox headerIcon="far fa-calendar-alt" headerText="Edit Service" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={checkDelete()}>
       <Row>
@@ -147,13 +152,13 @@ export const ServiceEdit: React.FC<Props> = (props) => {
       <Row>
         <Col>
           <FormGroup>
-            <label>Total Service Duration</label>
+            <label style={{width: "100%"}}>Total Service Duration <span className="description" style={{float: "right", marginTop: "5px"}}>{DateHelper.formatHtml5Time(new Date(videoStartTime))} - {DateHelper.formatHtml5Time(new Date(videoEndTime))}</span></label>
             <Duration totalSeconds={currentService?.duration} updatedFunction={totalSeconds => { let s = { ...currentService }; s.duration = totalSeconds; setCurrentService(s); }} />
           </FormGroup>
         </Col>
         <Col>
           <FormGroup>
-            <label>Start Video Early <span className="description"> (Optional) For countdowns</span></label>
+            <label style={{width: "100%"}}>Start Video Early <span className="description" style={{float: "right", marginTop: "5px"}}>(Optional) For countdowns</span></label>
             <Duration totalSeconds={currentService?.earlyStart} updatedFunction={totalSeconds => { let s = { ...currentService }; s.earlyStart = totalSeconds; setCurrentService(s); }} />
           </FormGroup>
         </Col>
@@ -161,7 +166,7 @@ export const ServiceEdit: React.FC<Props> = (props) => {
       <Row>
         <Col>
           <FormGroup>
-            <label>Enable Chat and Prayer</label>
+            <label style={{width: "48%"}}>Enable Chat and Prayer <span className="description" style={{float: "right", marginTop: "5px"}}>{DateHelper.formatHtml5Time(new Date(chatAndPrayerStartTime))} - {DateHelper.formatHtml5Time(new Date(chatAndPrayerEndTime))}</span></label>
             <Row>
               <Col>
                 <InputGroup>
@@ -201,7 +206,7 @@ export const ServiceEdit: React.FC<Props> = (props) => {
         </Col>
         <Col>
           <FormGroup>
-            <label id="videoKeyLabel">{keyLabel}</label>
+            <label id="videoKeyLabel" style={{width: "100%"}}>{keyLabel}</label>
             <input id="videoKeyText" type="text" className="form-control" name="providerKey" value={currentService?.providerKey} onChange={handleChange} placeholder={keyPlaceholder} />
           </FormGroup>
         </Col>
