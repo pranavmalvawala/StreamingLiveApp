@@ -1,6 +1,6 @@
 import React from "react";
 import { DisplayBox, LinkInterface, LinkEdit, ApiHelper, UserHelper } from "."
-import { Loading } from "../../../appBase/components";
+import { Loading, SmallButton } from "../../../appBase/components";
 
 export const Links: React.FC = () => {
   const [links, setLinks] = React.useState<LinkInterface[]>([]);
@@ -8,12 +8,11 @@ export const Links: React.FC = () => {
   const [isLoading, setIsLoading] = React.useState(true);
 
   const handleUpdated = () => { setCurrentLink(null); loadData(); }
-  const getEditContent = () => <a href="about:blank" onClick={handleAdd}><i className="fas fa-plus"></i></a>
+  const getEditContent = () => <SmallButton icon="add" text="Add" onClick={handleAdd} />
   const loadData = () => { ApiHelper.get("/links?category=link", "StreamingLiveApi").then(data => { setLinks(data); setIsLoading(false); }); }
   const saveChanges = () => { ApiHelper.post("/links", links, "StreamingLiveApi").then(loadData); }
 
-  const handleAdd = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const handleAdd = () => {
     let link: LinkInterface = { churchId: UserHelper.currentChurch.id, sort: links.length, text: "", url: "", linkType: "url", linkData: "", category: "link", icon: "" }
     setCurrentLink(link);
   }
@@ -44,15 +43,15 @@ export const Links: React.FC = () => {
     let idx = 0;
     let rows: JSX.Element[] = [];
     links.forEach(link => {
-      const upLink = (idx === 0) ? null : <a href="about:blank" data-idx={idx} onClick={moveUp}><i className="fas fa-arrow-up"></i></a>
-      const downLink = (idx === links.length - 1) ? null : <a href="about:blank" data-idx={idx} onClick={moveDown}><i className="fas fa-arrow-down"></i></a>
+      const upLink = (idx === 0) ? null : <a href="about:blank" data-idx={idx} onClick={moveUp}><i className="arrow_upward"></i></a>
+      const downLink = (idx === links.length - 1) ? null : <a href="about:blank" data-idx={idx} onClick={moveDown}><i className="arrow_downward"></i></a>
       rows.push(
         <tr key={idx}>
           <td><a href={link.url}>{link.text}</a></td>
           <td className="text-right">
             {upLink}
             {downLink}
-            <a href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); setCurrentLink(link); }}><i className="fas fa-pencil-alt"></i></a>
+            <a href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); setCurrentLink(link); }}><i className="edit"></i></a>
           </td>
         </tr>
       );
@@ -73,7 +72,7 @@ export const Links: React.FC = () => {
 
   if (currentLink !== null) return <LinkEdit currentLink={currentLink} updatedFunction={handleUpdated} />;
   else return (
-    <DisplayBox headerIcon="fas fa-link" headerText="Header Links" editContent={getEditContent()}>
+    <DisplayBox headerIcon="link" headerText="Header Links" editContent={getEditContent()}>
       {getTable()}
     </DisplayBox>
   );

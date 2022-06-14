@@ -1,20 +1,31 @@
 import React from "react"
+import { ChurchInterface, PersonInterface, UserContextInterface, UserInterface } from "./helpers";
 
-export interface UserContextInterface {
-    userName: string,
-    setUserName: (userName: string) => void,
-    churchName: string,
-    setChurchName: (churchName: string) => void,
+interface SLUserContextInterface extends UserContextInterface {
+  displayName: string,
+  setDisplayName: (name: string) => void
 }
 
-const UserContext = React.createContext<UserContextInterface | undefined>(undefined);
-interface Props { children: React.ReactNode; }
+const UserContext = React.createContext<SLUserContextInterface | undefined>(undefined);
+
+interface Props {
+  children: React.ReactNode;
+}
 
 export const UserProvider = ({ children }: Props) => {
-  const [userName, setUserName] = React.useState("");
-  const [churchName, setChurchName] = React.useState("");
-  return <UserContext.Provider value={{ userName, setUserName, churchName, setChurchName }}>{children} </UserContext.Provider>
+  const [displayName, setDisplayName] = React.useState<string>("");
+  const [user, setUser] = React.useState<UserInterface>(null);
+  const [person, setPerson] = React.useState<PersonInterface>(null);
+  const [church, setChurch] = React.useState<ChurchInterface>(null);
+  const [churches, setChurches] = React.useState<ChurchInterface[]>(null);
+
+  return <UserContext.Provider value={{
+    displayName, setDisplayName,
+    user, setUser,
+    church, setChurch,
+    churches, setChurches,
+    person, setPerson
+  }}>{children}</UserContext.Provider>
 };
 
 export default UserContext;
-

@@ -14,7 +14,7 @@ export const ChatMessage: React.FC<Props> = (props) => {
   const getDeleteLink = () => {
     if (!props.user.isHost) return null;
     else {
-      return <span className="delete"><a href="about:blank" onClick={handleDelete}><i className="far fa-trash-alt"></i></a></span>
+      return <span className="delete"><a href="about:blank" onClick={handleDelete}><i className="delete"></i></a></span>
     }
 
   }

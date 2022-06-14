@@ -57,7 +57,7 @@ export const ReceivePrayer: React.FC<Props> = (props) => {
         let className = "tab childTab";
         let visible = selectedConversation === r.conversation.id;
         result.push(<a key={"anchor_" + r.conversation.id.toString()} href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); selectConversation(r.conversation.id); }} className={className}>
-          <i className="fas fa-chat"></i>{r.conversation.title}
+          <i className="chat"></i>{r.conversation.title}
         </a>);
         result.push(<Chat key={r.conversation.id} room={r} user={props.chatState.user} visible={visible} enableAttendance={true} enableCallout={false} />);
       }

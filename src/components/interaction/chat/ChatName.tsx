@@ -1,6 +1,6 @@
 import React from "react";
 import { UserInterface } from "../../../helpers";
-import { Row, Col, InputGroup } from "react-bootstrap"
+import { Button, TextField } from "@mui/material";
 
 interface Props {
   user: UserInterface,
@@ -43,17 +43,11 @@ export const ChatName: React.FC<Props> = (props) => {
 
   if (!edit) return (<a href="about:blank" className="nav-link" onClick={editMode}>Change Name</a>);
   else return (
-    <Row style={{ marginRight: 0 }}>
-      <Col>
-        <InputGroup size="sm">
-          <input id="nameText" name="displayName" type="text" className="form-control form-control-sm" placeholder="John Smith" value={displayName} onChange={handleChange} />
-          <InputGroup.Append>
-            <button id="setNameButton" className="btn btn-primary btn-sm" onClick={handleUpdate}>Update</button>
-          </InputGroup.Append>
-        </InputGroup>
-      </Col>
-    </Row>
-
+    <>
+      <TextField size="small" fullWidth label="Name" id="nameText2" name="displayName" type="text" placeholder="John Smith" value={displayName} onChange={handleChange}
+        InputProps={{ endAdornment: <Button size="small" variant="contained" id="setNameButton" onClick={handleUpdate}>Update</Button> }}
+      />
+    </>
   );
 }
 

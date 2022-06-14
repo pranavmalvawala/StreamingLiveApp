@@ -1,6 +1,6 @@
 import React from "react";
 import { DisplayBox, ServiceEdit, AdminServiceInterface, ApiHelper, UserHelper } from ".";
-import { Loading } from "../../../appBase/components";
+import { Loading, SmallButton } from "../../../appBase/components";
 import { DateHelper } from "../../../helpers";
 
 export const Services: React.FC = () => {
@@ -9,7 +9,7 @@ export const Services: React.FC = () => {
   const [isLoading, setIsLoading] = React.useState(true);
 
   const handleUpdated = () => { setCurrentService(null); loadData(); }
-  const getEditContent = () => <a href="about:blank" onClick={handleAdd}><i className="fas fa-plus"></i></a>
+  const getEditContent = () => <SmallButton icon="add" text="Add" onClick={handleAdd} />
   const loadData = () => {
     ApiHelper.get("/services", "StreamingLiveApi").then(data => {
       data.forEach((s: AdminServiceInterface) => {
@@ -21,9 +21,7 @@ export const Services: React.FC = () => {
     });
   }
 
-  const handleAdd = (e: React.MouseEvent) => {
-    e.preventDefault();
-
+  const handleAdd = () => {
     let tz = new Date().getTimezoneOffset();
     let defaultDate = getNextSunday();
     //defaultDate.setTime(defaultDate.getTime() + (9 * 60 * 60 * 1000) - (tz * 60 * 1000));
@@ -49,7 +47,7 @@ export const Services: React.FC = () => {
           <td>{service.label}</td>
           <td>{DateHelper.prettyDateTime(service.serviceTime)}</td>
           <td className="text-right">
-            <a href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); setCurrentService(service); }}><i className="fas fa-pencil-alt"></i></a>
+            <a href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); setCurrentService(service); }}><i className="edit"></i></a>
           </td>
         </tr>
       );
@@ -71,7 +69,7 @@ export const Services: React.FC = () => {
 
   if (currentService !== null) return <ServiceEdit currentService={currentService} updatedFunction={handleUpdated} />;
   else return (
-    <DisplayBox headerIcon="far fa-calendar-alt" headerText="Services" editContent={getEditContent()} id="servicesBox">
+    <DisplayBox headerIcon="calendar_month" headerText="Services" editContent={getEditContent()} id="servicesBox">
       {getTable()}
     </DisplayBox>
   );

@@ -93,7 +93,7 @@ export const TabEdit: React.FC<Props> = (props) => {
   React.useEffect(() => { setCurrentTab(props.currentTab); }, [props.currentTab]);
 
   return (
-    <InputBox headerIcon="fas fa-folder" headerText="Edit Tab" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={checkDelete}>
+    <InputBox headerIcon="folder" headerText="Edit Tab" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={checkDelete}>
       <ErrorMessages errors={errors} />
       <div className="form-group">
         <label>Text</label>

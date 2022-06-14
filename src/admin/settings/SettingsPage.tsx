@@ -1,25 +1,23 @@
+import { Box, Grid, Icon } from "@mui/material";
 import React from "react";
-import { Row, Col } from "react-bootstrap"
-import { Header, Services, Links, Tabs, External, Pages } from "./components"
+import { Wrapper } from "../components/Wrapper";
+import { Services, Links, Tabs, External, Pages } from "./components"
 
 export const SettingsPage: React.FC = () => (
-  <>
-    <Header />
-    <div className="container">
-      <Row style={{ marginBottom: 25 }}>
-        <div className="col"><h1 style={{ borderBottom: 0, marginBottom: 0 }}><i className="fas fa-video"></i> Live Stream</h1></div>
-      </Row>
-      <Row>
-        <Col md={8}>
+  <Box sx={{ display: "flex", backgroundColor: "#EEE" }}>
+    <Wrapper>
+      <h1 style={{ borderBottom: 0, marginBottom: 0 }}><Icon>live_tv</Icon> Live Stream</h1>
+      <Grid container spacing={3}>
+        <Grid item md={8} xs={12}>
           <Services />
           <Pages />
-        </Col>
-        <Col md={4}>
+        </Grid>
+        <Grid item md={4} xs={12}>
           <Links />
           <Tabs />
           <External />
-        </Col>
-      </Row>
-    </div>
-  </>
+        </Grid>
+      </Grid>
+    </Wrapper>
+  </Box>
 )

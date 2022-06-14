@@ -1,5 +1,5 @@
+import { Grid, InputLabel, MenuItem, Select, TextField, FormControl, SelectChangeEvent } from "@mui/material";
 import React from "react";
-import { Row, FormGroup, Col, InputGroup } from "react-bootstrap"
 import { AdminServiceInterface, ApiHelper, InputBox, Duration } from ".";
 import { DateHelper, UniqueIdHelper } from "../../../helpers";
 
@@ -16,10 +16,10 @@ export const ServiceEdit: React.FC<Props> = (props) => {
     }
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const val = e.currentTarget.value;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | SelectChangeEvent<string>) => {
+    const val = e.target.value;
     let s = { ...currentService };
-    switch (e.currentTarget.name) {
+    switch (e.target.name) {
       case "serviceLabel": s.label = val; break;
       case "serviceTime":
         const date = new Date(val);
@@ -100,16 +100,16 @@ export const ServiceEdit: React.FC<Props> = (props) => {
   switch (currentService?.provider) {
     case "youtube_live":
     case "youtube_watchparty":
-      keyLabel = <>YouTube ID <span className="description" style={{float: "right", marginTop: "5px"}}>https://youtube.com/watch?v=<b style={{ color: "#24b8ff" }}>abcd1234</b></span></>;
+      keyLabel = <>YouTube ID <span className="description" style={{ float: "right", marginTop: 3, paddingLeft: 5 }}>https://youtube.com/watch?v=<b style={{ color: "#24b8ff" }}>abcd1234</b></span></>;
       keyPlaceholder = "abcd1234";
       break;
     case "vimeo_live":
     case "vimeo_watchparty":
-      keyLabel = <>Vimeo ID <span className="description" style={{float: "right", marginTop: "5px"}}>https://vimeo.com/<b>123456789</b></span></>;
+      keyLabel = <>Vimeo ID <span className="description" style={{ float: "right", marginTop: 3, paddingLeft: 5 }}>https://vimeo.com/<b>123456789</b></span></>;
       keyPlaceholder = "123456789";
       break;
     case "facebook_live":
-      keyLabel = <>Video ID <span className="description" style={{float: "right", marginTop: "5px"}}>https://facebook.com/video.php?v=<b>123456789</b></span></>;
+      keyLabel = <>Video ID <span className="description" style={{ float: "right", marginTop: 3, paddingLeft: 5 }}>https://facebook.com/video.php?v=<b>123456789</b></span></>;
       keyPlaceholder = "123456789";
       break;
   }
@@ -121,97 +121,74 @@ export const ServiceEdit: React.FC<Props> = (props) => {
   let chatAndPrayerStartTime = currentService?.serviceTime?.getTime() - currentService?.chatBefore * 1000;
   let chatAndPrayerEndTime = currentService?.serviceTime?.getTime() + currentService?.chatAfter * 1000;
   return (
-    <InputBox headerIcon="far fa-calendar-alt" headerText="Edit Service" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={checkDelete()}>
-      <Row>
-        <Col>
-          <FormGroup>
-            <label>Service Name</label>
-            <input type="text" className="form-control" name="serviceLabel" value={currentService?.label} onChange={handleChange} />
-          </FormGroup>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <FormGroup>
-            <label>Service Time</label>
-            <input type="datetime-local" className="form-control" name="serviceTime" defaultValue={DateHelper.formatHtml5DateTime(localServiceTime)} onChange={handleChange} />
-          </FormGroup>
-        </Col>
-        <Col>
-          <FormGroup>
-            <label>Recurs Weekly</label>
-            <select className="form-control" name="recurs" value={Boolean(currentService?.recurring).toString()} onChange={handleChange}>
-              <option value="false">No</option>
-              <option value="true">Yes</option>
-            </select>
-          </FormGroup>
-        </Col>
+    <InputBox headerIcon="calendar_month" headerText="Edit Service" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={checkDelete()}>
+      <>
+        <TextField fullWidth label="Service Name" name="serviceLabel" value={currentService?.label} onChange={handleChange} />
+        <Grid container spacing={3}>
+          <Grid item xs={6}>
+            <TextField fullWidth label="Service Time" type="datetime-local" className="form-control" name="serviceTime" defaultValue={DateHelper.formatHtml5DateTime(localServiceTime)} onChange={handleChange} />
+          </Grid>
+          <Grid item xs={6}>
+            <FormControl fullWidth>
+              <InputLabel>Recurs Weekly</InputLabel>
+              <Select label="Recurs Weekly" name="recurs" value={Boolean(currentService?.recurring).toString()} onChange={handleChange}>
+                <MenuItem value="false">No</MenuItem>
+                <MenuItem value="true">Yes</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+        </Grid>
+        <Grid container spacing={3}>
+          <Grid item xs={6}>
 
-      </Row>
-
-      <Row>
-        <Col>
-          <FormGroup>
-            <label style={{width: "100%"}}>Total Service Duration <span className="description" style={{float: "right", marginTop: "5px"}}>{DateHelper.formatHtml5Time(new Date(videoStartTime))} - {DateHelper.formatHtml5Time(new Date(videoEndTime))}</span></label>
+            <label style={{ width: "100%" }}>Total Service Duration <span className="description" style={{ float: "right", marginTop: "5px" }}>{DateHelper.formatHtml5Time(new Date(videoStartTime))} - {DateHelper.formatHtml5Time(new Date(videoEndTime))}</span></label>
             <Duration totalSeconds={currentService?.duration} updatedFunction={totalSeconds => { let s = { ...currentService }; s.duration = totalSeconds; setCurrentService(s); }} />
-          </FormGroup>
-        </Col>
-        <Col>
-          <FormGroup>
-            <label style={{width: "100%"}}>Start Video Early <span className="description" style={{float: "right", marginTop: "5px"}}>(Optional) For countdowns</span></label>
+
+          </Grid>
+          <Grid item xs={6}>
+
+            <label style={{ width: "100%" }}>Start Video Early <span className="description" style={{ float: "right", marginTop: "5px" }}>(Optional) For countdowns</span></label>
             <Duration totalSeconds={currentService?.earlyStart} updatedFunction={totalSeconds => { let s = { ...currentService }; s.earlyStart = totalSeconds; setCurrentService(s); }} />
-          </FormGroup>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <FormGroup>
-            <label style={{width: "48%"}}>Enable Chat and Prayer <span className="description" style={{float: "right", marginTop: "5px"}}>{DateHelper.formatHtml5Time(new Date(chatAndPrayerStartTime))} - {DateHelper.formatHtml5Time(new Date(chatAndPrayerEndTime))}</span></label>
-            <Row>
-              <Col>
-                <InputGroup>
-                  <input type="number" className="form-control" min="0" step="1" name="chatBefore" value={currentService?.chatBefore / 60} onChange={handleChange} />
-                  <div className="input-group-append"><label className="input-group-text">min before</label></div>
-                </InputGroup>
-              </Col>
-              <Col>
-                <InputGroup>
-                  <input type="number" className="form-control" min="0" step="1" name="chatAfter" value={currentService?.chatAfter / 60} onChange={handleChange} />
-                  <div className="input-group-append"><label className="input-group-text">min after</label></div>
-                </InputGroup>
-              </Col>
-            </Row>
-          </FormGroup>
-        </Col>
 
-      </Row>
-      <Row>
-        <Col>
-          <FormGroup>
-            <label>Video Provider</label>
-            <select id="Provider" className="form-control" name="provider" value={currentService?.provider} onChange={handleChange}>
-              <optgroup label="Live Stream">
-                <option value="youtube_live">YouTube</option>
-                <option value="vimeo_live">Vimeo</option>
-                <option value="facebook_live">Facebook</option>
-                <option value="custom_live">Custom Embed Url</option>
-              </optgroup>
-              <optgroup label="Prerecorded Watchparty">
-                <option value="youtube_watchparty">YouTube</option>
-                <option value="vimeo_watchparty">Vimeo</option>
-                <option value="custom_watchparty">Custom Embed Url</option>
-              </optgroup>
-            </select>
-          </FormGroup>
-        </Col>
-        <Col>
-          <FormGroup>
-            <label id="videoKeyLabel" style={{width: "100%"}}>{keyLabel}</label>
-            <input id="videoKeyText" type="text" className="form-control" name="providerKey" value={currentService?.providerKey} onChange={handleChange} placeholder={keyPlaceholder} />
-          </FormGroup>
-        </Col>
-      </Row>
+          </Grid>
+        </Grid>
+        <Grid container spacing={3}>
+          <Grid item xs={6}>
+            <TextField fullWidth label="Enable Chat - Minutes Before" type="number" name="chatBefore" value={currentService?.chatBefore / 60} onChange={handleChange} InputProps={{
+              inputProps: { min: 0, step: 1 },
+              endAdornment: <span style={{ whiteSpace: "nowrap" }}>{DateHelper.prettyTime(new Date(chatAndPrayerStartTime))}</span>
+            }} />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField fullWidth label="Enable Chat - Minutes After" type="number" name="chatAfter" value={currentService?.chatAfter / 60} onChange={handleChange} InputProps={{
+              inputProps: { min: 0, step: 1 },
+              endAdornment: <span style={{ whiteSpace: "nowrap" }}>{DateHelper.prettyTime(new Date(chatAndPrayerEndTime))}</span>
+            }} />
+          </Grid>
+        </Grid>
 
+        <Grid container spacing={3}>
+          <Grid item xs={6}>
+            <FormControl fullWidth>
+              <InputLabel>Video Provider</InputLabel>
+              <Select label="Video Provider" name="provider" value={currentService?.provider} onChange={handleChange}>
+                <MenuItem value="" disabled>Live Stream</MenuItem>
+                <MenuItem value="youtube_live">YouTube (Live)</MenuItem>
+                <MenuItem value="vimeo_live">Vimeo (Live)</MenuItem>
+                <MenuItem value="facebook_live">Facebook (Live)</MenuItem>
+                <MenuItem value="custom_live">Custom Embed Url (Live)</MenuItem>
+                <MenuItem value="" disabled>Prerecorded Watchparty</MenuItem>
+                <MenuItem value="youtube_watchparty">YouTube (Recorded)</MenuItem>
+                <MenuItem value="vimeo_watchparty">Vimeo (Recorded)</MenuItem>
+                <MenuItem value="custom_watchparty">Custom Embed Url (Recorded)</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={6}>
+            <TextField fullWidth label={keyLabel} name="providerKey" value={currentService?.providerKey} onChange={handleChange} placeholder={keyPlaceholder} />
+          </Grid>
+        </Grid>
+      </>
     </InputBox>
   );
 }

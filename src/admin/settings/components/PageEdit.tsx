@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { FormGroup } from "react-bootstrap";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { EditorState, ContentState, convertToRaw } from "draft-js";
@@ -7,6 +6,7 @@ import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
 import { PageInterface, ApiHelper, InputBox, UniqueIdHelper, LinkInterface, ErrorMessages } from "./"
 import { EnvironmentHelper } from "../../components";
+import { TextField } from "@mui/material";
 
 interface Props { page: PageInterface, updatedFunction: () => void }
 
@@ -23,7 +23,7 @@ export const PageEdit: React.FC<Props> = (props) => {
   const checkDelete = page?.id ? handleDelete : undefined;
   const handleCancel = () => { props.updatedFunction(); }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const val = e.currentTarget.value;
     let p = { ...page };
     switch (e.currentTarget.name) {
@@ -90,15 +90,11 @@ export const PageEdit: React.FC<Props> = (props) => {
   }, [props.page]);
 
   return (
-    <InputBox headerIcon="fas fa-code" headerText="Edit Page" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={checkDelete}>
-      <FormGroup>
-        <label>Page Name</label>
-        <input type="text" className="form-control" name="name" value={page?.name} onChange={handleChange} />
-      </FormGroup>
-      <FormGroup>
-        <label>Contents</label>
-        <Editor editorState={editorState} onEditorStateChange={handleEditorChange} editorStyle={{ height: 400 }} />
-      </FormGroup>
+    <InputBox headerIcon="code" headerText="Edit Page" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={checkDelete}>
+      <TextField fullWidth label="Page Name" name="name" value={page?.name} onChange={handleChange} />
+      <label>Contents</label>
+      <Editor editorState={editorState} onEditorStateChange={handleEditorChange} editorStyle={{ height: 400 }} />
+
       <ErrorMessages errors={errors} />
     </InputBox>
   );

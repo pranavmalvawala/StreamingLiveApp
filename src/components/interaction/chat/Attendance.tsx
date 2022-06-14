@@ -4,7 +4,7 @@ import { Menu, Item, useContextMenu } from "react-contexify";
 import "react-contexify/dist/ReactContexify.css";
 
 interface Props {
-    attendance: AttendanceInterface;
+  attendance: AttendanceInterface;
 }
 
 export const Attendance: React.FC<Props> = (props) => {
@@ -25,13 +25,13 @@ export const Attendance: React.FC<Props> = (props) => {
   }
 
   const getChevron = () => {
-    if (showList) return <i className="fas fa-chevron-up"></i>
-    else return <i className="fas fa-chevron-down"></i>
+    if (showList) return <i className="expand_less"></i>
+    else return <i className="expand_more"></i>
   }
 
   const getNameChevron = (name: string) => {
-    if (name === showName) return <a href="about:blank" onClick={(e) => { e.preventDefault(); setShowName(""); }}><i className="fas fa-chevron-up"></i></a>;
-    else return <a href="about:blank" onClick={(e) => { e.preventDefault(); setShowName(name); }}><i className="fas fa-chevron-down"></i></a>;
+    if (name === showName) return <a href="about:blank" onClick={(e) => { e.preventDefault(); setShowName(""); }}><i className="expand_less"></i></a>;
+    else return <a href="about:blank" onClick={(e) => { e.preventDefault(); setShowName(name); }}><i className="expand_more"></i></a>;
   }
 
   const getPeople = () => {
@@ -47,7 +47,7 @@ export const Attendance: React.FC<Props> = (props) => {
     let people = [];
     for (let i = 0; i < props.attendance.viewers.length; i++) {
       const v = props.attendance.viewers[i];
-      if (v.displayName === name) people.push(<div key={i} onContextMenu={(e) => handleAttendeeContext(e, v.id)} className="attendanceExpanded"><i className="fas fa-user-alt"></i>{v.displayName} <span className="id">{v.id}</span>{getPMIcon(v.id)}</div>);
+      if (v.displayName === name) people.push(<div key={i} onContextMenu={(e) => handleAttendeeContext(e, v.id)} className="attendanceExpanded"><i className="person"></i>{v.displayName} <span className="id">{v.id}</span>{getPMIcon(v.id)}</div>);
     }
     return people;
   }
@@ -65,8 +65,8 @@ export const Attendance: React.FC<Props> = (props) => {
     if (UserHelper.isHost) {
       let privateRoom: ChatRoomInterface = getRoomForConnection(connectionId);
       if (privateRoom !== null) {
-        if (privateRoom.joined) result = <i className="fas fa-comments private-active" style={{ marginLeft: 10 }}></i>
-        else result = <i className="far fa-comments" style={{ marginLeft: 10 }}></i>
+        if (privateRoom.joined) result = <i className="comment" style={{ marginLeft: 10 }}></i>
+        else result = <i className="comment" style={{ marginLeft: 10 }}></i>
 
       }
     }
@@ -89,11 +89,11 @@ export const Attendance: React.FC<Props> = (props) => {
         }
       }
 
-      if (!UserHelper.isHost || v.count > 1) people.push(<div key={i}><i className="fas fa-user-alt"></i>{v.displayName} {countSpan}</div>);
+      if (!UserHelper.isHost || v.count > 1) people.push(<div key={i}><i className="person"></i>{v.displayName} {countSpan}</div>);
       else {
         for (let i = 0; i < props.attendance.viewers.length; i++) {
           const c = props.attendance.viewers[i];
-          if (c.displayName === v.displayName) people.push(<div key={i} onContextMenu={(e) => handleAttendeeContext(e, c.id)}><i className="fas fa-user-alt"></i>{v.displayName}{getPMIcon(c.id)}</div>);
+          if (c.displayName === v.displayName) people.push(<div key={i} onContextMenu={(e) => handleAttendeeContext(e, c.id)}><i className="person"></i>{v.displayName}{getPMIcon(c.id)}</div>);
         }
       }
 

@@ -5,6 +5,7 @@ import { Routing } from "./Routing";
 import { CookiesProvider } from "react-cookie";
 import { ConfigHelper, ConfigurationInterface, Loading } from "./components";
 import { CustomLoading } from "./components/CustomLoading";
+import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 
 const App: React.FC = () => {
 
@@ -19,6 +20,18 @@ const App: React.FC = () => {
 
   React.useEffect(() => { loadConfig(); }, [loadConfig]);
 
+  const mdTheme = createTheme({
+    palette: {
+      secondary: {
+        main: "#444444"
+      }
+    },
+    components: {
+      MuiTextField: { defaultProps: { margin: "normal" } },
+      MuiFormControl: { defaultProps: { margin: "normal" } }
+    }
+  });
+
   if (isLoading) {
     if (tmpConfig?.appearance.logoDark) return <CustomLoading config={tmpConfig} />
     return <Loading />
@@ -26,9 +39,12 @@ const App: React.FC = () => {
   return (
     <UserProvider>
       <CookiesProvider>
-        <Router>
-          <Routing />
-        </Router>
+        <ThemeProvider theme={mdTheme}>
+          <CssBaseline />
+          <Router>
+            <Routing />
+          </Router>
+        </ThemeProvider>
       </CookiesProvider>
     </UserProvider>
   );

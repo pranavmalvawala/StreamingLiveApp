@@ -1,6 +1,6 @@
 import React from "react";
 import { DisplayBox, TabEdit, LinkInterface, ApiHelper, UserHelper } from ".";
-import { Loading } from "../../../appBase/components";
+import { Loading, SmallButton } from "../../../appBase/components";
 
 export const Tabs: React.FC = () => {
   const [tabs, setTabs] = React.useState<LinkInterface[]>([]);
@@ -8,12 +8,11 @@ export const Tabs: React.FC = () => {
   const [isLoading, setIsLoading] = React.useState(true);
 
   const handleUpdated = () => { setCurrentTab(null); loadData(); }
-  const getEditContent = () => <a href="about:blank" onClick={handleAdd}><i className="fas fa-plus"></i></a>
+  const getEditContent = () => <SmallButton icon="add" text="Add" onClick={handleAdd} />
   const loadData = () => { ApiHelper.get("/links?category=tab", "StreamingLiveApi").then(data => { setTabs(data); setIsLoading(false); }); }
   const saveChanges = () => { ApiHelper.post("/links", tabs, "StreamingLiveApi").then(loadData); }
 
-  const handleAdd = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const handleAdd = () => {
     let tab: LinkInterface = { churchId: UserHelper.currentChurch.id, sort: tabs.length, text: "", url: "", icon: "fas fa-link", linkData: "", linkType: "url", category: "tab" }
     setCurrentTab(tab);
   }
@@ -44,15 +43,15 @@ export const Tabs: React.FC = () => {
     let idx = 0;
     let rows: JSX.Element[] = [];
     tabs.forEach(tab => {
-      const upLink = (idx === 0) ? null : <a href="about:blank" data-idx={idx} onClick={moveUp}><i className="fas fa-arrow-up"></i></a>
-      const downLink = (idx === tabs.length - 1) ? null : <a href="about:blank" data-idx={idx} onClick={moveDown}><i className="fas fa-arrow-down"></i></a>
+      const upLink = (idx === 0) ? null : <a href="about:blank" data-idx={idx} onClick={moveUp}><i className="arrow_upward"></i></a>
+      const downLink = (idx === tabs.length - 1) ? null : <a href="about:blank" data-idx={idx} onClick={moveDown}><i className="arrow_downward"></i></a>
       rows.push(
         <tr key={idx}>
           <td><a href={tab.url}><i className={tab.icon} /> {tab.text}</a></td>
           <td className="text-right">
             {upLink}
             {downLink}
-            <a href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); setCurrentTab(tab); }}><i className="fas fa-pencil-alt"></i></a>
+            <a href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); setCurrentTab(tab); }}><i className="edit"></i></a>
           </td>
         </tr>
       );
@@ -74,7 +73,7 @@ export const Tabs: React.FC = () => {
 
   if (currentTab !== null) return <TabEdit currentTab={currentTab} updatedFunction={handleUpdated} />;
   else return (
-    <DisplayBox headerIcon="fas fa-folder" headerText="Sidebar Tabs" editContent={getEditContent()}>
+    <DisplayBox headerIcon="folder" headerText="Sidebar Tabs" editContent={getEditContent()}>
       {getTable()}
     </DisplayBox>
 

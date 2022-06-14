@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom"
-import { Row, Col, Container } from "react-bootstrap";
 import UserContext from "../../UserContext";
 import { UserHelper, NavItems, ApiHelper, EnvironmentHelper } from ".";
 import "../styles.css"
+import { Grid } from "@mui/material";
 
 export const Header: React.FC = () => {
   const [showUserMenu, setShowUserMenu] = React.useState(false);
@@ -25,7 +25,7 @@ export const Header: React.FC = () => {
       let result: JSX.Element[] = [];
       UserHelper.churches.forEach(c => {
         const churchName = (c.id === UserHelper.currentChurch.id) ? (<b>{c.name}</b>) : (c.name);
-        result.push(<a href="about:blank" data-id={c.id} onClick={switchChurch}><i className="fas fa-external-link-alt"></i> {churchName}</a>);
+        result.push(<a href="about:blank" data-id={c.id} onClick={switchChurch}><i className="link"></i> {churchName}</a>);
       });
       return result;
     }
@@ -39,9 +39,9 @@ export const Header: React.FC = () => {
         <div>
           <ul className="nav flex-column d-xl-none"><NavItems /></ul>
           {getChurchLinks()}
-          <a href={profileUrl} target="_blank" rel="noopener noreferrer"><i className="fas fa-user"></i> Profile</a>
-          <a href="mailto:support@streaminglive.church"><i className="fas fa-envelope"></i> Support</a>
-          <Link to="/logout"><i className="fas fa-lock"></i> Logout</Link>
+          <a href={profileUrl} target="_blank" rel="noopener noreferrer"><i className="person"></i> Profile</a>
+          <a href="mailto:support@streaminglive.church"><i className="mail"></i> Support</a>
+          <Link to="/logout"><i className="lock"></i> Logout</Link>
         </div>
       </div>)
     else return null;
@@ -51,21 +51,19 @@ export const Header: React.FC = () => {
   return (
     <>
       <div id="navbar" className="fixed-top">
-        <Container>
-          <Row>
-            <div className="col-6 col-lg-2-5"><Link className="navbar-brand" to="/"><img src="/images/logo.png" alt="logo" /></Link></div>
-            <Col className="d-none d-xl-block" xl={7} style={{ borderLeft: "2px solid #EEE", borderRight: "2px solid #EEE" }}>
-              <ul className="nav nav-fill">
-                <NavItems prefix="main" />
-              </ul>
-            </Col>
-            <div className="col-6 col-lg-2-5 text-right" style={{ paddingTop: 17 }} id="navRight">
-              <a href="about:blank" onClick={toggleUserMenu} id="userMenuLink">
-                <i className="fas fa-user" /> &nbsp; {firstName} {lastName} <i className="fas fa-caret-down"></i>
-              </a>
-            </div>
-          </Row>
-        </Container>
+        <Grid container spacing={3}>
+          <Grid item md={3} xs={6}><Link className="navbar-brand" to="/"><img src="/images/logo.png" alt="logo" /></Link></Grid>
+          <Grid item md={6} sx={{ display: { sm: "none", md: "block" } }}>
+            <ul className="nav nav-fill">
+              <NavItems prefix="main" />
+            </ul>
+          </Grid>
+          <Grid item md={3} xs={6} sx={{ textAlign: "right", paddingTop: 17 }} id="navRight">
+            <a href="about:blank" onClick={toggleUserMenu} id="userMenuLink">
+              <i className="person" /> &nbsp; {firstName} {lastName} <i className="arrow_downward"></i>
+            </a>
+          </Grid>
+        </Grid>
         {getUserMenu()}
       </div>
       <div id="navSpacer"></div>

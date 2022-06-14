@@ -31,7 +31,7 @@ export const Callout: React.FC<Props> = (props) => {
     if (edit) return getEditSection();
     else {
       if (props.room.callout?.content === "") return <div id="callout"><a href="about:blank" onClick={editMode}>Set Callout</a></div>;
-      else return (<div id="callout"><span style={{ float: "right" }}><a href="about:blank" onClick={editMode}><i className="fas fa-pencil-alt"></i></a></span>{ChatHelper.insertLinks(props.room.callout?.content || "")}</div>);
+      else return (<div id="callout"><span style={{ float: "right" }}><a href="about:blank" onClick={editMode}><i className="edit"></i></a></span>{ChatHelper.insertLinks(props.room.callout?.content || "")}</div>);
     }
   } else {
     if (props.room.callout?.content === "") return null;

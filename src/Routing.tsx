@@ -15,7 +15,7 @@ export const Routing: React.FC = () => {
   }
   React.useEffect(() => { if (EnvironmentHelper.GoogleAnalyticsTag !== "") ReactGA.pageview(location.pathname + location.search); }, [location]);
 
-  let user = React.useContext(UserContext)?.userName; //to force rerender on login
+  let user = React.useContext(UserContext)?.user; //to force rerender on login
   if (user === null || !ApiHelper.isAuthenticated) {
     return <Unauthenticated />;
   }

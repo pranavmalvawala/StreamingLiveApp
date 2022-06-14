@@ -12,7 +12,6 @@ export const Authenticated = () => (
     <Route path="/logout" element={<Logout />} />
     <Route path="/pages/:churchId/:id" element={<Page />} />
     <Route path="/" element={<Home />} />
-
   </Routes>
 )
 
