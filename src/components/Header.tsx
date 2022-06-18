@@ -1,3 +1,4 @@
+import { Icon } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom"
 import { NavItems, UserInterface, ChatName, UserHelper, EnvironmentHelper, ApiHelper, ChatHelper, ConfigHelper, ConfigurationInterface } from "."
@@ -87,7 +88,7 @@ export const Header: React.FC<Props> = (props) => {
             </ul>
           </div>
         </div>
-        <div id="userLink"><div><a href="about:blank" onClick={toggleUserMenu}>{props.user?.firstName ? `${firstName} ${lastName}` : "Loading"} <i className="expand_more"></i></a></div></div>
+        <div id="userLink"><div><a href="about:blank" onClick={toggleUserMenu}>{props.user?.firstName ? `${firstName} ${lastName}` : "Loading"} <Icon style={{ paddingTop: 5 }}>expand_more</Icon></a></div></div>
       </div>
       {getUserMenu()}
     </>

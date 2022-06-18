@@ -18,6 +18,11 @@ export const Login: React.FC = () => {
 
   const successCallback = () => {
     Cookies.set("displayName", "Anonymous");
+    context.setUser(UserHelper.user);
+    context.setChurches(UserHelper.churches)
+    context.setChurch(UserHelper.currentChurch)
+    ApiHelper.get(`/people/${UserHelper.currentChurch.personId}`, "MembershipApi").then(p => { context.setPerson(p); });
+
     if (UserHelper.checkAccess(Permissions.messagingApi.chat.host)) {
       UserHelper.isHost = true;
     }

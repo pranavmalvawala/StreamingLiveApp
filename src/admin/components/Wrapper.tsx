@@ -14,5 +14,5 @@ export const Wrapper: React.FC<Props> = props => {
   if (UserHelper.checkAccess(Permissions.streamingLiveApi.settings.edit)) tabs.push(<NavItem url="/admin/settings" label="Settings" icon="live_tv" />);
   const navContent = <><List component="nav">{tabs}</List></>
 
-  return <SiteWrapper navContent={navContent} context={context}>{props.children}</SiteWrapper>
+  return <SiteWrapper navContent={navContent} context={context} appName="StreamingLive">{props.children}</SiteWrapper>
 };

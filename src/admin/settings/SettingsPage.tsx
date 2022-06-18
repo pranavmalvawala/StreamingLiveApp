@@ -6,7 +6,7 @@ import { Services, Links, Tabs, External, Pages } from "./components"
 export const SettingsPage: React.FC = () => (
   <Box sx={{ display: "flex", backgroundColor: "#EEE" }}>
     <Wrapper>
-      <h1 style={{ borderBottom: 0, marginBottom: 0 }}><Icon>live_tv</Icon> Live Stream</h1>
+      <h1><Icon>live_tv</Icon> Admin Settings</h1>
       <Grid container spacing={3}>
         <Grid item md={8} xs={12}>
           <Services />
