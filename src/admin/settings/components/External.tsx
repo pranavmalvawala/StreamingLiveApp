@@ -9,7 +9,7 @@ export const External: React.FC<Props> = (props) => {
   const getChurchEditSetting = () => {
     if (Permissions.accessApi.settings.edit) {
       const jwt = ApiHelper.getConfig("AccessApi").jwt;
-      const url = `${EnvironmentHelper.AccountsApp}/login?jwt=${jwt}&returnUrl=/${ConfigHelper.current.churchId}/manage`;
+      const url = `${EnvironmentHelper.Common.AccountsRoot}/login?jwt=${jwt}&returnUrl=/${ConfigHelper.current.churchId}/manage`;
       return (<tr><td><a href={url}><i className="edit" /> Customize Appearance / Edit Users</a></td></tr>);
     }
     else return null;

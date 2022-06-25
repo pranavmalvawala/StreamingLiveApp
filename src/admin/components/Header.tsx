@@ -16,7 +16,7 @@ export const Header: React.FC = () => {
     const jwt = ApiHelper.getConfig("StreamingLiveApi").jwt;
     const id = e.currentTarget.getAttribute("data-id");
     UserHelper.selectChurch(context, id);
-    window.location.href = (EnvironmentHelper.SubUrl.replace("{key}", UserHelper.currentChurch.subDomain) + "/login?jwt=" + jwt);
+    window.location.href = (EnvironmentHelper.Common.StreamingLiveRoot.replace("{key}", UserHelper.currentChurch.subDomain) + "/login?jwt=" + jwt);
   }
 
   const getChurchLinks = () => {
@@ -33,7 +33,7 @@ export const Header: React.FC = () => {
 
   const getUserMenu = () => {
     const jwt = ApiHelper.getConfig("AccessApi").jwt;
-    const profileUrl = `${EnvironmentHelper.AccountsApp}/login?jwt=${jwt}&returnUrl=/profile`;
+    const profileUrl = `${EnvironmentHelper.Common.AccountsRoot}/login?jwt=${jwt}&returnUrl=/profile`;
     if (showUserMenu) return (
       <div className="container" id="userMenu">
         <div>

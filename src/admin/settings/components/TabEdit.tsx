@@ -76,7 +76,7 @@ export const TabEdit: React.FC<Props> = (props) => {
       if (pages === null) loadPages();
       else {
         options = [];
-        pages.forEach(page => options.push(<option value={EnvironmentHelper.ContentRoot + "/" + page.path} key={page.id}>{page.name}</option>));
+        pages.forEach(page => options.push(<option value={EnvironmentHelper.Common.ContentRoot + "/" + page.path} key={page.id}>{page.name}</option>));
         if (currentTab.linkData === "") currentTab.linkData = pages[0]?.path;
       }
       return (

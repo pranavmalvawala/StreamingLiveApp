@@ -49,7 +49,7 @@ export const PageEdit: React.FC<Props> = (props) => {
     page.content = draftToHtml(convertToRaw(content));
 
     const pages: PageInterface[] = await ApiHelper.post("/pages", [page], "StreamingLiveApi");
-    await updateTabs(EnvironmentHelper.ContentRoot + "/" + pages[0].path);
+    await updateTabs(EnvironmentHelper.Common.ContentRoot + "/" + pages[0].path);
     props.updatedFunction();
   }
 
@@ -73,7 +73,7 @@ export const PageEdit: React.FC<Props> = (props) => {
 
     if (UniqueIdHelper.isMissing(props.page.id)) setEditorState(EditorState.createWithContent(ContentState.createFromText("")));
     else {
-      const path = `${EnvironmentHelper.ContentRoot}/${props.page.churchId}/pages/${props.page.id}.html`;
+      const path = `${EnvironmentHelper.Common.ContentRoot}/${props.page.churchId}/pages/${props.page.id}.html`;
       fetch(path)
         .then(response => response.text())
         .then(content => {
