@@ -1,3 +1,4 @@
+import { Icon } from "@mui/material";
 import React from "react";
 import { DisplayBox, TabEdit, LinkInterface, ApiHelper, UserHelper } from ".";
 import { Loading, SmallButton } from "../../../appBase/components";
@@ -43,15 +44,15 @@ export const Tabs: React.FC = () => {
     let idx = 0;
     let rows: JSX.Element[] = [];
     tabs.forEach(tab => {
-      const upLink = (idx === 0) ? null : <a href="about:blank" data-idx={idx} onClick={moveUp}><i className="arrow_upward"></i></a>
-      const downLink = (idx === tabs.length - 1) ? null : <a href="about:blank" data-idx={idx} onClick={moveDown}><i className="arrow_downward"></i></a>
+      const upLink = (idx === 0) ? null : <a href="about:blank" data-idx={idx} onClick={moveUp}><Icon>arrow_upward</Icon></a>
+      const downLink = (idx === tabs.length - 1) ? null : <a href="about:blank" data-idx={idx} onClick={moveDown}><Icon>arrow_downward</Icon></a>
       rows.push(
         <tr key={idx}>
           <td><a href={tab.url}><i className={tab.icon} /> {tab.text}</a></td>
           <td className="text-right">
             {upLink}
             {downLink}
-            <a href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); setCurrentTab(tab); }}><i className="edit"></i></a>
+            <a href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); setCurrentTab(tab); }}><Icon>edit</Icon></a>
           </td>
         </tr>
       );

@@ -1,6 +1,7 @@
 import React from "react";
 import { DisplayBox, Permissions, EnvironmentHelper, ConfigHelper, ApiHelper } from "."
 import { Link } from "react-router-dom"
+import { Icon } from "@mui/material";
 
 interface Props { updatedFunction?: () => void }
 
@@ -10,12 +11,12 @@ export const External: React.FC<Props> = (props) => {
     if (Permissions.accessApi.settings.edit) {
       const jwt = ApiHelper.getConfig("AccessApi").jwt;
       const url = `${EnvironmentHelper.Common.AccountsRoot}/login?jwt=${jwt}&returnUrl=/${ConfigHelper.current.churchId}/manage`;
-      return (<tr><td><a href={url}><i className="edit" /> Customize Appearance / Edit Users</a></td></tr>);
+      return (<tr><td><a href={url}><Icon>edit</Icon> Customize Appearance / Edit Users</a></td></tr>);
     }
     else return null;
   }
 
-  const getMainSite = () => (<tr><td><Link to={"/"}><i className="play_arrow" /> View Site</Link></td></tr>)
+  const getMainSite = () => (<tr><td><Link to={"/"}><Icon>play_arrow</Icon> View Site</Link></td></tr>)
 
   return (
     <DisplayBox headerIcon="link" headerText="External Resources" editContent={false}>
