@@ -75,7 +75,7 @@ export const Home: React.FC = () => {
   }, [loadConfig]);
 
   React.useEffect(() => {
-    const jwt = Cookies.get("jwt")
+    //const jwt = Cookies.get("jwt")
     /*
         if (jwt && ChatHelper.current.user.firstName === "Anonymous") {
           navigate("/login")
