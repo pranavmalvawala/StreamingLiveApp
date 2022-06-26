@@ -1,3 +1,4 @@
+import { Icon } from "@mui/material";
 import React from "react";
 import { DisplayBox, LinkInterface, LinkEdit, ApiHelper, UserHelper } from "."
 import { Loading, SmallButton } from "../../../appBase/components";
@@ -51,7 +52,7 @@ export const Links: React.FC = () => {
           <td className="text-right">
             {upLink}
             {downLink}
-            <a href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); setCurrentLink(link); }}><i className="edit"></i></a>
+            <a href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); setCurrentLink(link); }}><Icon>edit</Icon></a>
           </td>
         </tr>
       );

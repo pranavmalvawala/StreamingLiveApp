@@ -1,3 +1,4 @@
+import { Icon } from "@mui/material";
 import React from "react";
 import { DisplayBox, PageInterface } from "."
 import { Loading, SmallButton } from "../../../appBase/components";
@@ -21,7 +22,7 @@ export const PageList: React.FC<Props> = (props) => {
           <tr>
             <td>{page.name}</td>
             <td className="text-right">
-              <a href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); props.editFunction(page); }}><i className="edit"></i></a>
+              <a href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); props.editFunction(page); }}><Icon>edit</Icon></a>
             </td>
           </tr>
         );

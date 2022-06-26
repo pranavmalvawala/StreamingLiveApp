@@ -1,3 +1,4 @@
+import { Icon } from "@mui/material";
 import React from "react";
 import { DisplayBox, ServiceEdit, AdminServiceInterface, ApiHelper, UserHelper } from ".";
 import { Loading, SmallButton } from "../../../appBase/components";
@@ -47,7 +48,7 @@ export const Services: React.FC = () => {
           <td>{service.label}</td>
           <td>{DateHelper.prettyDateTime(service.serviceTime)}</td>
           <td className="text-right">
-            <a href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); setCurrentService(service); }}><i className="edit"></i></a>
+            <a href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); setCurrentService(service); }}><Icon>edit</Icon></a>
           </td>
         </tr>
       );
