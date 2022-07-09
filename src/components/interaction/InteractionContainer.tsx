@@ -1,10 +1,10 @@
 import React from "react";
-import { TabInterface, Chat, HostChat, RequestPrayer, ReceivePrayer } from "..";
+import { TabInterface, Chat, HostChat, RequestPrayer, ReceivePrayer, EnvironmentHelper } from "..";
 import { ChatStateInterface, ConfigHelper, ConfigurationInterface } from "../../helpers";
 
 interface Props {
-    config: ConfigurationInterface
-    chatState: ChatStateInterface,
+  config: ConfigurationInterface
+  chatState: ChatStateInterface,
 }
 
 export const InteractionContainer: React.FC<Props> = (props) => {
@@ -44,10 +44,15 @@ export const InteractionContainer: React.FC<Props> = (props) => {
       <iframe src={tab.url} frameBorder="0" title={"frame" + i.toString()} /> :
     </div>)
 
-  const getPage = (tab: TabInterface, i: number, visible: boolean) => (
-    <div key={i} id={"frame" + i.toString()} className="frame" style={(!visible) ? { display: "none" } : {}}>
-      <iframe src={"/pageWrapper.html?url=" + escape(tab.url)} frameBorder="0" title={"frame" + i.toString()} /> :
-    </div>)
+  const getPage = (tab: TabInterface, i: number, visible: boolean) => {
+
+    let url = tab.url;
+    if (!url.startsWith("http")) url = EnvironmentHelper.Common.ContentRoot + "/" + url;
+
+    return (<div key={i} id={"frame" + i.toString()} className="frame" style={(!visible) ? { display: "none" } : {}}>
+      <iframe src={"/pageWrapper.html?url=" + escape(url)} frameBorder="0" title={"frame" + i.toString()} /> :
+    </div>);
+  }
 
   //const getPage = async (tab: TabInterface, i: number, visible: boolean) => {
   //  return <></>
