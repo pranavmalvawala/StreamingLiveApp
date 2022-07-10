@@ -21,7 +21,7 @@ export const PageList: React.FC<Props> = (props) => {
         rows.push(
           <tr>
             <td>{page.name}</td>
-            <td className="text-right">
+            <td style={{textAlign: "right"}}>
               <a href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); props.editFunction(page); }}><Icon>edit</Icon></a>
             </td>
           </tr>

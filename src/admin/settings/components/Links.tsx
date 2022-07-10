@@ -49,7 +49,7 @@ export const Links: React.FC = () => {
       rows.push(
         <tr key={idx}>
           <td><a href={link.url}>{link.text}</a></td>
-          <td className="text-right">
+          <td style={{textAlign: "right"}}>
             {upLink}
             {downLink}
             <a href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); setCurrentLink(link); }}><Icon>edit</Icon></a>
@@ -63,7 +63,7 @@ export const Links: React.FC = () => {
 
   const getTable = () => {
     if (isLoading) return <Loading />
-    else return (<table className="table table-sm">
+    else return (<table className="table">
       <tbody>
         {getLinks()}
       </tbody>

@@ -14,7 +14,7 @@ export const Tabs: React.FC = () => {
   const saveChanges = () => { ApiHelper.post("/links", tabs, "StreamingLiveApi").then(loadData); }
 
   const handleAdd = () => {
-    let tab: LinkInterface = { churchId: UserHelper.currentChurch.id, sort: tabs.length, text: "", url: "", icon: "fas fa-link", linkData: "", linkType: "url", category: "tab" }
+    let tab: LinkInterface = { churchId: UserHelper.currentChurch.id, sort: tabs.length, text: "", url: "", icon: "link", linkData: "", linkType: "url", category: "tab" }
     setCurrentTab(tab);
   }
 
@@ -48,8 +48,8 @@ export const Tabs: React.FC = () => {
       const downLink = (idx === tabs.length - 1) ? null : <a href="about:blank" data-idx={idx} onClick={moveDown}><Icon>arrow_downward</Icon></a>
       rows.push(
         <tr key={idx}>
-          <td><a href={tab.url}><i className={tab.icon} /> {tab.text}</a></td>
-          <td className="text-right">
+          <td><a href={tab.url}><Icon sx={{marginRight: "5px"}}>{tab.icon}</Icon>{tab.text}</a></td>
+          <td style={{textAlign: "right"}}>
             {upLink}
             {downLink}
             <a href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); setCurrentTab(tab); }}><Icon>edit</Icon></a>
@@ -63,7 +63,7 @@ export const Tabs: React.FC = () => {
 
   const getTable = () => {
     if (isLoading) return <Loading />
-    else return (<table className="table table-sm">
+    else return (<table className="table">
       <tbody>
         {getRows()}
       </tbody>

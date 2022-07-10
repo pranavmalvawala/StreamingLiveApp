@@ -41,7 +41,7 @@ export class ConfigHelper {
       if (t.type === "prayer") prayerTabIndex = i;
     }
     if (prayerTabIndex === -1) {
-      ConfigHelper.current.tabs.push({ type: "prayer", icon: "fas fa-envelope", text: "Private Messages", url: "", data: "" })
+      ConfigHelper.current.tabs.push({ type: "prayer", icon: "mail_outline", text: "Private Messages", url: "", data: "" })
       ChatHelper.onChange();
     }
   }

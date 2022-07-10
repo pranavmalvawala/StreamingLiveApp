@@ -47,7 +47,7 @@ export const Services: React.FC = () => {
         <tr key={service.id}>
           <td>{service.label}</td>
           <td>{DateHelper.prettyDateTime(service.serviceTime)}</td>
-          <td className="text-right">
+          <td style={{textAlign: "right"}}>
             <a href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); setCurrentService(service); }}><Icon>edit</Icon></a>
           </td>
         </tr>
@@ -59,7 +59,7 @@ export const Services: React.FC = () => {
 
   const getTable = () => {
     if (isLoading) return <Loading />
-    else return (<table className="table table-sm">
+    else return (<table className="table">
       <tbody>
         {getRows()}
       </tbody>

@@ -1,6 +1,7 @@
 import React from "react";
 import { TabInterface, Chat, HostChat, RequestPrayer, ReceivePrayer, EnvironmentHelper } from "..";
 import { ChatStateInterface, ConfigHelper, ConfigurationInterface } from "../../helpers";
+import { Icon, Box } from "@mui/material";
 
 interface Props {
   config: ConfigurationInterface
@@ -26,7 +27,7 @@ export const InteractionContainer: React.FC<Props> = (props) => {
     if (props.config.tabs != null) {
       for (let i = 0; i < props.config.tabs.length; i++) {
         let t = props.config.tabs[i];
-        result.push(<td key={i}><a href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); selectTab(i); }} className="altTab"><i className={t.icon}></i></a></td>);
+        result.push(<td key={i}><a href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); selectTab(i); }} className="altTab"><Icon sx={{marginRight: "5px"}}>{t.icon}</Icon></a></td>);
       }
     }
     return result;
@@ -74,11 +75,12 @@ export const InteractionContainer: React.FC<Props> = (props) => {
     if (props.config.tabs != null) {
       for (let i = 0; i < props.config.tabs.length; i++) {
         let t = props.config.tabs[i];
+        console.log(t);
         let visible = i === selectedTab;
         let className = getFlashing(visible, t) ? "tab flashing" : "tab";
 
         result.push(<a key={"anchor" + i.toString()} href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); selectTab(i); }} className={className}>
-          <i className={t.icon}></i>{t.text}
+          <Box sx={{display: "flex", alignItems: "center"}}><Icon sx={{marginRight: "5px"}}>{t.icon}</Icon>{t.text}</Box>
         </a>);
 
         switch (t.type) {

@@ -6,7 +6,7 @@ export const Loading = () => {
   return (
     <div id="liveContainer">
       <div className="smallCenterBlock" style={{ marginTop: 150 }}>
-        <img src={imgSrc} alt="logo" className="img-fluid" />
+        <img src={imgSrc} alt="logo" />
         <LoadingComponent color="#FFFFFF" />
       </div>
     </div>

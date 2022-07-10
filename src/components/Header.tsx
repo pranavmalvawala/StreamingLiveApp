@@ -83,12 +83,12 @@ export const Header: React.FC<Props> = (props) => {
         <div id="logo"><img src={imgSrc} alt="logo" /></div>
         <div id="liveButtons" className="d-none d-xl-flex">
           <div>
-            <ul className="nav nav-fill">
+            <ul className="nav">
               <NavItems config={config} />
             </ul>
           </div>
         </div>
-        <div id="userLink"><div><a href="about:blank" onClick={toggleUserMenu}>{props.user?.firstName ? `${firstName} ${lastName}` : "Loading"} <Icon style={{ paddingTop: 5 }}>expand_more</Icon></a></div></div>
+        <div id="userLink"><div><a href="about:blank" onClick={toggleUserMenu}>{props.user?.firstName ? `${firstName} ${lastName}` : "Loading"} <Icon>expand_more</Icon></a></div></div>
       </div>
       {getUserMenu()}
     </>

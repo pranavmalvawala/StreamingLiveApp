@@ -20,7 +20,7 @@ export const External: React.FC<Props> = (props) => {
 
   return (
     <DisplayBox headerIcon="link" headerText="External Resources" editContent={false}>
-      <table className="table table-sm">
+      <table className="table">
         <tbody>
           {getMainSite()}
           {getChurchEditSetting()}

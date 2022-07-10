@@ -29,7 +29,7 @@ export const Home: React.FC = () => {
 
   const checkHost = async (d: ConfigurationInterface) => {
     if (UserHelper.isHost) {
-      d.tabs.push({ type: "hostchat", text: "Host Chat", icon: "fas fa-users", data: "", url: "" });
+      d.tabs.push({ type: "hostchat", text: "Host Chat", icon: "group", data: "", url: "" });
       const hostConversation: ConversationInterface = await ApiHelper.get("/conversations/current/" + d.churchId + "/streamingLiveHost/chat", "MessagingApi");
       ChatHelper.current.hostRoom = ChatHelper.createRoom(hostConversation);
       ChatHelper.current.hostRoom.conversation.title = "Host Chat";
