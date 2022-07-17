@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { InputBox, LinkInterface, ApiHelper, PageInterface, EnvironmentHelper, ErrorMessages } from ".";
-import { FormControl, InputLabel, Select, SelectChangeEvent, TextField, MenuItem, Stack } from "@mui/material";
+import { FormControl, InputLabel, Select, SelectChangeEvent, TextField, MenuItem, Stack, Icon, Button, Dialog } from "@mui/material";
+import SearchIcons from "./../../../appBase/components/material/iconpicker/IconPicker";
+import SvgIcon from "@mui/material/SvgIcon";
+import * as muiIcons from "@mui/icons-material";
 
 interface Props { currentTab: LinkInterface, updatedFunction?: () => void }
 
@@ -8,6 +11,21 @@ export const TabEdit: React.FC<Props> = (props) => {
   const [currentTab, setCurrentTab] = useState<LinkInterface>(null);
   const [pages, setPages] = useState<PageInterface[]>(null);
   const [errors, setErrors] = useState<string[]>([]);
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const onSelect = useCallback((iconName: string) => {
+    let t = { ...currentTab };
+    t.icon = iconName;
+    setCurrentTab(t);
+    closeModal();
+  }, [currentTab]);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   const handleDelete = () => {
     if (window.confirm("Are you sure you wish to delete this tab?")) {
@@ -48,18 +66,6 @@ export const TabEdit: React.FC<Props> = (props) => {
     ApiHelper.post("/links", [currentTab], "StreamingLiveApi").then(props.updatedFunction);
   }
 
-  const initIcon = (e: React.MouseEvent) => {
-    e.preventDefault();
-    let target: any = $(e.currentTarget);
-    target.iconpicker()
-      .on("change", (e: any) => {
-        let t = { ...currentTab };
-        t.icon = e.icon;
-        setCurrentTab(t);
-      });
-    target.click();
-  }
-
   const getUrl = () => {
     if (currentTab?.linkType === "url") {
       return (
@@ -94,13 +100,11 @@ export const TabEdit: React.FC<Props> = (props) => {
     <InputBox headerIcon="folder" headerText="Edit Tab" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={checkDelete}>
       <ErrorMessages errors={errors} />
       <Stack direction="row" pt={2}>
-        <TextField fullWidth margin="none" label="Text" name="text" type="text" value={currentTab?.text} onChange={handleChange} />
-        <div className="input-group-append">
-          <button className="btn btn-secondary iconpicker dropdown-toggle" name="TabIcon" id="TabIcon" data-icon={currentTab?.icon} data-iconset="fontawesome5" onClick={initIcon}>
-            <i className={currentTab?.icon}></i>
-            <span className="caret"></span>
-          </button>
-        </div>
+        <TextField fullWidth margin="none" label="Text" name="text" type="text" value={currentTab?.text} onChange={handleChange} InputProps={{ endAdornment: <div className="input-group-append">
+          <Button variant="contained" endIcon={<Icon>arrow_drop_down</Icon>} onClick={openModal}>
+            <SvgIcon component={(muiIcons as any)[currentTab?.icon]}></SvgIcon>
+          </Button>
+        </div> }} />
         <input type="hidden" asp-for="TabId" />
       </Stack>
       <FormControl fullWidth>
@@ -114,6 +118,10 @@ export const TabEdit: React.FC<Props> = (props) => {
       </FormControl>
       {getUrl()}
       {getPage()}
+
+      <Dialog open={isModalOpen}>
+        <SearchIcons onSelect={onSelect} />
+      </Dialog>
     </InputBox>
   );
 }

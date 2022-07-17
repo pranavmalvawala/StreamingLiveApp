@@ -2,6 +2,8 @@ import { Icon } from "@mui/material";
 import React from "react";
 import { DisplayBox, TabEdit, LinkInterface, ApiHelper, UserHelper } from ".";
 import { Loading, SmallButton } from "../../../appBase/components";
+import SvgIcon from "@mui/material/SvgIcon";
+import * as muiIcons from "@mui/icons-material";
 
 export const Tabs: React.FC = () => {
   const [tabs, setTabs] = React.useState<LinkInterface[]>([]);
@@ -48,7 +50,7 @@ export const Tabs: React.FC = () => {
       const downLink = (idx === tabs.length - 1) ? null : <a href="about:blank" data-idx={idx} onClick={moveDown}><Icon>arrow_downward</Icon></a>
       rows.push(
         <tr key={idx}>
-          <td><a href={tab.url}><Icon sx={{marginRight: "5px"}}>{tab.icon}</Icon>{tab.text}</a></td>
+          <td><a href={tab.url}><SvgIcon sx={{marginRight: "5px"}} component={(muiIcons as any)[tab.icon]}></SvgIcon>{tab.text}</a></td>
           <td style={{textAlign: "right"}}>
             {upLink}
             {downLink}
