@@ -17,8 +17,6 @@ export class EnvironmentHelper {
       default: EnvironmentHelper.initDev(); break;
     }
     EnvironmentHelper.Common.init(stage);
-    console.log("AccessApi");
-    console.log(EnvironmentHelper.Common.AccessApi)
 
     ApiHelper.apiConfigs = [
       { keyName: "AccessApi", url: EnvironmentHelper.Common.AccessApi, jwt: "", permisssions: [] },

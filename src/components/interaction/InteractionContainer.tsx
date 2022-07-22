@@ -2,6 +2,7 @@ import React from "react";
 import { TabInterface, Chat, HostChat, RequestPrayer, ReceivePrayer, EnvironmentHelper } from "..";
 import { ChatStateInterface, ConfigHelper, ConfigurationInterface } from "../../helpers";
 import { Icon, Box } from "@mui/material";
+import useMountedState from "../../appBase/hooks/useMountedState";
 
 interface Props {
   config: ConfigurationInterface
@@ -10,6 +11,7 @@ interface Props {
 
 export const InteractionContainer: React.FC<Props> = (props) => {
   const [selectedTab, setSelectedTab] = React.useState(0);
+  const isMounted = useMountedState();
 
   /*
         const initChat = () => {
@@ -75,7 +77,6 @@ export const InteractionContainer: React.FC<Props> = (props) => {
     if (props.config.tabs != null) {
       for (let i = 0; i < props.config.tabs.length; i++) {
         let t = props.config.tabs[i];
-        console.log(t);
         let visible = i === selectedTab;
         let className = getFlashing(visible, t) ? "tab flashing" : "tab";
 
@@ -118,13 +119,15 @@ export const InteractionContainer: React.FC<Props> = (props) => {
           if (t.type === "prayer" && selectedTab !== i) prayerTabIndex = i;
         }
 
-        setSelectedTab(prayerTabIndex);
+        if(isMounted()) {
+          setSelectedTab(prayerTabIndex);
+        }
         ConfigHelper.current.switchToConversationId = "";
 
       }
 
     }
-  }, [props.config.switchToConversationId, props.config.tabs, selectedTab]);
+  }, [props.config.switchToConversationId, props.config.tabs, selectedTab, isMounted]);
 
   return (
     <div id="interactionContainer">

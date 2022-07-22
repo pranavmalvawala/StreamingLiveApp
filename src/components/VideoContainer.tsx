@@ -2,6 +2,7 @@ import React from "react";
 import { ServiceInterface } from ".";
 import { ChatHelper, ConfigHelper, UserInterface } from "../helpers";
 import { Jutsu } from "react-jutsu"
+import useMountedState from "../appBase/hooks/useMountedState";
 
 interface Props { currentService: ServiceInterface | null, jitsiRoom: string, user: UserInterface }
 
@@ -9,6 +10,7 @@ export const VideoContainer: React.FC<Props> = (props) => {
 
   const [currentTime, setCurrentTime] = React.useState(new Date().getTime());
   const [loadedTime, setLoadedTime] = React.useState(new Date().getTime());
+  const isMounted = useMountedState();
 
   const getCountdownTime = (serviceTime: Date) => {
     let remainingSeconds = Math.floor((serviceTime.getTime() - currentTime) / 1000);
@@ -70,11 +72,14 @@ export const VideoContainer: React.FC<Props> = (props) => {
       else return getVideo(cs);
     }
   }
-  const updateCurrentTime = () => { setCurrentTime(new Date().getTime()); }
   React.useEffect(() => {
+    const updateCurrentTime = () => {
+      if(isMounted()) {
+        setCurrentTime(new Date().getTime());
+      }}
     setLoadedTime(new Date().getTime());
     setInterval(updateCurrentTime, 1000);
-  }, []);
+  }, [isMounted]);
 
   return (
     <div id="videoContainer">
