@@ -1,3 +1,4 @@
+import { Button, FormControl, InputLabel, OutlinedInput } from "@mui/material";
 import React, { KeyboardEvent } from "react";
 import { Emojis } from ".";
 import { ApiHelper, ChatHelper, ChatRoomInterface, ConfigHelper, MessageInterface } from "../../../helpers"
@@ -36,14 +37,19 @@ export const ChatSend: React.FC<Props> = (props) => {
   return (
     <div id="chatSend">
       {emojiContent}
-      <div className="input-group" id="sendPublic">
-        <div className="input-group-prepend">
-          <a href="about:blank" onClick={toggleEmojis} data-field="sendText" className="btn btn-outline-secondary emojiButton"><span role="img" aria-label="emoji">😀</span></a>
-        </div>
-        <input type="text" className="form-control" id="sendChatText" value={message} onChange={handleChange} onKeyDown={handleKeyDown} autoComplete="off" />
-        <div className="input-group-append">
-          <a id="sendMessageButton" className="btn btn-primary" href="about:blank" onClick={handleSendMessage}>Send</a>
-        </div>
+      <div id="sendPublic" style={{ marginLeft: 5, marginRight: 5 }}>
+
+        <FormControl fullWidth variant="outlined">
+          <InputLabel htmlFor="searchText">Send Message</InputLabel>
+          <OutlinedInput id="sendChatText" name="sendChatText" type="text" label="Send Message" value={message} onChange={handleChange}
+            onKeyDown={handleKeyDown} autoComplete="off"
+            endAdornment={<>
+              <Button variant="outlined" size="small" style={{ paddingRight: 8, paddingLeft: 8, minWidth: 0, marginRight: 5 }} onClick={toggleEmojis} data-field="sendText" className="emojiButton"><span role="img" aria-label="emoji">😀</span></Button>
+              <Button variant="contained" onClick={handleSendMessage}>Send</Button>
+            </>}
+          />
+        </FormControl>
+
       </div>
     </div>
   );

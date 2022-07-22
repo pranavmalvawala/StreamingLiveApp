@@ -1,4 +1,4 @@
-import { Icon } from "@mui/material";
+import { Button, FormControl, Icon, InputLabel, OutlinedInput } from "@mui/material";
 import React from "react";
 import { ApiHelper, ChatHelper, ChatRoomInterface, ChatUserInterface, MessageInterface, ConfigHelper } from "../../../helpers";
 
@@ -21,12 +21,14 @@ export const Callout: React.FC<Props> = (props) => {
     setEdit(false);
   }
 
-  const getEditSection = () => (<div className="input-group input-group-sm mb-3">
-    <input id="nameText" type="text" className="form-control form-control-sm" placeholder="Callout message" value={message} onChange={handleChange} />
-    <div className="input-group-append input-group-append-sm">
-      <button id="setNameButton" className="btn btn-primary btn-sm" onClick={handleUpdate}>Update</button>
-    </div>
-  </div>)
+  const getEditSection = () => (<FormControl fullWidth variant="outlined">
+    <InputLabel htmlFor="calloutText">Callout Message</InputLabel>
+    <OutlinedInput id="calloutText" name="calloutText" type="text" label="Callout Message" value={message} onChange={handleChange} autoComplete="off"
+      endAdornment={<>
+        <Button variant="contained" onClick={handleUpdate}>Update</Button>
+      </>}
+    />
+  </FormControl>)
 
   if (props.user?.isHost) {
     if (edit) return getEditSection();

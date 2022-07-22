@@ -27,7 +27,7 @@ export const InteractionContainer: React.FC<Props> = (props) => {
     if (props.config.tabs != null) {
       for (let i = 0; i < props.config.tabs.length; i++) {
         let t = props.config.tabs[i];
-        result.push(<td key={i}><a href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); selectTab(i); }} className="altTab"><Icon sx={{marginRight: "5px"}}>{t.icon}</Icon></a></td>);
+        result.push(<td key={i}><a href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); selectTab(i); }} className="altTab"><Icon sx={{ marginRight: "5px" }}>{t.icon}</Icon></a></td>);
       }
     }
     return result;
@@ -80,7 +80,7 @@ export const InteractionContainer: React.FC<Props> = (props) => {
         let className = getFlashing(visible, t) ? "tab flashing" : "tab";
 
         result.push(<a key={"anchor" + i.toString()} href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); selectTab(i); }} className={className}>
-          <Box sx={{display: "flex", alignItems: "center"}}><Icon sx={{marginRight: "5px"}}>{t.icon}</Icon>{t.text}</Box>
+          <Box sx={{ display: "flex", alignItems: "center" }}><Icon sx={{ marginRight: "5px", marginLeft: "5px" }}>{t.icon}</Icon>{t.text}</Box>
         </a>);
 
         switch (t.type) {

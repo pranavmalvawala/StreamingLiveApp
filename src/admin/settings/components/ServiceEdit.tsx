@@ -126,7 +126,7 @@ export const ServiceEdit: React.FC<Props> = (props) => {
         <TextField fullWidth label="Service Name" name="serviceLabel" value={currentService?.label} onChange={handleChange} />
         <Grid container spacing={3}>
           <Grid item xs={6}>
-            <TextField fullWidth label="Service Time" type="datetime-local" className="form-control" name="serviceTime" defaultValue={DateHelper.formatHtml5DateTime(localServiceTime)} onChange={handleChange} />
+            <TextField fullWidth label="Service Time" type="datetime-local" name="serviceTime" defaultValue={DateHelper.formatHtml5DateTime(localServiceTime)} onChange={handleChange} />
           </Grid>
           <Grid item xs={6}>
             <FormControl fullWidth>

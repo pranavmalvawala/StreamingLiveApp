@@ -2,8 +2,6 @@ import React, { useState, useCallback } from "react";
 import { InputBox, LinkInterface, ApiHelper, PageInterface, EnvironmentHelper, ErrorMessages } from ".";
 import { FormControl, InputLabel, Select, SelectChangeEvent, TextField, MenuItem, Stack, Icon, Button, Dialog } from "@mui/material";
 import SearchIcons from "./../../../appBase/components/material/iconpicker/IconPicker";
-import SvgIcon from "@mui/material/SvgIcon";
-import * as muiIcons from "@mui/icons-material";
 
 interface Props { currentTab: LinkInterface, updatedFunction?: () => void }
 
@@ -96,15 +94,18 @@ export const TabEdit: React.FC<Props> = (props) => {
 
   React.useEffect(() => { setCurrentTab(props.currentTab); }, [props.currentTab]);
 
-  return (
+  if (!currentTab) return <></>
+  else return (
     <InputBox headerIcon="folder" headerText="Edit Tab" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={checkDelete}>
       <ErrorMessages errors={errors} />
       <Stack direction="row" pt={2}>
-        <TextField fullWidth margin="none" label="Text" name="text" type="text" value={currentTab?.text} onChange={handleChange} InputProps={{ endAdornment: <div className="input-group-append">
-          <Button variant="contained" endIcon={<Icon>arrow_drop_down</Icon>} onClick={openModal}>
-            <SvgIcon component={(muiIcons as any)[currentTab?.icon]}></SvgIcon>
-          </Button>
-        </div> }} />
+        <TextField fullWidth margin="none" label="Text" name="text" type="text" value={currentTab?.text} onChange={handleChange} InputProps={{
+          endAdornment: <div className="input-group-append">
+            <Button variant="contained" endIcon={<Icon>arrow_drop_down</Icon>} onClick={openModal}>
+              <Icon>{currentTab?.icon}</Icon>
+            </Button>
+          </div>
+        }} />
         <input type="hidden" asp-for="TabId" />
       </Stack>
       <FormControl fullWidth>

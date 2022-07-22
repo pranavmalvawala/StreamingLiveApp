@@ -1,3 +1,4 @@
+import { TextField } from "@mui/material";
 import React, { useState } from "react";
 import { InputBox, LinkInterface, ApiHelper, ErrorMessages } from "."
 
@@ -39,14 +40,8 @@ export const LinkEdit: React.FC<Props> = (props) => {
   return (
     <InputBox headerIcon="link" headerText="Edit Link" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={checkDelete}>
       <ErrorMessages errors={errors} />
-      <div className="form-group">
-        <label>Text</label>
-        <input type="text" className="form-control" name="text" value={currentLink?.text} onChange={handleChange} />
-      </div>
-      <div className="form-group">
-        <label>Url</label>
-        <input type="text" className="form-control" name="url" value={currentLink?.url} onChange={handleChange} />
-      </div>
+      <TextField fullWidth label="Text" name="text" type="text" value={currentLink?.text} onChange={handleChange} />
+      <TextField fullWidth label="Url" name="url" type="text" value={currentLink?.url} onChange={handleChange} />
     </InputBox>
   );
 }
