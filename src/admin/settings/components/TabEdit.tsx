@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { InputBox, LinkInterface, ApiHelper, PageInterface, EnvironmentHelper, ErrorMessages } from ".";
+import { InputBox, LinkInterface, ApiHelper, PageInterface, ErrorMessages } from ".";
 import { FormControl, InputLabel, Select, SelectChangeEvent, TextField, MenuItem, Stack, Icon, Button, Dialog } from "@mui/material";
 import SearchIcons from "./../../../appBase/components/material/iconpicker/IconPicker";
 
@@ -78,9 +78,12 @@ export const TabEdit: React.FC<Props> = (props) => {
       if (pages === null) loadPages();
       else {
         options = [];
-        pages.forEach(page => options.push(<MenuItem value={EnvironmentHelper.Common.ContentRoot + "/" + page.path} key={page.id}>{page.name}</MenuItem>));
+        pages.forEach(page => {
+          options.push(<MenuItem value={page.id} key={page.id}>{page.name}</MenuItem>)
+        });
         if (currentTab.linkData === "") currentTab.linkData = pages[0]?.path;
       }
+      console.log("PAGE - " + currentTab?.linkData)
       return (
         <FormControl fullWidth>
           <InputLabel id="page">Page</InputLabel>
@@ -114,7 +117,7 @@ export const TabEdit: React.FC<Props> = (props) => {
           <MenuItem value="url">External Url</MenuItem>
           <MenuItem value="page">Page</MenuItem>
           <MenuItem value="chat">Chat</MenuItem>
-          <MenuItem value="prayer">PagPrayere</MenuItem>
+          <MenuItem value="prayer">PagePrayer</MenuItem>
         </Select>
       </FormControl>
       {getUrl()}
