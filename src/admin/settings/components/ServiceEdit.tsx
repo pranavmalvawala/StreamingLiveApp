@@ -123,15 +123,15 @@ export const ServiceEdit: React.FC<Props> = (props) => {
   return (
     <InputBox headerIcon="calendar_month" headerText="Edit Service" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={checkDelete()}>
       <>
-        <TextField fullWidth label="Service Name" name="serviceLabel" value={currentService?.label} onChange={handleChange} />
+        <TextField fullWidth label="Service Name" name="serviceLabel" value={currentService?.label || ""} onChange={handleChange} />
         <Grid container spacing={3}>
           <Grid item xs={6}>
-            <TextField fullWidth label="Service Time" type="datetime-local" name="serviceTime" defaultValue={DateHelper.formatHtml5DateTime(localServiceTime)} onChange={handleChange} />
+            <TextField fullWidth label="Service Time" type="datetime-local" name="serviceTime" InputLabelProps={{ shrink: !!DateHelper.formatHtml5DateTime(localServiceTime) }} defaultValue={DateHelper.formatHtml5DateTime(localServiceTime)} onChange={handleChange} />
           </Grid>
           <Grid item xs={6}>
             <FormControl fullWidth>
               <InputLabel>Recurs Weekly</InputLabel>
-              <Select label="Recurs Weekly" name="recurs" value={Boolean(currentService?.recurring).toString()} onChange={handleChange}>
+              <Select label="Recurs Weekly" name="recurs" value={Boolean(currentService?.recurring).toString() || ""} onChange={handleChange}>
                 <MenuItem value="false">No</MenuItem>
                 <MenuItem value="true">Yes</MenuItem>
               </Select>
@@ -154,13 +154,13 @@ export const ServiceEdit: React.FC<Props> = (props) => {
         </Grid>
         <Grid container spacing={3}>
           <Grid item xs={6}>
-            <TextField fullWidth label="Enable Chat - Minutes Before" type="number" name="chatBefore" value={currentService?.chatBefore / 60} onChange={handleChange} InputProps={{
+            <TextField fullWidth label="Enable Chat - Minutes Before" type="number" name="chatBefore" value={currentService?.chatBefore / 60 || ""} onChange={handleChange} InputProps={{
               inputProps: { min: 0, step: 1 },
               endAdornment: <span style={{ whiteSpace: "nowrap" }}>{DateHelper.prettyTime(new Date(chatAndPrayerStartTime))}</span>
             }} />
           </Grid>
           <Grid item xs={6}>
-            <TextField fullWidth label="Enable Chat - Minutes After" type="number" name="chatAfter" value={currentService?.chatAfter / 60} onChange={handleChange} InputProps={{
+            <TextField fullWidth label="Enable Chat - Minutes After" type="number" name="chatAfter" value={currentService?.chatAfter / 60 || ""} onChange={handleChange} InputProps={{
               inputProps: { min: 0, step: 1 },
               endAdornment: <span style={{ whiteSpace: "nowrap" }}>{DateHelper.prettyTime(new Date(chatAndPrayerEndTime))}</span>
             }} />
@@ -171,7 +171,7 @@ export const ServiceEdit: React.FC<Props> = (props) => {
           <Grid item xs={6}>
             <FormControl fullWidth>
               <InputLabel>Video Provider</InputLabel>
-              <Select label="Video Provider" name="provider" value={currentService?.provider} onChange={handleChange}>
+              <Select label="Video Provider" name="provider" value={currentService?.provider || ""} onChange={handleChange}>
                 <MenuItem value="" disabled>Live Stream</MenuItem>
                 <MenuItem value="youtube_live">YouTube (Live)</MenuItem>
                 <MenuItem value="vimeo_live">Vimeo (Live)</MenuItem>
@@ -185,7 +185,7 @@ export const ServiceEdit: React.FC<Props> = (props) => {
             </FormControl>
           </Grid>
           <Grid item xs={6}>
-            <TextField fullWidth label={keyLabel} name="providerKey" value={currentService?.providerKey} onChange={handleChange} placeholder={keyPlaceholder} />
+            <TextField fullWidth label={keyLabel} name="providerKey" value={currentService?.providerKey || ""} onChange={handleChange} placeholder={keyPlaceholder} />
           </Grid>
         </Grid>
       </>

@@ -40,8 +40,8 @@ export const LinkEdit: React.FC<Props> = (props) => {
   return (
     <InputBox headerIcon="link" headerText="Edit Link" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={checkDelete}>
       <ErrorMessages errors={errors} />
-      <TextField fullWidth label="Text" name="text" type="text" value={currentLink?.text} onChange={handleChange} />
-      <TextField fullWidth label="Url" name="url" type="text" value={currentLink?.url} onChange={handleChange} />
+      <TextField fullWidth label="Text" name="text" type="text" value={currentLink?.text || ""} onChange={handleChange} />
+      <TextField fullWidth label="Url" name="url" type="text" value={currentLink?.url || ""} onChange={handleChange} />
     </InputBox>
   );
 }

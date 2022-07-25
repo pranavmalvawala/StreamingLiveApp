@@ -20,10 +20,10 @@ export const Duration: React.FC<Props> = (props) => {
   return (
     <Grid container spacing={3}>
       <Grid item xs={6}>
-        <TextField fullWidth label="Minutes" type="number" InputProps={{ inputProps: { min: 0, step: 1, max: 59 } }} name="min" value={min} onChange={handleChange} />
+        <TextField fullWidth label="Minutes" type="number" InputProps={{ inputProps: { min: 0, step: 1, max: 59 } }} name="min" value={min || ""} onChange={handleChange} />
       </Grid>
       <Grid item xs={6}>
-        <TextField fullWidth label="Seconds" type="number" InputProps={{ inputProps: { min: 0, step: 1, max: 59 } }} name="sec" value={sec} onChange={handleChange} />
+        <TextField fullWidth label="Seconds" type="number" InputProps={{ inputProps: { min: 0, step: 1, max: 59 } }} name="sec" value={sec || ""} onChange={handleChange} />
       </Grid>
     </Grid>
   );

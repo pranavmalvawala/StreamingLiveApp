@@ -48,7 +48,7 @@ export const Tabs: React.FC = () => {
       const downLink = (idx === tabs.length - 1) ? null : <a href="about:blank" data-idx={idx} onClick={moveDown}><Icon>arrow_downward</Icon></a>
       rows.push(
         <tr key={idx}>
-          <td><a href={tab.url}><Icon>{tab.icon}</Icon> {tab.text}</a></td>
+          <td><a href={tab.url} style={{display: "flex"}}><Icon sx={{marginRight: "5px"}}>{tab.icon}</Icon>{tab.text}</a></td>
           <td style={{ textAlign: "right" }}>
             {upLink}
             {downLink}

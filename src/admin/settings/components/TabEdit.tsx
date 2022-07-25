@@ -110,7 +110,7 @@ export const TabEdit: React.FC<Props> = (props) => {
       </Stack>
       <FormControl fullWidth>
         <InputLabel id="type">Type</InputLabel>
-        <Select labelId="type" label="Type" name="type" value={currentTab?.linkType || null} onChange={handleChange}>
+        <Select labelId="type" label="Type" name="type" value={currentTab?.linkType || ""} onChange={handleChange}>
           <MenuItem value="url">External Url</MenuItem>
           <MenuItem value="page">Page</MenuItem>
           <MenuItem value="chat">Chat</MenuItem>
