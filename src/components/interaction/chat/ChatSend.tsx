@@ -1,6 +1,7 @@
 import { Button, FormControl, InputLabel, OutlinedInput } from "@mui/material";
 import React, { KeyboardEvent } from "react";
 import { Emojis } from ".";
+import { UserHelper } from "../../../appBase/helpers";
 import { ApiHelper, ChatHelper, ChatRoomInterface, ConfigHelper, MessageInterface } from "../../../helpers"
 
 interface Props { room: ChatRoomInterface }
@@ -21,7 +22,8 @@ export const ChatSend: React.FC<Props> = (props) => {
   const sendMessage = () => {
     const { firstName, lastName } = ChatHelper.current.user;
     const msg: MessageInterface = { churchId: ConfigHelper.current.churchId, content: message.trim(), conversationId: props.room.conversation.id, displayName: `${firstName} ${lastName}`, messageType: "message" }
-    ApiHelper.postAnonymous("/messages/send", [msg], "MessagingApi");
+    if (UserHelper.user) ApiHelper.post("/messages/send", [msg], "MessagingApi");
+    else ApiHelper.postAnonymous("/messages/send", [msg], "MessagingApi");
     setMessage("");
   }
 
