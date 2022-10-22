@@ -22,7 +22,9 @@ export const PlaylistEdit: React.FC<Props> = (props) => {
   }
 
   const handlePhotoUpdated = () => {
-    if (props.updatedPhoto !== null) {
+    console.log("*******UPDATED PHOTO");
+    console.log(props.updatedPhoto);
+    if (props.updatedPhoto !== null && props.updatedPhoto !== currentPlaylist?.thumbnail) {
       const p = { ...currentPlaylist };
       p.thumbnail = props.updatedPhoto;
       props.showPhotoEditor("", null);

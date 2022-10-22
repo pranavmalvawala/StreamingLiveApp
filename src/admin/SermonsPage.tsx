@@ -11,11 +11,11 @@ export const SermonsPage: React.FC = () => {
   const [photoType, setPhotoType] = React.useState<string>(null);
 
   const handlePhotoUpdated = (dataUrl: string) => {
+    console.log(photoType)
     setPhotoUrl(dataUrl);
-    setPhotoType(null);
   }
 
-  const imageEditor = (photoType !== null) && (
+  const imageEditor = (photoType) && (
     <ImageEditor
       aspectRatio={16 / 9}
       photoUrl={photoUrl}
@@ -27,6 +27,8 @@ export const SermonsPage: React.FC = () => {
   );
 
   const showPhotoEditor = (pType: string, url: string) => {
+    console.log("show photo editor");
+    console.log(pType);
     setPhotoUrl(url);
     setPhotoType(pType);
   }

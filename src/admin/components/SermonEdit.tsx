@@ -29,7 +29,7 @@ export const SermonEdit: React.FC<Props> = (props) => {
   const handleCancel = () => { props.updatedFunction(); }
 
   const handlePhotoUpdated = () => {
-    if (props.updatedPhoto !== null) {
+    if (props.updatedPhoto !== null && props.updatedPhoto !== currentSermon?.thumbnail) {
       const s = { ...currentSermon };
       s.thumbnail = props.updatedPhoto;
       props.showPhotoEditor("", null);
@@ -179,8 +179,8 @@ export const SermonEdit: React.FC<Props> = (props) => {
       <Grid container spacing={3}>
         <Grid item xs={6}>
           <FormControl fullWidth>
-            <InputLabel>Sermon Provider</InputLabel>
-            <Select label="Sermon Provider" name="videoType" value={currentSermon?.videoType || ""} onChange={handleChange}>
+            <InputLabel>Video Provider</InputLabel>
+            <Select label="Video Provider" name="videoType" value={currentSermon?.videoType || ""} onChange={handleChange}>
               {currentSermon?.permanentUrl && (<MenuItem value="youtube_channel">Current YouTube Live Stream</MenuItem>)}
               <MenuItem value="youtube">YouTube</MenuItem>
               <MenuItem value="vimeo">Vimeo</MenuItem>
