@@ -11,15 +11,15 @@ export const External: React.FC<Props> = (props) => {
     if (Permissions.accessApi.settings.edit) {
       const jwt = ApiHelper.getConfig("AccessApi").jwt;
       const url = `${EnvironmentHelper.Common.AccountsRoot}/login?jwt=${jwt}&returnUrl=/${ConfigHelper.current.churchId}/manage`;
-      return (<tr><td><a href={url} style={{display: "flex"}}><Icon sx={{marginRight: "5px"}}>edit</Icon>Customize Appearance / Edit Users</a></td></tr>);
+      return (<tr><td><a href={url} style={{ display: "flex" }}><Icon sx={{ marginRight: "5px" }}>edit</Icon>Customize Appearance / Edit Users</a></td></tr>);
     }
     else return null;
   }
 
-  const getMainSite = () => (<tr><td><Link to={"/"} style={{display: "flex"}}><Icon sx={{marginRight: "5px"}}>play_arrow</Icon>View Site</Link></td></tr>)
+  const getMainSite = () => (<tr><td><Link to={"/"} style={{ display: "flex" }}><Icon sx={{ marginRight: "5px" }}>play_arrow</Icon>View Site</Link></td></tr>)
 
   return (
-    <DisplayBox headerIcon="link" headerText="External Resources" editContent={false}>
+    <DisplayBox headerIcon="link" headerText="External Resources" editContent={false} help="accounts/appearance">
       <table className="table">
         <tbody>
           {getMainSite()}

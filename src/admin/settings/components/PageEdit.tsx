@@ -90,7 +90,7 @@ export const PageEdit: React.FC<Props> = (props) => {
   }, [props.page]);
 
   return (
-    <InputBox headerIcon="code" headerText="Edit Page" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={checkDelete}>
+    <InputBox headerIcon="code" headerText="Edit Page" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={checkDelete} help="streaminglive/pages-tabs">
       <TextField fullWidth label="Page Name" name="name" value={page?.name || ""} onChange={handleChange} />
       <label>Contents</label>
       <Editor editorState={editorState} onEditorStateChange={handleEditorChange} editorStyle={{ height: 400 }} />

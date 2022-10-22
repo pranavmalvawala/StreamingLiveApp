@@ -38,7 +38,7 @@ export const LinkEdit: React.FC<Props> = (props) => {
   React.useEffect(() => { setCurrentLink(props.currentLink); }, [props.currentLink]);
 
   return (
-    <InputBox headerIcon="link" headerText="Edit Link" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={checkDelete}>
+    <InputBox headerIcon="link" headerText="Edit Link" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={checkDelete} help="streaminglive/header-links">
       <ErrorMessages errors={errors} />
       <TextField fullWidth label="Text" name="text" type="text" value={currentLink?.text || ""} onChange={handleChange} />
       <TextField fullWidth label="Url" name="url" type="text" value={currentLink?.url || ""} onChange={handleChange} />

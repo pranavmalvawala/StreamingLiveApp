@@ -49,7 +49,7 @@ export const Links: React.FC = () => {
       rows.push(
         <tr key={idx}>
           <td><a href={link.url}>{link.text}</a></td>
-          <td style={{textAlign: "right"}}>
+          <td style={{ textAlign: "right" }}>
             {upLink}
             {downLink}
             <a href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); setCurrentLink(link); }}><Icon>edit</Icon></a>
