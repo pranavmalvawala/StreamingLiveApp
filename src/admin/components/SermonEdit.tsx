@@ -14,7 +14,6 @@ interface Props {
 
 export const SermonEdit: React.FC<Props> = (props) => {
 
-
   const [currentSermon, setCurrentSermon] = React.useState<SermonInterface>(null);
   const [playlists, setPlaylists] = React.useState<PlaylistInterface[]>([]);
   const [isLoading, setIsLoading] = React.useState(true);
@@ -138,7 +137,7 @@ export const SermonEdit: React.FC<Props> = (props) => {
   }
 
   React.useEffect(() => { setCurrentSermon(props.currentSermon); loadData(); }, [props.currentSermon]);
-  React.useEffect(handlePhotoUpdated, [props.updatedPhoto, currentSermon]);
+  React.useEffect(handlePhotoUpdated, [props.updatedPhoto, currentSermon]); //eslint-disable-line
 
   let keyLabel = <>Sermon Embed Url</>;
   let keyPlaceholder = "https://yourprovider.com/yoururl/"

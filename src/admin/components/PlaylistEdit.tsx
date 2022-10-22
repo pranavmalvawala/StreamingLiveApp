@@ -46,7 +46,7 @@ export const PlaylistEdit: React.FC<Props> = (props) => {
   }
 
   React.useEffect(() => { setCurrentPlaylist(props.currentPlaylist); }, [props.currentPlaylist]);
-  React.useEffect(handlePhotoUpdated, [props.updatedPhoto, currentPlaylist]);
+  React.useEffect(handlePhotoUpdated, [props.updatedPhoto, currentPlaylist]); //eslint-disable-line
 
   return (
     <InputBox headerIcon="calendar_month" headerText="Edit Playlist" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={checkDelete()}>

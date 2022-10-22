@@ -1,7 +1,7 @@
 import { Icon, IconButton, Menu, MenuItem, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import React from "react";
 import { DisplayBox, ApiHelper, DateHelper, SermonInterface, UserHelper, PlaylistInterface } from ".";
-import { Loading, SmallButton } from "../../appBase/components";
+import { Loading } from "../../appBase/components";
 import { ArrayHelper } from "../../appBase/helpers";
 import { SermonEdit } from "./SermonEdit";
 
@@ -20,14 +20,13 @@ export const Sermons = (props: Props) => {
   const handleUpdated = () => { setCurrentSermon(null); loadData(); }
   //const getEditContent = () => <SmallButton icon="add" text="Add" onClick={handleAdd} />
 
-
   const getEditContent = () => {
     const open = Boolean(anchorEl);
     return (<>
-      <IconButton aria-label="addButton" id="addBtnGroup" data-cy="add-button" aria-controls={open ? "add-menu" : undefined} aria-expanded={open ? "true" : undefined} aria-haspopup="true" onClick={(e) => { setAnchorEl(e.currentTarget); }} >
+      <IconButton aria-label="addButton" id="addBtnGroup" data-cy="add-button" aria-controls={open ? "add-menu" : undefined} aria-expanded={open ? "true" : undefined} aria-haspopup="true" onClick={(e) => { setAnchorEl(e.currentTarget); }}>
         <Icon color="primary">add</Icon>
       </IconButton>
-      <Menu id="add-menu" MenuListProps={{ "aria-labelledby": "addBtnGroup" }} anchorEl={anchorEl} open={open} onClose={() => { setAnchorEl(null); }} >
+      <Menu id="add-menu" MenuListProps={{ "aria-labelledby": "addBtnGroup" }} anchorEl={anchorEl} open={open} onClose={() => { setAnchorEl(null); }}>
         <MenuItem data-cy="add-campus" onClick={() => { setAnchorEl(null);; handleAdd(false); }}>
           Add Sermon
         </MenuItem>
