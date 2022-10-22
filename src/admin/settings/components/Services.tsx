@@ -28,7 +28,7 @@ export const Services: React.FC = () => {
     //defaultDate.setTime(defaultDate.getTime() + (9 * 60 * 60 * 1000) - (tz * 60 * 1000));
     defaultDate.setTime(defaultDate.getTime() + (9 * 60 * 60 * 1000));
 
-    let link: AdminServiceInterface = { churchId: UserHelper.currentChurch.id, serviceTime: defaultDate, chatBefore: 600, chatAfter: 600, duration: 3600, earlyStart: 600, provider: "youtube_live", providerKey: "", recurring: false, timezoneOffset: tz, videoUrl: "", label: "Service Name" }
+    let link: AdminServiceInterface = { churchId: UserHelper.currentChurch.id, serviceTime: defaultDate, chatBefore: 600, chatAfter: 600, duration: 3600, earlyStart: 600, provider: "youtube_live", providerKey: "", recurring: false, timezoneOffset: tz, videoUrl: "", label: "Sunday Morning", sermonId: "latest" }
     setCurrentService(link);
     loadData();
   }
@@ -47,7 +47,7 @@ export const Services: React.FC = () => {
         <tr key={service.id}>
           <td>{service.label}</td>
           <td>{DateHelper.prettyDateTime(service.serviceTime)}</td>
-          <td style={{textAlign: "right"}}>
+          <td style={{ textAlign: "right" }}>
             <a href="about:blank" onClick={(e: React.MouseEvent) => { e.preventDefault(); setCurrentService(service); }}><Icon>edit</Icon></a>
           </td>
         </tr>

@@ -11,8 +11,7 @@ export const Unauthenticated = () => (
       <Route path="/login" element={<Login />} />
       <Route path="/pages/:churchId/:id" element={<Page />} />
       <Route path="/admin/settings" element={<Navigate to="/" />} />
-      <Route path="/admin/pages" element={<Navigate to="/" />} />
-      <Route path="/admin/users" element={<Navigate to="/" />} />
+      <Route path="/admin" element={<Navigate to="/" />} />
       <Route path="/" element={<Home />} />
     </Routes>
   </>

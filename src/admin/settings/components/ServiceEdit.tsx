@@ -1,14 +1,25 @@
 import { Grid, InputLabel, MenuItem, Select, TextField, FormControl, SelectChangeEvent } from "@mui/material";
 import React from "react";
-import { AdminServiceInterface, ApiHelper, InputBox, Duration } from ".";
-import { DateHelper, UniqueIdHelper } from "../../../helpers";
+import { AdminServiceInterface, ApiHelper, InputBox } from ".";
+import { Loading } from "../../../appBase/components/Loading";
+import { DateHelper, SermonInterface, UniqueIdHelper } from "../../../helpers";
 
 interface Props { currentService: AdminServiceInterface, updatedFunction?: () => void }
 
 export const ServiceEdit: React.FC<Props> = (props) => {
   const [currentService, setCurrentService] = React.useState<AdminServiceInterface>(null);
+  const [sermons, setSermons] = React.useState<SermonInterface[]>([]);
+  const [isLoading, setIsLoading] = React.useState(true);
+
   const checkDelete = () => { if (!UniqueIdHelper.isMissing(currentService?.id)) return handleDelete; else return null; }
   const handleCancel = () => { props.updatedFunction(); }
+
+  const loadData = () => {
+    ApiHelper.get("/sermons", "StreamingLiveApi").then(data => {
+      setSermons(data);
+      setIsLoading(false);
+    });
+  }
 
   const handleDelete = () => {
     if (window.confirm("Are you sure you wish to delete this service?")) {
@@ -27,6 +38,7 @@ export const ServiceEdit: React.FC<Props> = (props) => {
         break;
       case "chatBefore": s.chatBefore = parseInt(val) * 60; break;
       case "chatAfter": s.chatAfter = parseInt(val) * 60; break;
+      case "earlyStart": s.earlyStart = parseInt(val) * 60; break;
       case "provider": s.provider = val; break;
       case "providerKey":
         s.providerKey = val;
@@ -35,6 +47,7 @@ export const ServiceEdit: React.FC<Props> = (props) => {
         else if (s.provider === "vimeo_live" || s.provider === "vimeo_watchparty") s.providerKey = getVimeoKey(s.providerKey);
         break;
       case "recurs": s.recurring = val === "true"; break;
+      case "sermonId": s.sermonId = val; break;
     }
     setCurrentService(s);
   }
@@ -92,103 +105,79 @@ export const ServiceEdit: React.FC<Props> = (props) => {
     return currentService.videoUrl = result;
   }
 
-  React.useEffect(() => { setCurrentService(props.currentService); }, [props.currentService]);
-
-  let keyLabel = <>Video Embed Url</>;
-  let keyPlaceholder = "https://yourprovider.com/yoururl/"
-
-  switch (currentService?.provider) {
-    case "youtube_live":
-    case "youtube_watchparty":
-      keyLabel = <>YouTube ID <span className="description" style={{ float: "right", marginTop: 3, paddingLeft: 5 }}>https://youtube.com/watch?v=<b style={{ color: "#24b8ff" }}>abcd1234</b></span></>;
-      keyPlaceholder = "abcd1234";
-      break;
-    case "vimeo_live":
-    case "vimeo_watchparty":
-      keyLabel = <>Vimeo ID <span className="description" style={{ float: "right", marginTop: 3, paddingLeft: 5 }}>https://vimeo.com/<b>123456789</b></span></>;
-      keyPlaceholder = "123456789";
-      break;
-    case "facebook_live":
-      keyLabel = <>Video ID <span className="description" style={{ float: "right", marginTop: 3, paddingLeft: 5 }}>https://facebook.com/video.php?v=<b>123456789</b></span></>;
-      keyPlaceholder = "123456789";
-      break;
+  const getSermons = () => {
+    let result: JSX.Element[] = [];
+    sermons.forEach(sermon => {
+      if (sermon.permanentUrl) result.push(<MenuItem value={sermon.id}>{sermon.title}</MenuItem>);
+    });
+    result.push(<hr />)
+    sermons.forEach(sermon => {
+      if (!sermon.permanentUrl) result.push(<MenuItem value={sermon.id}>{sermon.title}</MenuItem>);
+    });
+    return result;
   }
 
-  let localServiceTime = currentService?.serviceTime;
+  React.useEffect(() => { setCurrentService(props.currentService); loadData(); }, [props.currentService]);
 
-  let videoStartTime = currentService?.serviceTime?.getTime() - currentService?.earlyStart * 1000;
-  let videoEndTime = currentService?.serviceTime?.getTime() + currentService?.duration * 1000;
-  let chatAndPrayerStartTime = currentService?.serviceTime?.getTime() - currentService?.chatBefore * 1000;
-  let chatAndPrayerEndTime = currentService?.serviceTime?.getTime() + currentService?.chatAfter * 1000;
-  return (
-    <InputBox headerIcon="calendar_month" headerText="Edit Service" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={checkDelete()} helpArticleUrl="https://support.churchapps.org/streaminglive/header-links.html">
-      <>
-        <TextField fullWidth label="Service Name" name="serviceLabel" value={currentService?.label || ""} onChange={handleChange} />
-        <Grid container spacing={3}>
-          <Grid item xs={6}>
-            <TextField fullWidth label="Service Time" type="datetime-local" name="serviceTime" InputLabelProps={{ shrink: !!DateHelper.formatHtml5DateTime(localServiceTime) }} defaultValue={DateHelper.formatHtml5DateTime(localServiceTime)} onChange={handleChange} />
-          </Grid>
-          <Grid item xs={6}>
-            <FormControl fullWidth>
-              <InputLabel>Recurs Weekly</InputLabel>
-              <Select label="Recurs Weekly" name="recurs" value={Boolean(currentService?.recurring).toString() || ""} onChange={handleChange}>
-                <MenuItem value="false">No</MenuItem>
-                <MenuItem value="true">Yes</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-        </Grid>
-        <Grid container spacing={3}>
-          <Grid item xs={6}>
+  if (isLoading) return <Loading />
+  else {
 
-            <label style={{ width: "100%" }}>Total Service Duration <span className="description" style={{ float: "right", marginTop: "5px" }}>{DateHelper.formatHtml5Time(new Date(videoStartTime))} - {DateHelper.formatHtml5Time(new Date(videoEndTime))}</span></label>
-            <Duration totalSeconds={currentService?.duration} updatedFunction={totalSeconds => { let s = { ...currentService }; s.duration = totalSeconds; setCurrentService(s); }} />
+    let localServiceTime = currentService?.serviceTime;
+    let chatAndPrayerStartTime = currentService?.serviceTime?.getTime() - currentService?.chatBefore * 1000;
+    let chatAndPrayerEndTime = currentService?.serviceTime?.getTime() + currentService?.chatAfter * 1000;
+    let earlyStartTime = currentService?.serviceTime?.getTime() + currentService?.earlyStart * 1000;
+    return (
+      <InputBox headerIcon="calendar_month" headerText="Edit Service" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={checkDelete()}>
+        <>
+          <TextField fullWidth label="Service Name" name="serviceLabel" value={currentService?.label || ""} onChange={handleChange} />
+          <Grid container spacing={3}>
+            <Grid item xs={6}>
+              <TextField fullWidth label="Service Time" type="datetime-local" name="serviceTime" InputLabelProps={{ shrink: !!DateHelper.formatHtml5DateTime(localServiceTime) }} defaultValue={DateHelper.formatHtml5DateTime(localServiceTime)} onChange={handleChange} />
+            </Grid>
+            <Grid item xs={6}>
+              <FormControl fullWidth>
+                <InputLabel>Recurs Weekly</InputLabel>
+                <Select label="Recurs Weekly" name="recurs" value={Boolean(currentService?.recurring).toString() || ""} onChange={handleChange}>
+                  <MenuItem value="false">No</MenuItem>
+                  <MenuItem value="true">Yes</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
 
           </Grid>
-          <Grid item xs={6}>
-
-            <label style={{ width: "100%" }}>Start Video Early <span className="description" style={{ float: "right", marginTop: "5px" }}>(Optional) For countdowns</span></label>
-            <Duration totalSeconds={currentService?.earlyStart} updatedFunction={totalSeconds => { let s = { ...currentService }; s.earlyStart = totalSeconds; setCurrentService(s); }} />
-
+          <Grid container spacing={3}>
+            <Grid item xs={6}>
+              <TextField fullWidth label="Enable Chat - Minutes Before" type="number" name="chatBefore" value={currentService?.chatBefore / 60 || ""} onChange={handleChange} InputProps={{
+                inputProps: { min: 0, step: 1 },
+                endAdornment: <span style={{ whiteSpace: "nowrap" }}>{DateHelper.prettyTime(new Date(chatAndPrayerStartTime))}</span>
+              }} />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField fullWidth label="Enable Chat - Minutes After" type="number" name="chatAfter" value={currentService?.chatAfter / 60 || ""} onChange={handleChange} InputProps={{
+                inputProps: { min: 0, step: 1 },
+                endAdornment: <span style={{ whiteSpace: "nowrap" }}>{DateHelper.prettyTime(new Date(chatAndPrayerEndTime))}</span>
+              }} />
+            </Grid>
           </Grid>
-        </Grid>
-        <Grid container spacing={3}>
-          <Grid item xs={6}>
-            <TextField fullWidth label="Enable Chat - Minutes Before" type="number" name="chatBefore" value={currentService?.chatBefore / 60 || ""} onChange={handleChange} InputProps={{
-              inputProps: { min: 0, step: 1 },
-              endAdornment: <span style={{ whiteSpace: "nowrap" }}>{DateHelper.prettyTime(new Date(chatAndPrayerStartTime))}</span>
-            }} />
+          <Grid container spacing={3}>
+            <Grid item xs={6}>
+              <TextField fullWidth label="Start Video Early - Optional for countdowns" type="number" name="earlyStart" value={currentService?.earlyStart / 60 || ""} onChange={handleChange} InputProps={{
+                inputProps: { min: 0, step: 1 },
+                endAdornment: <span style={{ whiteSpace: "nowrap" }}>{DateHelper.prettyTime(new Date(earlyStartTime))}</span>
+              }} />
+            </Grid>
+            <Grid item xs={6}>
+              <FormControl fullWidth>
+                <InputLabel>Sermon</InputLabel>
+                <Select label="Sermon" name="sermonId" value={currentService.sermonId} onChange={handleChange}>
+                  <MenuItem value="latest">Latest Sermon</MenuItem>
+                  {getSermons()}
+                </Select>
+              </FormControl>
+            </Grid>
           </Grid>
-          <Grid item xs={6}>
-            <TextField fullWidth label="Enable Chat - Minutes After" type="number" name="chatAfter" value={currentService?.chatAfter / 60 || ""} onChange={handleChange} InputProps={{
-              inputProps: { min: 0, step: 1 },
-              endAdornment: <span style={{ whiteSpace: "nowrap" }}>{DateHelper.prettyTime(new Date(chatAndPrayerEndTime))}</span>
-            }} />
-          </Grid>
-        </Grid>
-
-        <Grid container spacing={3}>
-          <Grid item xs={6}>
-            <FormControl fullWidth>
-              <InputLabel>Video Provider</InputLabel>
-              <Select label="Video Provider" name="provider" value={currentService?.provider || ""} onChange={handleChange}>
-                <MenuItem value="" disabled>Live Stream</MenuItem>
-                <MenuItem value="youtube_live">YouTube (Live)</MenuItem>
-                <MenuItem value="vimeo_live">Vimeo (Live)</MenuItem>
-                <MenuItem value="facebook_live">Facebook (Live)</MenuItem>
-                <MenuItem value="custom_live">Custom Embed Url (Live)</MenuItem>
-                <MenuItem value="" disabled>Prerecorded Watchparty</MenuItem>
-                <MenuItem value="youtube_watchparty">YouTube (Recorded)</MenuItem>
-                <MenuItem value="vimeo_watchparty">Vimeo (Recorded)</MenuItem>
-                <MenuItem value="custom_watchparty">Custom Embed Url (Recorded)</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={6}>
-            <TextField fullWidth label={keyLabel} name="providerKey" value={currentService?.providerKey || ""} onChange={handleChange} placeholder={keyPlaceholder} />
-          </Grid>
-        </Grid>
-      </>
-    </InputBox>
-  );
+        </>
+      </InputBox>
+    );
+  }
 }

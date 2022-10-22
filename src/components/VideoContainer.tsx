@@ -43,17 +43,18 @@ export const VideoContainer: React.FC<Props> = (props) => {
         />
       )
     } else {
-      let videoUrl = cs.videoUrl;
+      let videoUrl = cs.sermon?.videoUrl || "";
       if (cs.localStartTime !== undefined) {
         let seconds = Math.floor((loadedTime - cs.localStartTime.getTime()) / 1000);
         if (seconds > 10) {
-          if (cs.provider === "youtube_watchparty") videoUrl += "&start=" + seconds.toString();
-          if (cs.provider === "vimeo_watchparty") videoUrl += "#t=" + seconds.toString() + "s";
+          if (cs?.sermon?.videoType === "youtube") videoUrl += "&start=" + seconds.toString();
+          if (cs?.sermon?.videoType === "vimeo") videoUrl += "#t=" + seconds.toString() + "s";
         } else {
-          if (cs.provider === "youtube_watchparty") videoUrl += "&start=0";
-          if (cs.provider === "vimeo_watchparty") videoUrl += cs.videoUrl + "#t=0m0s";
+          if (cs?.sermon?.videoType === "youtube") videoUrl += "&start=0";
+          if (cs?.sermon?.videoType === "vimeo") videoUrl += "#t=0m0s";
         }
       }
+      console.log(videoUrl);
       return (<iframe id="videoFrame" src={videoUrl} frameBorder={0} allow="autoplay; fullscreen" allowFullScreen title="Sermon Video"></iframe>);
     }
   }
@@ -74,9 +75,10 @@ export const VideoContainer: React.FC<Props> = (props) => {
   }
   React.useEffect(() => {
     const updateCurrentTime = () => {
-      if(isMounted()) {
+      if (isMounted()) {
         setCurrentTime(new Date().getTime());
-      }}
+      }
+    }
     setLoadedTime(new Date().getTime());
     setInterval(updateCurrentTime, 1000);
   }, [isMounted]);

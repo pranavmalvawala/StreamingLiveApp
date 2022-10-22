@@ -37,7 +37,7 @@ export const Header: React.FC<Props> = (props) => {
   }
   const getSettingLink = () => {
     if (UserHelper.isHost) return (
-      <li className="nav-item"><Link to="/admin/settings" className="nav-link">Admin Dashboard</Link></li>
+      <li className="nav-item"><Link to="/admin" className="nav-link">Admin Dashboard</Link></li>
     );
   }
 
