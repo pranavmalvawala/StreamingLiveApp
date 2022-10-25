@@ -84,11 +84,11 @@ export const Home: React.FC = () => {
   }, [loadConfig]);
 
   React.useEffect(() => {
-    //const jwt = Cookies.get("jwt")
-    /*
-        if (jwt && ChatHelper.current.user.firstName === "Anonymous") {
-          navigate("/login")
-        }*/
+    const jwt = Cookies.get("jwt")
+
+    if (jwt && ChatHelper.current.user.firstName === "Anonymous") {
+      navigate("/login")
+    }
   }, [navigate]);
 
   React.useEffect(checkJoinRooms, [currentService]); //eslint-disable-line
