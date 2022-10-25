@@ -54,8 +54,8 @@ export const SermonEdit: React.FC<Props> = (props) => {
       case "playlistId": v.playlistId = val; break;
       case "videoData":
         v.videoData = val;
-        if (v.videoType === "youtube") v.videoType = getYouTubeKey(v.videoData);
-        else if (v.videoType === "facebook") v.videoType = getFacebookKey(v.videoData);
+        if (v.videoType === "youtube") v.videoData = getYouTubeKey(v.videoData);
+        else if (v.videoType === "facebook") v.videoData = getFacebookKey(v.videoData);
         else if (v.videoType === "vimeo") v.videoData = getVimeoKey(v.videoData);
         break;
     }
