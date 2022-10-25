@@ -16,12 +16,13 @@ export class Permissions extends PermissionsBase {
     },
     settings: {
       edit: { api: "StreamingLiveApi", contentType: "Settings", action: "Edit" }
+    },
+    chat: {
+      host: { api: "StreamingLiveApi", contentType: "Chat", action: "Host" }
     }
   };
 
   static messagingApi = {
-    chat: {
-      host: { api: "MessagingApi", contentType: "Chat", action: "Host" }
-    }
+
   }
 }

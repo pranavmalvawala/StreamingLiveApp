@@ -23,7 +23,7 @@ export const Login: React.FC = () => {
     context.setChurch(UserHelper.currentChurch)
     ApiHelper.get(`/people/${UserHelper.currentChurch.personId}`, "MembershipApi").then(p => { context.setPerson(p); });
 
-    if (UserHelper.checkAccess(Permissions.messagingApi.chat.host)) {
+    if (UserHelper.checkAccess(Permissions.streamingLiveApi.chat.host)) {
       UserHelper.isHost = true;
     }
   }

@@ -119,7 +119,7 @@ export const InteractionContainer: React.FC<Props> = (props) => {
           if (t.type === "prayer" && selectedTab !== i) prayerTabIndex = i;
         }
 
-        if(isMounted()) {
+        if (isMounted()) {
           setSelectedTab(prayerTabIndex);
         }
         ConfigHelper.current.switchToConversationId = "";

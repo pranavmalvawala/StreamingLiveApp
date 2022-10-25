@@ -31,15 +31,18 @@ export const Home: React.FC = () => {
 
   const checkHost = async (d: ConfigurationInterface) => {
     if (UserHelper.isHost) {
-      d.tabs.push({ type: "hostchat", text: "Host Chat", icon: "group", data: "", url: "" });
-      const hostConversation: ConversationInterface = await ApiHelper.get("/conversations/current/" + d.churchId + "/streamingLiveHost/chat", "MessagingApi");
-      ChatHelper.current.hostRoom = ChatHelper.createRoom(hostConversation);
-      ChatHelper.current.hostRoom.conversation.title = "Host Chat";
-      setChatState(ChatHelper.current);
-      setTimeout(() => {
-        ChatHelper.joinRoom(hostConversation.id, hostConversation.churchId);
-        ChatHelper.current.hostRoom.joined = true;
-      }, 500);
+      const hostChatDetails = await ApiHelper.get("/services/" + currentService.id + "/hostChat", "StreamingLiveApi");
+      if (hostChatDetails.room) {
+        d.tabs.push({ type: "hostchat", text: "Host Chat", icon: "group", data: "", url: "" });
+        const hostConversation: ConversationInterface = await ApiHelper.get("/conversations/current/" + d.churchId + "/streamingLiveHost/" + hostChatDetails.room, "MessagingApi");
+        ChatHelper.current.hostRoom = ChatHelper.createRoom(hostConversation);
+        ChatHelper.current.hostRoom.conversation.title = "Host Chat";
+        setChatState(ChatHelper.current);
+        setTimeout(() => {
+          ChatHelper.joinRoom(hostConversation.id, hostConversation.churchId);
+          ChatHelper.current.hostRoom.joined = true;
+        }, 500);
+      }
     }
   }
 

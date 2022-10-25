@@ -125,7 +125,7 @@ export const ServiceEdit: React.FC<Props> = (props) => {
     let localServiceTime = currentService?.serviceTime;
     let chatAndPrayerStartTime = currentService?.serviceTime?.getTime() - currentService?.chatBefore * 1000;
     let chatAndPrayerEndTime = currentService?.serviceTime?.getTime() + currentService?.chatAfter * 1000;
-    let earlyStartTime = currentService?.serviceTime?.getTime() + currentService?.earlyStart * 1000;
+    let earlyStartTime = currentService?.serviceTime?.getTime() - currentService?.earlyStart * 1000;
     return (
       <InputBox headerIcon="calendar_month" headerText="Edit Service" saveFunction={handleSave} cancelFunction={handleCancel} deleteFunction={checkDelete()}>
         <>
