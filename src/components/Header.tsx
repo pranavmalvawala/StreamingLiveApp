@@ -30,7 +30,7 @@ export const Header: React.FC<Props> = (props) => {
   const getProfileLink = () => {
     if (!ApiHelper.isAuthenticated) return (<li className="nav-item"><ChatName user={props.user} updateFunction={updateName} promptName={promptName} /></li>);
     else {
-      const jwt = ApiHelper.getConfig("AccessApi").jwt;
+      const jwt = ApiHelper.getConfig("MembershipApi").jwt;
       const profileUrl = `${EnvironmentHelper.Common.AccountsRoot}/login?jwt=${jwt}&returnUrl=/profile`;
       return (<li className="nav-item"><a href={profileUrl} target="_blank" rel="noopener noreferrer" className="nav-link">Profile</a></li>);
     }

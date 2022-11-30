@@ -34,7 +34,6 @@ export const ChatName: React.FC<Props> = (props) => {
       alert("Please enter a full name");
       return;
     }
-    //if (ApiHelper.isAuthenticated) ApiHelper.post("/users/setDisplayName", { firstName: trimmedFirst, lastName: trimmedLast }, "AccessApi");
     props.updateFunction(trimmedName);
     setEdit(false);
   }
