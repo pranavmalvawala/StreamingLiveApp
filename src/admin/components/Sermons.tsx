@@ -46,7 +46,7 @@ export const Sermons = (props: Props) => {
   }
 
   const handleAdd = (permanentUrl: boolean) => {
-    let v: SermonInterface = { churchId: UserHelper.currentChurch.id, duration: 5400, videoType: "youtube", videoData: "", title: "New Sermon", permanentUrl }
+    let v: SermonInterface = { churchId: UserHelper.currentUserChurch.church.id, duration: 5400, videoType: "youtube", videoData: "", title: "New Sermon", permanentUrl }
     if (permanentUrl) {
       v.videoType = "youtube_channel";
       v.videoData = "This is not your channel url - See help link above";

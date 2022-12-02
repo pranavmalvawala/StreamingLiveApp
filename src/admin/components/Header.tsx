@@ -16,16 +16,16 @@ export const Header: React.FC = () => {
     const jwt = ApiHelper.getConfig("StreamingLiveApi").jwt;
     const id = e.currentTarget.getAttribute("data-id");
     UserHelper.selectChurch(context, id);
-    window.location.href = (EnvironmentHelper.Common.StreamingLiveRoot.replace("{key}", UserHelper.currentChurch.subDomain) + "/login?jwt=" + jwt);
+    window.location.href = (EnvironmentHelper.Common.StreamingLiveRoot.replace("{key}", UserHelper.currentUserChurch.church.subDomain) + "/login?jwt=" + jwt);
   }
 
   const getChurchLinks = () => {
-    if (UserHelper.churches.length < 2) return null;
+    if (UserHelper.userChurches.length < 2) return null;
     else {
       let result: JSX.Element[] = [];
-      UserHelper.churches.forEach(c => {
-        const churchName = (c.id === UserHelper.currentChurch.id) ? (<b>{c.name}</b>) : (c.name);
-        result.push(<a href="about:blank" data-id={c.id} onClick={switchChurch}><i className="link"></i> {churchName}</a>);
+      UserHelper.userChurches.forEach(c => {
+        const churchName = (c.church.id === UserHelper.currentUserChurch.church.id) ? (<b>{c.church.name}</b>) : (c.church.name);
+        result.push(<a href="about:blank" data-id={c.church.id} onClick={switchChurch}><i className="link"></i> {churchName}</a>);
       });
       return result;
     }

@@ -1,5 +1,6 @@
 import React from "react"
-import { ChurchInterface, PersonInterface, UserContextInterface, UserInterface } from "./helpers";
+import { LoginUserChurchInterface } from "./appBase/interfaces";
+import { PersonInterface, UserContextInterface, UserInterface } from "./helpers";
 
 interface SLUserContextInterface extends UserContextInterface {
   displayName: string,
@@ -16,14 +17,14 @@ export const UserProvider = ({ children }: Props) => {
   const [displayName, setDisplayName] = React.useState<string>("");
   const [user, setUser] = React.useState<UserInterface>(null);
   const [person, setPerson] = React.useState<PersonInterface>(null);
-  const [church, setChurch] = React.useState<ChurchInterface>(null);
-  const [churches, setChurches] = React.useState<ChurchInterface[]>(null);
+  const [userChurch, setUserChurch] = React.useState<LoginUserChurchInterface>(null);
+  const [userChurches, setUserChurches] = React.useState<LoginUserChurchInterface[]>(null);
 
   return <UserContext.Provider value={{
     displayName, setDisplayName,
     user, setUser,
-    church, setChurch,
-    churches, setChurches,
+    userChurch, setUserChurch,
+    userChurches, setUserChurches,
     person, setPerson
   }}>{children}</UserContext.Provider>
 };

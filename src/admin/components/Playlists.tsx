@@ -24,7 +24,7 @@ export const Playlists = (props: Props) => {
   }
 
   const handleAdd = () => {
-    let v: PlaylistInterface = { churchId: UserHelper.currentChurch.id, title: "New Playlist", description: "", publishDate: new Date(), thumbnail: "" }
+    let v: PlaylistInterface = { churchId: UserHelper.currentUserChurch.church.id, title: "New Playlist", description: "", publishDate: new Date(), thumbnail: "" }
     setCurrentPlaylist(v);
     loadData();
   }

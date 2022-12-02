@@ -28,7 +28,7 @@ export const Services: React.FC = () => {
     //defaultDate.setTime(defaultDate.getTime() + (9 * 60 * 60 * 1000) - (tz * 60 * 1000));
     defaultDate.setTime(defaultDate.getTime() + (9 * 60 * 60 * 1000));
 
-    let link: AdminServiceInterface = { churchId: UserHelper.currentChurch.id, serviceTime: defaultDate, chatBefore: 600, chatAfter: 600, duration: 3600, earlyStart: 600, provider: "youtube_live", providerKey: "", recurring: false, timezoneOffset: tz, videoUrl: "", label: "Sunday Morning", sermonId: "latest" }
+    let link: AdminServiceInterface = { churchId: UserHelper.currentUserChurch.church.id, serviceTime: defaultDate, chatBefore: 600, chatAfter: 600, duration: 3600, earlyStart: 600, provider: "youtube_live", providerKey: "", recurring: false, timezoneOffset: tz, videoUrl: "", label: "Sunday Morning", sermonId: "latest" }
     setCurrentService(link);
     loadData();
   }

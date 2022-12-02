@@ -19,9 +19,9 @@ export const Login: React.FC = () => {
   const successCallback = () => {
     Cookies.set("displayName", "Anonymous");
     context.setUser(UserHelper.user);
-    context.setChurches(UserHelper.churches)
-    context.setChurch(UserHelper.currentChurch)
-    ApiHelper.get(`/people/${UserHelper.currentChurch.personId}`, "MembershipApi").then(p => { context.setPerson(p); });
+    context.setUserChurches(UserHelper.userChurches)
+    context.setUserChurch(UserHelper.currentUserChurch)
+    ApiHelper.get(`/people/${UserHelper.currentUserChurch.person?.id}`, "MembershipApi").then(p => { context.setPerson(p); });
 
     if (UserHelper.checkAccess(Permissions.streamingLiveApi.chat.host)) {
       UserHelper.isHost = true;

@@ -9,7 +9,7 @@ export const Pages: React.FC = () => {
   const loadData = () => { ApiHelper.get("/pages", "StreamingLiveApi").then(data => { setPages(data); setIsLoading(false); }) }
   const loadPage = (id: string) => { ApiHelper.get("/pages/" + id, "StreamingLiveApi").then(data => setCurrentPage(data)); }
   const handleUpdate = () => { setCurrentPage(null); loadData(); }
-  const handleAdd = () => { setCurrentPage({ churchId: UserHelper.currentChurch.id, lastModified: new Date(), name: "" }) }
+  const handleAdd = () => { setCurrentPage({ churchId: UserHelper.currentUserChurch.church.id, lastModified: new Date(), name: "" }) }
   const handleEdit = (page: PageInterface) => { loadPage(page.id); }
 
   React.useEffect(() => { loadData(); }, []);

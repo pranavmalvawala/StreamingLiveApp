@@ -14,7 +14,7 @@ export const Links: React.FC = () => {
   const saveChanges = () => { ApiHelper.post("/links", links, "StreamingLiveApi").then(loadData); }
 
   const handleAdd = () => {
-    let link: LinkInterface = { churchId: UserHelper.currentChurch.id, sort: links.length, text: "", url: "", linkType: "url", linkData: "", category: "link", icon: "" }
+    let link: LinkInterface = { churchId: UserHelper.currentUserChurch.church.id, sort: links.length, text: "", url: "", linkType: "url", linkData: "", category: "link", icon: "" }
     setCurrentLink(link);
   }
 
