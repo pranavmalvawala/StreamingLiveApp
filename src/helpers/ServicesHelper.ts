@@ -30,7 +30,7 @@ export class ServicesHelper {
         s.localStartTime = new Date(s.localCountdownTime.getTime());
         s.localStartTime.setSeconds(s.localStartTime.getSeconds() - this.getSeconds(s.earlyStart));
         s.localEndTime = new Date(s.localStartTime.getTime());
-        s.localEndTime.setSeconds(s.localEndTime.getSeconds() + this.getSeconds(s.duration));
+        s.localEndTime.setSeconds(s.localEndTime.getSeconds() + s.sermon?.duration || 5400);
         s.localChatStart = new Date(s.localStartTime.getTime());
         s.localChatStart.setSeconds(s.localChatStart.getSeconds() - this.getSeconds(s.chatBefore));
         s.localChatEnd = new Date(s.localEndTime.getTime());
