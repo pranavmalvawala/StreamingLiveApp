@@ -33,7 +33,7 @@ export const Header: React.FC = () => {
 
   const getUserMenu = () => {
     const jwt = ApiHelper.getConfig("MembershipApi").jwt;
-    const profileUrl = `${EnvironmentHelper.Common.AccountsRoot}/login?jwt=${jwt}&returnUrl=/profile`;
+    const profileUrl = `${EnvironmentHelper.Common.ChumsRoot}/login?jwt=${jwt}&returnUrl=/profile`;
     if (showUserMenu) return (
       <div className="container" id="userMenu">
         <div>
